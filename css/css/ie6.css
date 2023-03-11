@@ -1,0 +1,23 @@
+/*
+ *FUNDO TRANSPARENTE PNG
+ */
+html img/**/ {
+filter:expression(
+   this.alphaxLoaded ? "" :
+   (
+       this.src.substr(this.src.length-4)==".png"
+       ?
+       (
+     (!this.complete)
+     ? "" :
+         this.runtimeStyle.filter=
+         ("progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+this.src+"')")+
+         (this.onbeforeprint="this.runtimeStyle.filter='';this.src='"+this.src+"'").substr(0,0)+
+         String(this.alphaxLoaded=true).substr(0,0)+
+         (this.src="imagens/blank.png").substr(0,0)
+       )
+       :
+       this.runtimeStyle.filter=""
+   )
+     );
+ }

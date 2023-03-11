@@ -1,0 +1,32 @@
+/*
+ *	Navegação
+ */
+#NavegacaoInterno{
+	float: left;
+	width:650px;
+	padding: 0 0 0 0;
+	height:auto;
+	margin: 10px 0 10px 0;		
+}
+#NavegacaoInterno ul{
+	padding: 3px 0 0 0;
+	list-style-type: none;
+	margin: 0 0 0 0;
+}
+#NavegacaoInterno ul li{
+	float:left;
+}
+#NavegacaoInterno ul li a{
+	font-size:0.72em;
+	text-decoration:none;
+	color:#FFFFFF;
+}
+#NavegacaoInterno ul li a:hover{
+	text-decoration:underline;
+}
+#NavegacaoInterno ul#atalhos{
+	float:left;
+}
+#NavegacaoInterno ul#atalhos li a{
+	padding-right: 7px;
+}

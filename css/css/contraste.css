@@ -1,0 +1,88 @@
+.c_preto body,
+.c_preto #tudo,
+.c_preto #containerRodape,
+.c_preto #containerNoticia{
+	color:#FFF !important;
+   background: #000 !important;
+}
+.c_preto body,
+.c_preto #tudo,
+.c_preto #containerRodape,
+.c_preto #containerNoticia{
+	color: #FFF !important;
+   background: #000033 !important;
+}
+.c_preto body,
+.c_preto #tudo,
+.c_preto #containerRodape,
+.c_preto #containerNoticia{
+	color: #FFF !important;
+   background: #002200 !important;
+}
+.c_preto #containerRodape, .c_preto .ifrodape,
+.c_preto #containerNoticia, .c_preto #tudo a,
+
+.c_azul #textorodape, .c_azul .ifrodape,
+.c_azul #colunaEsquerda, .c_azul #colunaEsquerda a,
+
+.c_verde #textorodape, .c_verde .ifrodape,
+.c_verde #colunaEsquerda, .c_verde #colunaEsquerda a
+{
+		color:#FFF !important;
+}
+
+/* c_preto */
+.c_preto p, .c_preto ul, .c_preto li, .c_preto form label, .c_preto form input, .c_preto form select, .c_preto form textarea, .c_preto span{
+    color:#FFF !important;
+    background: #000!important;
+}
+
+.c_preto #tudo a{
+    color: #9F0 !important;
+    font-weight:bold;
+}
+
+.c_preto #tudo img{
+    border:2px solid #9F0 !important;
+}
+
+.c_preto #tudo h1, .c_preto #tudo h3, .c_preto #tudo h4{
+    color:#090 !important;
+}
+
+/* c_azul */
+
+.c_azul p, .c_azul ul, .c_azul li, .c_azul label, .c_azul input, .c_azul select, .c_azul textarea, .c_azul span{
+    color:#FFF !important;
+    background: #000033!important;
+}
+
+.c_azul #tudo a{
+    color: #FF0 !important;
+    font-weight:bold;
+}
+
+.c_azul #tudo img{
+    border:2px solid #FF0 !important;
+}
+
+.c_azul #tudo h1, .c_azul #tudo h3, .c_azul #tudo h4{
+    color:#0066FF !important;
+}
+
+/* c_verde */
+.c_verde p, .c_verde ul, .c_verde li, .c_verde label, .c_verde input, .c_verde select, .c_verde textarea, .c_verde span{
+    color:#FFF !important;
+    background: #002200!important;
+}
+.c_verde #tudo a{
+    color:#FF0 !important;
+    font-weight:bold;
+}
+.c_verde #tudo img{
+    border:2px solid #FF0 !important;
+}
+
+.c_verde #tudo h1, .c_verde #tudo h3, .c_verde #tudo h4{
+    color:#999 !important;
+}

@@ -1,0 +1,34 @@
+// página inicial
+    - componente sobre guia de cursos (formação, local, curso) ex: https://ifc.edu.br/, https://ifmt.edu.br/
+    - componente sobre calendário de eventos
+    - componente sobre editais e concursos (vigentes, inscrições abertas, por campus)
+    - componente de notícias (slideshow com reserva vertical e botão de "mais notícias")
+    - componentes de redes sociais
+    - componentes de vídeos (com vídeo "conheça o if baiano") ex: https://ifrs.edu.br/
+    - componente de mapa
+    - seção sobre eventos periódicos
+    - seção sobre projetos relevantes do instituto
+    - agenda do reitor
+    - seção de acesso rápido ex: https://ifc.edu.br/
+
+// página de grupo de notícias
+
+// página de lista de concursos
+
+// página single concurso
+
+// página single notícias
+
+// página page
+
+// página lista de eventos
+
+// página single evento
+
+// página agenda do reitor
+
+// página de projetos
+
+// página de vídeos ?
+
+// página de localização dos campi
