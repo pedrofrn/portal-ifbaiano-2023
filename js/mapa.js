@@ -40,10 +40,11 @@ canvas.onmousemove = function (e) {
 }
 
 function campusMapa(cidade, out = false) {
+    
     ctx.fillStyle = '#b3bbb0';
     const xpath = `//li[text()='${cidade}']`;
     let matchingElement = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-
+    
     if (!out) {
         canvas.style.cursor = 'pointer';
         ctx.fillStyle = '#c80710';
@@ -54,7 +55,7 @@ function campusMapa(cidade, out = false) {
             matchingElement.classList.remove('hoverLiCampus')
             canvas.style.cursor = 'initial';
         }
-    }
+    }    
 
     const circle = new Path2D();
     variavel = circle.arc(cidadesCoordenadas[cidade][0], cidadesCoordenadas[cidade][1], 6, 0, 5 * Math.PI);

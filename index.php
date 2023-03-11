@@ -7,14 +7,14 @@
 		<?php include 'menu.php'; ?>
 	</div>
 	<div id="containerMeioCentro">
-		<?php if (is_active_sidebar('avisos')): ?>
+		<?php if (is_active_sidebar('avisos')) : ?>
 			<div id="avisosImportantes">
 				<span class="spanX"></span>
 				<?php dynamic_sidebar('avisos'); ?>
 			</div>
 		<?php endif; ?>
 
-		<?php if (is_active_sidebar('cards')): ?>
+		<?php if (is_active_sidebar('cards')) : ?>
 			<div class="tituloSecao">
 				Ensino público, gratuito e de qualidade. Conheça nossos cursos
 			</div>
@@ -57,8 +57,7 @@
 		<div id="Noticias">
 			<div id="NoticiasConteudo">
 				<div class='container'>
-					<div class="ism-slider" data-transition_type="fade" data-play_type="loop" data-image_fx="zoomrotate"
-						id="my-slider">
+					<div class="ism-slider" data-transition_type="fade" data-play_type="loop" data-image_fx="zoomrotate" id="my-slider">
 						<ol>
 							<?php
 							$destaque = get_posts(
@@ -70,7 +69,7 @@
 							foreach ($destaque as $post) {
 								setup_postdata($post);
 
-								?>
+							?>
 								<li>
 									<a href="<?php the_permalink(); ?>">
 										<div class="imagemnoticiadestaque">
@@ -103,8 +102,7 @@
 			</div>
 			<div id="NoticiasMaisNoticias">
 				<a href="<?php echo get_option('home'); ?>/page_fullposts" alt="Todas as notícias">Acessar mais
-					notícias<img src="<?php bloginfo('template_url'); ?>/imagens/icone-link-externo.png"
-						style="width: 14px;margin-left: 5px;"></a>
+					notícias<img src="<?php bloginfo('template_url'); ?>/imagens/icone-link-externo.png" style="width: 14px;margin-left: 5px;"></a>
 			</div>
 		</div>
 		<p style="background:red;color:white;padding:15px;text-align:center;">nesta seção, colocar sanfona para editais
@@ -114,7 +112,7 @@
 
 		<div id="Fotos">
 			<div id="FotosConteudo">
-				<?php if (!function_exists('dynamic_sidebar') || !dynamic_sidebar('Fotos')): ?>
+				<?php if (!function_exists('dynamic_sidebar') || !dynamic_sidebar('Fotos')) : ?>
 
 				<?php endif; ?>
 			</div>
@@ -124,7 +122,6 @@
 	</div>
 
 	<div id="containerMeioDireita">
-
 		<div id="Mural">
 			<div id="MuralTitulo">
 				Comunicados
@@ -145,7 +142,7 @@
 						setup_postdata($post);
 						foreach (get_the_category() as $cat) {
 							if (($cat->cat_name == 'Informes')) {
-								?>
+				?>
 								<div id="InformesContainer">
 									<div id="InformesdoData">
 										<?php the_time('d/m/Y \à\s H\hi'); ?>
@@ -154,22 +151,65 @@
 										<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 									</div>
 								</div>
-								<?php
+								<div id="maisComunicados">
+									<a href="<?php echo get_option('home'); ?>/page_fullinfos" alt="Todos os Comunicados">Mais
+										comunicados<img src="<?php bloginfo('template_url'); ?>/imagens/icone-link-externo.png" style="width: 14px;margin-left: 5px;"></a>
+								</div>
+				<?php
 							}
 						}
 					}
 				} else {
-					echo "Não há comunicado a exibir.";
+					echo "<div style='padding-top:10px' id='InformesContainer'><span>Sem comunicados cadastrados.</span></div>";
 				} ?>
-				<div id="maisComunicados">
-					<a href="<?php echo get_option('home'); ?>/page_fullinfos" alt="Todos os Comunicados">Mais
-						comunicados<img src="<?php bloginfo('template_url'); ?>/imagens/icone-link-externo.png"
-							style="width: 14px;margin-left: 5px;"></a>
-				</div>
+
+			</div>
+		</div>
+		<div id="Mural">
+			<div id="MuralTitulo">
+				Comunicados
+			</div>
+			<div id="MuralConteudo">
+				<?php
+				wp_reset_query();
+				wp_reset_postdata();
+				$argumentos = array(
+					'category_name' => 'informes',
+					'numberposts' => 5
+				);
+
+				$my_posts = get_posts($argumentos);
+
+				if ($my_posts) {
+					foreach ($my_posts as $post) {
+						setup_postdata($post);
+						foreach (get_the_category() as $cat) {
+							if (($cat->cat_name == 'Informes')) {
+				?>
+								<div id="InformesContainer">
+									<div id="InformesdoData">
+										<?php the_time('d/m/Y \à\s H\hi'); ?>
+									</div>
+									<div id="InformesTitulo">
+										<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+									</div>
+								</div>
+								<div id="maisComunicados">
+									<a href="<?php echo get_option('home'); ?>/page_fullinfos" alt="Todos os Comunicados">Mais
+										comunicados<img src="<?php bloginfo('template_url'); ?>/imagens/icone-link-externo.png" style="width: 14px;margin-left: 5px;"></a>
+								</div>
+				<?php
+							}
+						}
+					}
+				} else {
+					echo "<div style='padding-top:10px' id='InformesContainer'><span>Sem comunicados cadastrados.</span></div>";
+				} ?>
+
 			</div>
 		</div>
 		<div id="Facebook">
-			<?php if (!function_exists('dynamic_sidebar') || !dynamic_sidebar('Facebook')): ?>
+			<?php if (!function_exists('dynamic_sidebar') || !dynamic_sidebar('Facebook')) : ?>
 
 			<?php endif; ?>
 		</div>

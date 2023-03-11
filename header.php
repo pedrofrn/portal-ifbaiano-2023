@@ -19,9 +19,9 @@
 	<script src="<?php bloginfo('template_url'); ?>/js/ism-2.2.min.js"></script>
 
 	<!-- JAVASCRIPT -->
-	<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/styleswitcher.js"></script>
+	<!-- <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/styleswitcher.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-3.3.2.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-3.3.2.min.js"></script> -->
 	<!-- CSS -->
 	<link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" title="default" media="screen" />
 	<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/contrastePreto.css" type="text/css"

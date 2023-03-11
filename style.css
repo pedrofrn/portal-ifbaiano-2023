@@ -1992,7 +1992,7 @@ a:visited {
 }
 
 #Mural {
-	width: auto;
+	width: 200px;
 	margin: 0 0 20px 0;
 	border: 1px solid #c0c1c3;
     border-radius: 0 0 5px 5px;
@@ -3337,7 +3337,8 @@ div#containerMeioCentro span.spanX svg {
 div#containerMeioCentro #cardsCursos {
 	display: flex;
 	margin-bottom: 20px;
-	gap: 20px;
+	gap: 10px;
+	justify-content: space-between;
 }
 
 #cardsCursos .card figure {
@@ -3383,7 +3384,7 @@ div#containerMeioCentro #cardsCursos {
 div#mapa {
 	display: inline-flex;
 	margin-bottom: 20px;
-	gap: 20px;
+	gap: 10px;
 	position: relative;
 	width: 100%;
 }

