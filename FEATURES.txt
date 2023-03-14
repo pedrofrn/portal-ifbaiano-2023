@@ -13,13 +13,15 @@
 
 // página de grupo de notícias
 
+// página de lista de informes
+
 // página de lista de concursos
 
 // página single concurso
 
-// página single notícias
+// página single notícias OK
 
-// página page
+// página page OK
 
 // página lista de eventos
 

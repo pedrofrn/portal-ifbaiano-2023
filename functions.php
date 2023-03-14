@@ -76,6 +76,19 @@ if (function_exists('register_sidebar')) {
 		)
 	);
 
+	# Area de Acesso Rápido
+	register_sidebar(
+		array(
+			'name' => 'Acesso Rápido',
+			'id' => 'acesso',
+			'description' => 'Botões para acesso rápido',
+			'before_widget' => '',
+			'after_widget' => '',
+			'before_title' => '',
+			'after_title' => '',
+		)
+	);
+
 	# Area de widgets do facebook
 	register_sidebar(
 		array(
@@ -393,6 +406,22 @@ function __popular_posts($no_posts = 6, $before = "<li>", $after = "</li>", $sho
 	return $output;
 }
 
+function get_breadcrumb()
+{
+	echo '<a href="' . home_url() . '" rel="nofollow">Página Inicial</a>';
+	if (is_single()) {
+		echo " &nbsp;&nbsp;&#187;&nbsp;&nbsp; ";
+		the_title();
+	} elseif (is_page()) {
+		echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;";
+		echo the_title();
+	} elseif (is_search()) {
+		echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;Search Results for... ";
+		echo '"<em>';
+		echo the_search_query();
+		echo '</em>"';
+	}
+}
 
 
 // extrair apenas a url do thumbnail
@@ -886,7 +915,7 @@ function multi_media_uploader_meta_box_func($post)
 {
 	$banner_img = get_post_meta($post->ID, 'post_banner_img', true);
 
-?>
+	?>
 	<style type="text/css">
 		.multi-upload-medias ul li .delete-img {
 			/*position: absolute; right: 3px; top: 2px;*/
@@ -926,9 +955,9 @@ function multi_media_uploader_meta_box_func($post)
 	</table>
 
 	<script type="text/javascript">
-		jQuery(function($) {
+		jQuery(function ($) {
 
-			$('body').on('click', '.wc_multi_upload_image_button', function(e) {
+			$('body').on('click', '.wc_multi_upload_image_button', function (e) {
 				e.preventDefault();
 
 				var button = $(this),
@@ -938,13 +967,13 @@ function multi_media_uploader_meta_box_func($post)
 							text: 'Aplicar'
 						},
 						multiple: true
-					}).on('select', function() {
+					}).on('select', function () {
 						var attech_ids = '';
 						attachments
 						var attachments = custom_uploader.state().get('selection'),
 							attachment_ids = new Array(),
 							i = 0;
-						attachments.each(function(attachment) {
+						attachments.each(function (attachment) {
 							attachment_ids[i] = attachment['id'];
 							attech_ids += ',' + attachment['id'];
 							if (attachment.attributes.type == 'application/pdf') {
@@ -965,10 +994,10 @@ function multi_media_uploader_meta_box_func($post)
 						}
 						$(button).siblings('.wc_multi_remove_image_button').show();
 					})
-					.open();
+						.open();
 			});
 
-			$('body').on('click', '.wc_multi_remove_image_button', function() {
+			$('body').on('click', '.wc_multi_remove_image_button', function () {
 				$(this).hide().prev().val('').prev().addClass('button').html('Add Media');
 				$(this).parent().find('ul').empty();
 				return false;
@@ -976,12 +1005,12 @@ function multi_media_uploader_meta_box_func($post)
 
 		});
 
-		jQuery(document).ready(function() {
-			jQuery(document).on('click', '.multi-upload-medias ul li i.delete-img', function() {
+		jQuery(document).ready(function () {
+			jQuery(document).on('click', '.multi-upload-medias ul li i.delete-img', function () {
 				var ids = [];
 				var this_c = jQuery(this);
 				jQuery(this).parent().remove();
-				jQuery('.multi-upload-medias ul li').each(function() {
+				jQuery('.multi-upload-medias ul li').each(function () {
 					ids.push(jQuery(this).attr('data-attechment-id'));
 				});
 				jQuery('.multi-upload-medias').find('input[type="hidden"]').attr('value', ids);
@@ -989,7 +1018,7 @@ function multi_media_uploader_meta_box_func($post)
 		})
 	</script>
 
-<?php
+	<?php
 }
 
 function multi_media_uploader_field($name, $value = '')
@@ -1059,17 +1088,17 @@ function single_repeatable_meta_box_callback($post)
 	$banner_img = get_post_meta($post->ID, 'post_banner_img', true);
 
 	wp_nonce_field('repeterBox', 'formType');
-?>
+	?>
 	<script type="text/javascript">
-		jQuery(document).ready(function($) {
-			$('#add-row').on('click', function() {
+		jQuery(document).ready(function ($) {
+			$('#add-row').on('click', function () {
 				var row = $('.empty-row.custom-repeter-text').clone(true);
 				row.removeClass('empty-row custom-repeter-text').css('display', 'table-row');
 				row.insertBefore('#repeatable-fieldset-one tbody>tr:last');
 				return false;
 			});
 
-			$('.remove-row').on('click', function() {
+			$('.remove-row').on('click', function () {
 				$(this).parents('tr').remove();
 				return false;
 			});
@@ -1079,23 +1108,23 @@ function single_repeatable_meta_box_callback($post)
 	<table id="repeatable-fieldset-one" width="100%">
 		<tbody>
 			<?php
-			if ($single_repeter_group) :
+			if ($single_repeter_group):
 				foreach ($single_repeter_group as $field) {
-			?>
+					?>
 					<tr>
 						<td><input type="text" style="width:98%;" name="nome[]" value="<?php if ($field['nome'] != '')
-																							echo esc_attr($field['nome']); ?>" placeholder="Nome do(a) docente" /></td>
+							echo esc_attr($field['nome']); ?>" placeholder="Nome do(a) docente" /></td>
 						<td><input type="text" style="width:98%;" name="titulacao[]" value="<?php if ($field['titulacao'] != '')
-																								echo esc_attr($field['titulacao']); ?>" placeholder="Titulação" /></td>
+							echo esc_attr($field['titulacao']); ?>" placeholder="Titulação" /></td>
 						<td><input type="text" style="width:98%;" name="email[]" value="<?php if ($field['email'] != '')
-																							echo esc_attr($field['email']); ?>" placeholder="docente@ifbaiano.edu.br" /></td>
+							echo esc_attr($field['email']); ?>" placeholder="docente@ifbaiano.edu.br" /></td>
 						<td><input type="text" style="width:98%;" name="lattes[]" value="<?php if ($field['lattes'] != '')
-																								echo esc_attr($field['lattes']); ?>" placeholder="http://lattes.cnpq.br/docente" /></td>
+							echo esc_attr($field['lattes']); ?>" placeholder="http://lattes.cnpq.br/docente" /></td>
 						<td><a class="button remove-row" href="#1">Remover</a></td>
 					</tr>
-				<?php
+					<?php
 				}
-			else :
+			else:
 				?>
 				<tr>
 					<td><input type="text" style="width:98%;" name="nome[]" placeholder="Nome do(a) docente" /></td>
@@ -1119,7 +1148,7 @@ function single_repeatable_meta_box_callback($post)
 		</tbody>
 	</table>
 	<p><a id="add-row" class="button" href="#">Adicionar</a></p>
-<?php
+	<?php
 }
 
 // Save Meta Box values.

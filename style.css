@@ -1411,12 +1411,12 @@ div.marca-topo-menu {
 
 #containerMeioEsquerda {
 	height: auto;
-	width: 200px;
+	width: 170px;
 }
 
 #MenuPrincipal {
 	height: auto;
-	width: 200px;
+	width: 100%;
 	border-bottom: solid 1px #FFFFFF;
 }
 
@@ -1427,7 +1427,8 @@ div.marca-topo-menu {
 
 #containerMeioCentroNoticia a {
 	color: #08c;
-	font-weight: bold;
+	font-weight: 800;
+	text-decoration: none;
 }
 
 #containerMeioCentroNoticia a:hover {
@@ -1499,12 +1500,48 @@ a:visited {
 }
 
 /*===============================Noticias======================*/
+
+div.breadcrumb {
+	text-transform: uppercase;
+	font-size: 8pt;
+	margin-bottom: 15px;
+	color: #a7a7a7;
+	letter-spacing: .05em;
+}
+
+div.breadcrumb a {
+	font-weight: 600 !important;
+	text-decoration: none;
+}
+
+div.data-publicacao {
+	display: inline-flex;
+	gap: 10px;
+	background-color: #f6f6f6;
+	width: 100%;
+	min-height: 40px;
+	align-items: center;
+	padding-left: 15px;
+}
+
+div.data-publicacao .data {
+	font-size: 9pt;
+	color: #afafaf;
+}
+
 .imagem-data-publicacao {
-	width: 25px;
-	height: 25px;
+	width: 20px;
+	height: 20px;
 	background: url("imagens/calendario-guia-de-cursos.png") no-repeat;
-	margin: 15px 10px 0 0;
-	float: left;
+	background-size: contain;
+}
+
+div.thumbNoticia {
+	margin: 10px 0;
+}
+
+div.thumbNoticia img {
+	width: 100%;
 }
 
 #containerMeioCentro #Noticias {
@@ -1586,9 +1623,15 @@ a:visited {
 }
 
 .subtitulo-post {
-	color: #333;
-	font-style: italic;
-	margin-top: 30px;
+	color: #5f5f5f;
+    font-style: italic;
+    padding: 5px 15px;
+    margin-bottom: 10px;
+    border-left: 5px solid #18ab29;
+}
+
+.subtitulo-post p {
+	margin: 0;
 }
 
 #boxtags {
@@ -1964,7 +2007,7 @@ a:visited {
 
 #containerMeioDireita {
 	height: auto;
-	max-width: 200px;
+	width: 190px;
 }
 
 #Banner {
@@ -1995,7 +2038,7 @@ a:visited {
 	width: 200px;
 	margin: 0 0 20px 0;
 	border: 1px solid #c0c1c3;
-    border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
 }
 
 #MuralTitulo {
@@ -2009,7 +2052,7 @@ a:visited {
 }
 
 #MuralConteudo {
-	height: auto;	
+	height: auto;
 	overflow: auto;
 }
 
@@ -2032,9 +2075,7 @@ a:visited {
 	margin: 0 20px 0 0;
 }
 
-#InformesTitulo {
-	
-}
+#InformesTitulo {}
 
 #InformesdoData {
 	padding: 10px 0 5px 0;
@@ -2225,12 +2266,6 @@ a:visited {
 }
 
 /* =================================== ULTIMAS NOTICIAS =================================== */
-#containerMeioCentroNoticia {
-	height: auto;
-	float: left;
-	width: 970px;
-	margin: 0 0 0 30px;
-}
 
 #containerNoticia {
 	height: auto;
@@ -2251,12 +2286,12 @@ a:visited {
 }
 
 #tituloNoticia {
-	font-size: 25px;
+	font-size: 30pt;
 	word-wrap: break-word;
 	line-height: 1.15em;
-	font-weight: bold;
+	font-weight: 600;
 	letter-spacing: -0.03em;
-	margin: 0 0 8px 0;
+	margin: 0 0 20px 0;
 	text-align: left;
 	color: #2d6548;
 }
@@ -2279,6 +2314,7 @@ a:visited {
 	font-size: 14px;
 	word-wrap: break-word;
 	line-height: 1.75em;
+	padding: 10px 20px;
 }
 
 #hirarquiaNoticia {
@@ -2336,172 +2372,6 @@ a:visited {
 	border-bottom: solid 1px #d5deda;
 }
 
-/*==================================== PRO-REITORIAS===================================*/
-#containerProreitoria {
-	height: auto;
-	width: 720px;
-	float: left;
-	text-align: justify;
-	margin: 0 0 0 30px;
-}
-
-#containerProreitoriaTitulo {
-	height: auto;
-	width: 720px;
-	margin: 0 0 20px 0;
-	color: #007711;
-	font-size: 23px;
-	font-weight: bold;
-}
-
-/*=========== PRO-REITORIAS TOPO===========*/
-#containerProreitoriaTopo {
-	height: auto;
-	width: 720px;
-}
-
-#ProreitoriaTopoTitulo {
-	font-size: 20px;
-	color: #438B4C;
-	border-top: 3px solid #017C14;
-	padding: 7px 0 0 10px;
-	height: 40px;
-	background-color: #EEEFF1;
-}
-
-#ProreitoriaTopoConteudo {
-	font-size: 12px;
-	color: #343434;
-	padding: 0 10px 0 10px;
-}
-
-/*=========== PRO-REITORIAS MEIO===========*/
-#containerProreitoriaMeio {
-	height: auto;
-	width: 720px;
-	margin: 20px 0 0 0;
-}
-
-#ProreitoriaMeioEsquerda {
-	width: 340px;
-	height: auto;
-	float: left;
-	margin: 0 30px 0 0;
-	border-top: 3px solid #017C14;
-}
-
-#ProreitoriaMeioDireita {
-	width: 340px;
-	height: auto;
-	float: right;
-	border-top: 3px solid #017C14;
-}
-
-#ProreitoriaMeioEsquerdaTitulo {
-	font-size: 20px;
-	color: #438B4C;
-	height: 40px;
-	padding: 7px 0 0 10px;
-	background-color: #EEEFF1;
-}
-
-#ProreitoriaMeioEsquerdaConteudo {
-	height: auto;
-	font-size: 12px;
-	color: #343434;
-	padding: 10px 10px 0 10px;
-}
-
-#ProreitoriaMeioDireitaTitulo {
-	font-size: 20px;
-	color: #438B4C;
-	height: 40px;
-	padding: 7px 0 0 10px;
-	background-color: #EEEFF1;
-}
-
-#ProreitoriaMeioDireitaConteudo {
-	height: auto;
-	font-size: 12px;
-	color: #343434;
-	padding: 10px 10px 0 10px;
-}
-
-/*=========== PRO-REITORIAS BAIXO===========*/
-#containerProreitoriaBaixo {
-	height: auto;
-	width: 720px;
-	margin: 20px 0 20px 0;
-}
-
-#ProreitoriaBaixoTitulo {
-	font-size: 20px;
-	color: #438B4C;
-	border-top: 3px solid #017C14;
-	padding: 7px 0 0 10px;
-	height: 40px;
-	background-color: #EEEFF1;
-}
-
-#ProreitoriabaixoConteudo {
-	font-size: 12px;
-	color: #343434;
-	padding: 0 10px 0 10px;
-	margin: 10px 0 0 0;
-}
-
-/*=========== PRO-REITORIAS RODAPE===========*/
-#containerProreitoriaRodape {
-	height: auto;
-	width: 720px;
-	margin: 20px 0 20px 0;
-}
-
-#ProreitoriaRodapeEsquerda {
-	width: 340px;
-	height: auto;
-	float: left;
-	margin: 0 30px 0 0;
-	border-top: 3px solid #017C14;
-}
-
-#ProreitoriaRodapeDireita {
-	width: 340px;
-	height: auto;
-	float: right;
-	border-top: 3px solid #017C14;
-}
-
-#ProreitoriaRodapeEsquerdaTitulo {
-	font-size: 20px;
-	color: #438B4C;
-	height: 40px;
-	padding: 7px 0 0 10px;
-	background-color: #EEEFF1;
-}
-
-#ProreitoriaRodapeEsquerdaConteudo {
-	height: auto;
-	font-size: 12px;
-	color: #343434;
-	padding: 10px 10px 0 10px;
-}
-
-#ProreitoriaRodapeDireitaTitulo {
-	font-size: 20px;
-	color: #438B4C;
-	height: 40px;
-	padding: 7px 0 0 10px;
-	background-color: #EEEFF1;
-}
-
-#ProreitoriaRodapeDireitaConteudo {
-	height: auto;
-	font-size: 12px;
-	color: #343434;
-	padding: 10px 10px 0 10px;
-}
-
 #BarraInferiorDireitaGov {
 	width: 150px;
 	height: 45px;
@@ -2513,15 +2383,6 @@ a:visited {
 #paginacao_pagefullpost {
 	margin: 20px 0 15px 0;
 	text-align: center;
-}
-
-.data-de-publicacao {
-	font-size: x-small;
-	color: #afafaf;
-	margin-bottom: 10px;
-	text-transform: uppercase;
-	text-align: right;
-	padding-top: 4px;
 }
 
 .bawmrp {
@@ -2575,6 +2436,75 @@ a img.aligncenter {
 	display: block;
 	margin-left: auto;
 	margin-right: auto
+}
+
+/* =================================== BOX SIDEBAR ===================================== */
+
+div#boxSidebar {
+	border-top: solid 3px #00510F;
+}
+
+div#boxSidebar .boxSidebarTitulo {
+	background-color: #ecf1ec;
+	border-bottom: solid 1px #D6DCD7;
+	color: #00510F;
+	padding: 10px;
+	font-size: 12px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+div#boxSidebar .boxSidebarConteudo {
+	padding: 0;
+	font-size: 9pt;
+	border: solid 1px #D6DCD7;
+}
+
+div#boxSidebar .boxSidebarSingle {
+	padding: 10px 0;
+	border-bottom: solid 1px #D6DCD7;
+}
+
+div#boxSidebar .boxSidebarSingle .boxSidebarSingleTitulo {
+	padding: 0 10px;
+}
+
+div#boxSidebar .boxSidebarSingle .boxSidebarSingleTitulo a {
+	font-weight: 600;
+	text-decoration: none;
+	color: #000000;
+}
+
+div#boxSidebar .boxSidebarSingle .boxSidebarSingleTitulo a:hover {
+	text-decoration: underline;
+}
+
+.boxSidebarMais {
+	text-align: right;
+}
+
+.boxSidebarMais {
+	background-color: #D6DCD7;
+	color: #333;
+	padding: 5px 10px 5px 10px;
+	text-transform: uppercase;
+	font-size: 7pt;
+	letter-spacing: .1em;
+	font-weight: 800;
+}
+
+.boxSidebarMais a {
+	text-decoration: none;
+	color: #00510F;
+}
+
+.boxSidebarMais a:hover {
+	text-decoration: underline;
+}
+
+div.acessoRapido {
+	margin-bottom: 20px;
+	font-size: 10pt !important;
 }
 
 /* =================================== AGENDA DO REITOR =================================== */
@@ -2836,10 +2766,6 @@ a img.aligncenter {
 	transform: translate(-50%, -50%);
 }
 
-#NoticiasConteudo .container {
-	margin-bottom: 20px;
-}
-
 .imagemnoticiadestaque {
 	overflow: hidden;
 	position: relative;
@@ -2867,9 +2793,10 @@ a img.aligncenter {
 
 #titulonoticiadestaque h1 {
 	text-align: left;
-    font-size: xx-large;
-    font-weight: 600;
-    margin: 100px 40px 60px 40px;
+	font-size: xx-large;
+	color: #fff;
+	font-weight: 600;
+	margin: 100px 40px 60px 40px;
 }
 
 .infonoticia {
@@ -3012,9 +2939,44 @@ a img.aligncenter {
 }
 
 #MenuPrincipal ul.menu ul.sub-menu {
-	padding-left: 10px;
+	padding-left: 0px;
 	list-style: none;
+	transition: all 1s ease;
 	background: #edf5ed;
+}
+
+.hidden {
+	max-height: 0;
+	overflow: hidden;
+}
+
+.hidden.open {
+	max-height: max-content;
+	animation: animateFromBottom .5s;
+}
+
+@keyframes animateFromBottom {
+	from {
+		transform: translate3d(0, 10px, 0);
+		opacity: 0
+	}
+
+	to {
+		transform: translate3d(0, 0, 0);
+		opacity: 1
+	}
+}
+
+@keyframes animateToBottom {
+	from {
+		transform: translate3d(0, 0, 0);
+		opacity: 1
+	}
+
+	to {
+		transform: translate3d(0, 10px, 0);
+		opacity: 0
+	}
 }
 
 /*----------- css da página de notícias ------------- */
@@ -3276,7 +3238,7 @@ a img.aligncenter {
 
 div#avisosImportantes {
 	position: relative;
-	padding: 20px;
+	padding: 30px 20px 20px 20px;
 	margin-bottom: 20px;
 	background: #f6f6f6;
 }
@@ -3309,11 +3271,11 @@ div#avisosImportantes h6.tituloAviso {
 
 div.tituloSecao {
 	text-transform: uppercase;
-    letter-spacing: .12em;
-    font-size: 8pt;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #8d8d8d;
+	letter-spacing: .12em;
+	font-size: 8pt;
+	font-weight: 600;
+	margin-bottom: 10px;
+	color: #8d8d8d;
 }
 
 div#containerMeioCentro span.spanX {
@@ -3405,19 +3367,20 @@ div#mapa .legendaMapa {
 div#mapa .legendaMapa ul {
 	margin: 0;
 	list-style: none;
-	padding:0;
+	padding: 0;
 }
 
 div#mapa .legendaMapa ul li {
 	border: 1px solid #eeeeee;
-    padding: 3px 10px;
-    font-size: 12px;
+	padding: 3px 10px;
+	font-size: 12px;
 	letter-spacing: .05em;
 	border-left: none;
 	border-right: none;
 }
 
-div#mapa .legendaMapa ul li:hover, .hoverLiCampus {
+div#mapa .legendaMapa ul li:hover,
+.hoverLiCampus {
 	background-color: #b9da95;
 	border-radius: 2px;
 	font-weight: 800;
