@@ -35,7 +35,7 @@
 					<div class="data-publicacao">
 						<div class="imagem-data-publicacao"></div>
 						<div class="data">
-							Última atualização: <strong>
+							Última modificação: <strong>
 								<?php the_modified_time('j/m/Y \à\s G\hi '); ?>
 							</strong> | Publicação: <strong>
 								<?php echo '' . get_the_date('j/m/Y \à\s G\hi '); ?>
@@ -44,13 +44,11 @@
 					</div>
 
 					<div id="textoNoticia">
-						<?php if (has_post_thumbnail()): ?>
-							<div class="thumbNoticia">
-								<?php the_post_thumbnail(); ?>
-							</div>
-						<?php endif; ?>
+						<?php include 'post-thumbnail.php'; ?>
 						<?php the_content(); ?>
 					</div>
+					<?php include 'table-documents.php'; ?>
+					
 				<?php }
 			}
 			?>

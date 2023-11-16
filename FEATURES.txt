@@ -17,7 +17,7 @@
 
 // página de lista de concursos
 
-// página single concurso
+// página single concurso OK
 
 // página single notícias OK
 

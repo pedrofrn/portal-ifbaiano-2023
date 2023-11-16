@@ -9,7 +9,7 @@
 		content="O IF Baiano - <?php bloginfo('name'); ?> é uma instituição pública de Ensino Médio e Superior, focado na Educação Profissional e Tecnológica.">
 	<meta name="author" content="Diretoria de Comunicação do Instituto Federal Baiano" />
 	<meta name="keywords"
-		content="ifbaiano, campus if baiano, site, institucional, tecnico, integrado, subsequente, fic, ensino, pesquisa, extensão, cursos">
+		content="ifbaiano, ensino medio, escola, educacao, gratuito, publico, campus if baiano, site, institucional, tecnico, integrado, subsequente, fic, ensino, pesquisa, extensão, cursos">
 
 	<link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/imagens/favicon.ico">
 	<link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed"
@@ -26,8 +26,6 @@
 	<link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" title="default" media="screen" />
 	<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/contrastePreto.css" type="text/css"
 		title="contrastePreto" media="screen" />
-
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
 
 	<title>
 		<?php bloginfo('name'); ?>

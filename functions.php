@@ -416,7 +416,7 @@ function get_breadcrumb()
 		echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;";
 		echo the_title();
 	} elseif (is_search()) {
-		echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;Search Results for... ";
+		echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;Pesquisa sobre... ";
 		echo '"<em>';
 		echo the_search_query();
 		echo '</em>"';
@@ -451,7 +451,7 @@ function posts_custom_columns($column_name, $id)
 		echo the_post_thumbnail('admin-thumb');
 	}
 }
-add_theme_support('post-thumbnails', array('post'));
+add_theme_support('post-thumbnails', array('post', 'concursos', 'cursos'));
 ?>
 
 <?php
@@ -875,7 +875,7 @@ function create_posttype()
 			'description' => 'Página de concursos do IF Baiano',
 			'public' => true,
 			'has_archive' => true,
-			'supports' => array('thumbnail', 'title', 'editor', 'excerpt'),
+			'supports' => array('title', 'editor', 'excerpt', 'thumbnail'),
 			'rewrite' => array('slug' => 'concursos'),
 			'show_in_rest' => true,
 		)
@@ -1289,6 +1289,78 @@ function coordenacao_save_postdata($post_id)
 	update_post_meta($post_ID, 'coordenacao_titulacao', $tcoordenacaoSAN);
 	update_post_meta($post_ID, 'coordenacao_email', $ecoordenacaoSAN);
 	update_post_meta($post_ID, 'coordenacao_lattes', $lcoordenacaoSAN);
+}
+
+// display da lista de concursos
+
+function cardConcursos()
+{
+	$dataini = get_post_meta(get_the_ID(), 'inicio_inscricoes', true);
+	$datafim = date("d/m/Y", strtotime(get_post_meta(get_the_ID(), 'final_inscricoes', true)));
+	$horaini = get_post_meta(get_the_ID(), 'inicio_hora_inscricoes', true);
+	$horafim = get_post_meta(get_the_ID(), 'final_hora_inscricoes', true);
+	$datainiecho = date("d/m/Y", strtotime($dataini));
+	$horainiecho = date("H", strtotime($horaini));
+	$horafimecho = date("H", strtotime($horafim));
+
+    echo '<div class="cardConcursos"><div class="imagemCardConcursos">';
+	
+	if (has_post_thumbnail()) echo '<a href="' . get_permalink() . '">' . the_post_thumbnail() . '</a>';
+	else echo '<img src="https://ifbaiano.edu.br/portal/wp-content/uploads/2021/04/imagem-marca-site-concursos-2021.png" alt="Concurso IF Baiano" />';
+
+	echo '</div><div class="infoCardConcursos"><a href="' . get_permalink() . '">' . get_the_title() . '</a>';
+
+	?>
+	<script>
+		(() => {
+			const dataAtual = new Date();
+			const dataAtualParse = Date.parse(dataAtual);
+			const horaFinal = '<?php echo $horafim; ?>'.split(":");
+			const inicioInscricoes = '<?php echo $datainiecho; ?>'.split("/");
+			const inicioData = Date.parse(new Date(inicioInscricoes[2], inicioInscricoes[1] - 1, inicioInscricoes[0]));
+			const fimInscricoes = '<?php echo $datafim; ?>'.split("/");
+			const fimData = Date.parse(new Date(fimInscricoes[2], fimInscricoes[1] - 1, fimInscricoes[0]));
+			const fimParseData = new Date(fimData).setHours(horaFinal[0]);
+			const horaInicial = '<?php echo $horaini; ?>'.split(":");
+			const horaIni = horaInicial[0] * 3600;
+			
+			if (dataAtualParse >= inicioData + horaIni && dataAtualParse <= fimParseData) {
+				inscricoesAbertas = 'Inscrições abertas';
+				timestampInicioInscricoes = inicioData;
+			} else {
+				inscricoesAbertas = 'Fora do período de inscrições';
+				timestampInicioInscricoes = 0;
+			}
+			
+		})();
+	</script>
+	<?php
+	echo '<div class="avisoInscricoes"><script>document.write(inscricoesAbertas)</script><span class="timestampInicioInscricoes" style="visibility:hidden"><script>document.write(timestampInicioInscricoes)</script></span></div>';
+
+	if (!empty($dataini) && !empty($horaini) && !empty($horafim) && !($horaini == 0) && !($horafim == 0)) {
+		echo 'Das ' . $horainiecho . ' horas de ' . $datainiecho . ' às ' . $horafimecho . ' horas de ' . $datafim . '.';
+	} else if (!empty($dataini) && !empty($horaini) && !empty($horafim) && $horaini == 0 && $horafim == 0) {
+		echo 'De ' . $datainiecho . ' a ' . $datafim . '.';
+	} else if (!empty($dataini) && !empty($horaini) && !empty($horafim) && $horaini == 0 && !($horafim == 0)) {
+		echo 'De ' . $datainiecho . ' às ' . $horafimecho . ' horas de ' . $datafim . '.';
+	} else if (!empty($dataini) && !empty($horaini) && !empty($horafim) && !($horaini == 0) && $horafim == 0) {
+		echo 'Das ' . $horainiecho . ' horas de ' . $datainiecho . ' a ' . $datafim . '.';
+	} else if (!empty($dataini) && empty($horaini) && empty($horafim)) {
+		echo 'De ' . $datainiecho . ' a ' . $datafim . '.';
+	} else if (!empty($dataini) && !empty($horaini) && empty($horafim) && $horaini == 0) {
+		echo 'De ' . $datainiecho . ' a ' . $datafim . '.';
+	} else if (!empty($dataini) && !empty($horaini) && empty($horafim) && !($horaini == 0)) {
+		echo 'Das ' . $horainiecho . ' horas de ' . $datainiecho . ' a ' . $datafim . '.';
+	} else if (!empty($dataini) && empty($horaini) && !empty($horafim) && $horafim == 0) {
+		echo 'De ' . $datainiecho . ' a ' . $datafim . '.';
+	} else if (!empty($dataini) && empty($horaini) && !empty($horafim) && !($horafim == 0)) {
+		echo 'De ' . $datainiecho . ' às ' . $horafimecho . ' horas de ' . $datafim . '.';
+	} else if (empty($dataini) && !empty($datafim) && !($horafim == 0)) {
+		echo 'Até às ' . $horafimecho . ' horas de ' . $datafim . '.';
+	} else if (empty($dataini) && !empty($datafim) && empty($horafim) && $datafim !== '01/01/1970') {
+		echo 'Até ' . $datafim . '.';
+	}
+	echo '</div></div>';
 }
 
 ?>

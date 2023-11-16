@@ -1,5 +1,5 @@
 @charset "utf-8";
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
 /*
 Theme Name:		Portal IF Baiano 2023
 Theme URI:		https://www.ifbaiano.edu.br
@@ -23,8 +23,13 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 	#MenuDireita,
 	#Facebook,
 	#Facebook iframe,
-	#containerNoticiapost {
+	#containerNoticiapost,
+	iframe {
 		width: 100% !important
+	}
+
+	#containerMeio {
+		display: block !important;
 	}
 
 	#containerCabecalhoInterno,
@@ -143,7 +148,7 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 		padding-left: 10px;
 		content: "Aperte para acessar o menu principal";
 		letter-spacing: 0.03em;
-		font-weight: bold;
+		font-weight: 600;
 	}
 
 	.dropdownmenu {
@@ -223,7 +228,7 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 		background: #D70F53;
 		border-radius: 5px;
 		text-decoration: none;
-		font-weight: bold;
+		font-weight: 600;
 		color: #FCD761;
 		font-size: small;
 	}
@@ -241,7 +246,7 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 		background: #d3a256;
 		border-radius: 5px;
 		text-decoration: none;
-		font-weight: bold;
+		font-weight: 600;
 		color: #000000;
 		font-size: small;
 	}
@@ -278,7 +283,7 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 		background: #D70F53;
 		border-radius: 5px;
 		text-decoration: none;
-		font-weight: bold;
+		font-weight: 600;
 		color: #FCD761;
 		font-size: small;
 	}
@@ -288,7 +293,7 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 		background: #fdd816;
 		border-radius: 5px;
 		text-decoration: none;
-		font-weight: bold;
+		font-weight: 600;
 		color: #343434;
 		font-size: small;
 	}
@@ -310,7 +315,7 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 		background: #fdd816;
 		border-radius: 5px;
 		text-decoration: none;
-		font-weight: bold;
+		font-weight: 600;
 		color: #343434;
 		font-size: small;
 	}
@@ -555,8 +560,13 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 	#MenuDireita,
 	#Facebook,
 	#Facebook iframe,
-	#containerNoticiapost {
+	#containerNoticiapost,
+	iframe {
 		width: 100% !important
+	}
+
+	#containerMeio {
+		display: block !important;
 	}
 
 	#containerCabecalhoInterno,
@@ -675,7 +685,7 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 		padding-left: 10px;
 		content: "Aperte para acessar o menu principal";
 		letter-spacing: 0.03em;
-		font-weight: bold;
+		font-weight: 600;
 	}
 
 	.dropdownmenu {
@@ -746,7 +756,7 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 		background: #D70F53;
 		border-radius: 5px;
 		text-decoration: none;
-		font-weight: bold;
+		font-weight: 600;
 		color: #FCD761;
 		font-size: small;
 	}
@@ -764,7 +774,7 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 		background: #D70F53;
 		border-radius: 5px;
 		text-decoration: none;
-		font-weight: bold;
+		font-weight: 600;
 		color: #FCD761;
 		font-size: small;
 	}
@@ -782,7 +792,7 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 		background: #d3a256;
 		border-radius: 5px;
 		text-decoration: none;
-		font-weight: bold;
+		font-weight: 600;
 		color: #000000;
 		font-size: small;
 	}
@@ -796,7 +806,7 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 		background: #fdd816;
 		border-radius: 5px;
 		text-decoration: none;
-		font-weight: bold;
+		font-weight: 600;
 		color: #343434;
 		font-size: small;
 	}
@@ -818,7 +828,7 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 		background: #fdd816;
 		border-radius: 5px;
 		text-decoration: none;
-		font-weight: bold;
+		font-weight: 600;
 		color: #343434;
 		font-size: small;
 	}
@@ -1119,7 +1129,7 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 	background: url(https://ifbaiano.edu.br/portal/wp-content/uploads/2021/06/imagem-lateral-ingresso-2021.jpg) center no-repeat;
 	color: #fff;
 	font-size: large;
-	font-weight: bold;
+	font-weight: 600;
 	background-size: contain;
 }
 
@@ -1137,8 +1147,12 @@ Tags:			ifbaiano, campi, campus, unidades, portal
 	font-family: 'Open Sans', sans-serif;
 }
 
+strong, h1, h2, h3, h4 {
+	font-weight: 600 !important;
+}
+
 #CentroHeaderEsquerdaMeio a {
-	font-weight: 900;
+	font-weight: 600;
 	letter-spacing: -0.025em;
 }
 
@@ -1307,7 +1321,7 @@ div.menuBarraInferiorHead ul#menu-estudenoif_principal li:last-child {
 	margin-top: 20px;
 	border-bottom: 1px dotted #FFFFFF;
 	font-size: 10px;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 #Acessibilidade a {
@@ -1338,7 +1352,7 @@ div.menuBarraInferiorHead ul#menu-estudenoif_principal li:last-child {
 #CentroHeaderEsquerdaMeio {
 	margin: 5px 0;
 	font-size: 40px;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 #CentroHeaderEsquerdaMeio a {
@@ -1414,6 +1428,10 @@ div.marca-topo-menu {
 	width: 170px;
 }
 
+#containerMeioCentroNoticia {
+	width: 100%;
+}
+
 #MenuPrincipal {
 	height: auto;
 	width: 100%;
@@ -1427,7 +1445,7 @@ div.marca-topo-menu {
 
 #containerMeioCentroNoticia a {
 	color: #08c;
-	font-weight: 800;
+	font-weight: 600;
 	text-decoration: none;
 }
 
@@ -1475,7 +1493,7 @@ div.marca-topo-menu {
 	margin: 0 0 10px 0;
 	color: #343434;
 	font-size: xx-large;
-	font-weight: bold;
+	font-weight: 600;
 	text-shadow: 0px 0px 8px rgba(0, 0, 0, 1);
 	line-height: 1.1em;
 	word-wrap: break-word;
@@ -1517,31 +1535,41 @@ div.breadcrumb a {
 div.data-publicacao {
 	display: inline-flex;
 	gap: 10px;
-	background-color: #f6f6f6;
-	width: 100%;
 	min-height: 40px;
 	align-items: center;
 	padding-left: 15px;
 }
 
 div.data-publicacao .data {
-	font-size: 9pt;
-	color: #afafaf;
+	font-size: 8pt;
+	color: #08c;
 }
 
 .imagem-data-publicacao {
-	width: 20px;
-	height: 20px;
+	width: 16px;
+	height: 16px;
 	background: url("imagens/calendario-guia-de-cursos.png") no-repeat;
 	background-size: contain;
 }
 
 div.thumbNoticia {
 	margin: 10px 0;
+	display: flex;
+	max-height: 400px;
+    border-radius: 5px;
+	overflow: hidden;
 }
 
 div.thumbNoticia img {
 	width: 100%;
+	height: max-content !important;
+}
+
+div.thumbNoticiaLegenda {
+	font-size: 9pt;
+	font-style: italic;
+	text-align: center;
+	color: #818181;
 }
 
 #containerMeioCentro #Noticias {
@@ -1618,7 +1646,7 @@ div.thumbNoticia img {
 }
 
 #containerNoticia #tituloNoticia {
-	font-weight: bold;
+	font-weight: 600;
 	letter-spacing: -0.03em;
 }
 
@@ -1768,7 +1796,7 @@ div.thumbNoticia img {
 
 #NoticiasBlog .feed-img h1 {
 	font-size: x-large;
-	font-weight: bold;
+	font-weight: 600;
 	line-height: 1.2em;
 	color: #8a8a8a;
 }
@@ -1864,7 +1892,7 @@ div.thumbNoticia img {
 #GaleriaVideosMeioTopoDireitaTitulo {
 	font-size: large;
 	color: #2B3C2F;
-	font-weight: bold;
+	font-weight: 600;
 	overflow: hidden;
 }
 
@@ -2045,7 +2073,7 @@ div.thumbNoticia img {
 	height: auto;
 	padding: 10px;
 	font-size: medium;
-	font-weight: 800;
+	font-weight: 600;
 	color: #2c67cd;
 	text-align: center;
 	border-top: 3px solid #2c67cd;
@@ -2212,7 +2240,7 @@ div.thumbNoticia img {
 
 #tituloMapaSite {
 	font-size: 20px;
-	font-weight: bold;
+	font-weight: 600;
 	margin: 0 0 -15px 0;
 }
 
@@ -2261,7 +2289,7 @@ div.thumbNoticia img {
 	padding: 10px;
 	color: #00510F;
 	font-size: 12px;
-	font-weight: bold;
+	font-weight: 600;
 	text-transform: uppercase;
 }
 
@@ -2286,7 +2314,7 @@ div.thumbNoticia img {
 }
 
 #tituloNoticia {
-	font-size: 30pt;
+	font-size: 20pt;
 	word-wrap: break-word;
 	line-height: 1.15em;
 	font-weight: 600;
@@ -2313,7 +2341,7 @@ div.thumbNoticia img {
 #textoNoticia {
 	font-size: 14px;
 	word-wrap: break-word;
-	line-height: 1.75em;
+	line-height: 1.5em;
 	padding: 10px 20px;
 }
 
@@ -2343,13 +2371,13 @@ div.thumbNoticia img {
 
 #tituloPesquisaNoticia {
 	font-size: 20px;
-	font-weight: bold;
+	font-weight: 600;
 	margin: 0 0 20px 0;
 }
 
 #TituloNoticiaPesquisa {
 	font-size: 16px;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 #TituloNoticiaPesquisa a {
@@ -2451,7 +2479,7 @@ div#boxSidebar .boxSidebarTitulo {
 	padding: 10px;
 	font-size: 12px;
 	text-transform: uppercase;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 div#boxSidebar .boxSidebarConteudo {
@@ -2490,7 +2518,7 @@ div#boxSidebar .boxSidebarSingle .boxSidebarSingleTitulo a:hover {
 	text-transform: uppercase;
 	font-size: 7pt;
 	letter-spacing: .1em;
-	font-weight: 800;
+	font-weight: 600;
 }
 
 .boxSidebarMais a {
@@ -2531,7 +2559,7 @@ div.acessoRapido {
 	color: #444;
 	text-transform: uppercase;
 	letter-spacing: normal;
-	font-weight: bold;
+	font-weight: 600;
 	font-size: small !important;
 }
 
@@ -2570,7 +2598,7 @@ div.acessoRapido {
 	color: #00510F;
 	padding: 0 0 5px 0;
 	font-size: medium;
-	font-weight: bold;
+	font-weight: 600;
 	margin: 0;
 }
 
@@ -2581,7 +2609,7 @@ div.acessoRapido {
 }
 
 #ultimasUnidadesTitulo {
-	font-weight: bold;
+	font-weight: 600;
 	font-size: smaller;
 	color: #2d6548;
 	margin-bottom: 5px;
@@ -2682,7 +2710,7 @@ div.acessoRapido {
 	border-top: solid 1px #517e59;
 	border-bottom: solid 1px #D6DCD7;
 	color: #00510F;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 #concursos-e-selecoes ul {
@@ -2741,7 +2769,7 @@ div.acessoRapido {
 	font-size: x-small;
 	padding: 2px 15px;
 	text-transform: uppercase;
-	font-weight: bold;
+	font-weight: 600;
 	color: #343434;
 	margin-bottom: 5px;
 	border-radius: 2px;
@@ -2912,7 +2940,7 @@ div.acessoRapido {
 }
 
 #MenuPrincipal ul.menu li a.dcjq-parent {
-	font-weight: bold;
+	font-weight: 600;
 }
 
 #MenuDireita ul.menu {
@@ -3106,7 +3134,7 @@ div.acessoRapido {
 	font-size: 12px;
 	text-transform: uppercase;
 	color: #00510F;
-	font-weight: bold;
+	font-weight: 600;
 	border-top: 3px solid #00510F;
 	padding: 10px;
 	background-color: #ecf1ec;
@@ -3130,7 +3158,7 @@ div.acessoRapido {
 
 #documentoshome #docconteudo #DocumentosTitulo a {
 	color: #08c;
-	font-weight: bold;
+	font-weight: 600;
 	font-size: small;
 	text-decoration: none;
 }
@@ -3383,7 +3411,7 @@ div#mapa .legendaMapa ul li:hover,
 .hoverLiCampus {
 	background-color: #b9da95;
 	border-radius: 2px;
-	font-weight: 800;
+	font-weight: 600;
 	cursor: pointer;
 }
 
@@ -3533,7 +3561,7 @@ div#containerNoticiapost {
 }
 
 div#head {
-	margin: 30px 0;
+	margin-bottom: 20px;
 	display: flex;
 }
 
@@ -3542,6 +3570,8 @@ div#head div#imagemprocesso {
 	align-self: center;
 	width: 150px;
 	height: 150px;
+	flex: none;
+	background-color: #4e6852;
 	margin-right: 20px;
 	overflow: hidden;
 	position: relative;
@@ -3549,9 +3579,14 @@ div#head div#imagemprocesso {
 }
 
 div#head div#imagemprocesso img {
-	width: auto;
+	/* width: 150px;
 	position: absolute;
-	height: 100%;
+	height: auto; */
+	width: auto;
+    position: absolute;
+    max-height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 div#nomeEdital {
@@ -3561,13 +3596,13 @@ div#nomeEdital {
 
 div#nomeEdital h2 {
 	text-transform: uppercase;
-	font-size: medium;
-	font-weight: bold;
+	font-size: 8pt;
+	font-weight: 600;
 	color: #40814c;
 	border-bottom: 1px dashed #e1e1e1;
 	padding-bottom: 10px;
 	margin-bottom: 10px;
-	margin-top: 0;
+	margin-top: 10px;
 }
 
 div#nomeEdital p {
@@ -3601,7 +3636,7 @@ div#editalContent #editalInscricoes {
 
 .avisoInscricoes {
 	letter-spacing: .05em;
-	float: left;
+	width: fit-content;
 }
 
 .linkEdital {
@@ -3641,7 +3676,7 @@ div#editalContent #editalInscricoes {
 }
 
 #infoCursoTabela .infoCursoTitulo {
-	font-weight: bold;
+	font-weight: 600;
 }
 
 #infoCursoTabela tr:nth-child(even) {
@@ -3657,7 +3692,7 @@ div#editalContent #editalInscricoes {
 	cursor: pointer;
 	font-size: small;
 	color: #00510F;
-	font-weight: bold;
+	font-weight: 600;
 	border-left: 6px solid #6bb078;
 	padding: 10px;
 	background-color: #f9f9f9;
@@ -3709,7 +3744,7 @@ div#editalContent #editalInscricoes {
 	align-self: center;
 	text-decoration: none;
 	color: #08c;
-	font-weight: bold;
+	font-weight: 600;
 	font-size: 11pt;
 	flex: 35;
 }
@@ -3721,11 +3756,11 @@ div#editalContent #editalInscricoes {
 .sufixodoc {
 	flex: 1;
 	align-self: center;
-	font-size: 8pt !important;
+	font-size: 7pt !important;
 	background-color: #809488;
 	border-radius: 10px;
 	font-size: smaller;
-	font-weight: bold;
+	font-weight: 600;
 	color: #fff;
 	padding: 2px 7px;
 	margin-right: 10px;
@@ -3748,7 +3783,7 @@ div#editalContent #editalInscricoes {
 #corpoDocente .docente {
 	font-size: small;
 	padding: 20px 15px;
-	width: 30%;
+	width: 29.5%;
 	align-self: center;
 }
 
@@ -3817,4 +3852,34 @@ div#editalContent #editalInscricoes {
 	transform: rotate(45deg);
 	-webkit-transform: rotate(45deg);
 	transition: .5s ease;
+}
+
+/* LISTA CONCURSOS */
+div.concursosInscricoesAbertas {
+
+}
+
+div.cardConcursos {
+	display: flex;
+	border-bottom: 1px dashed #D6DCD7;
+	padding: 15px;
+	margin: 5px 0;
+	gap: 15px;
+	font-size: 10pt;
+}
+
+div.cardConcursos .imagemCardConcursos {
+	width: 60px;
+	height: 60px;
+	overflow: hidden;
+	border-radius: 5px;
+}
+
+div.cardConcursos .imagemCardConcursos img {
+	width: auto;
+    max-height: 60px;
+}
+
+div.cardConcursos .infoCardConcursos {
+	flex: 5;
 }
