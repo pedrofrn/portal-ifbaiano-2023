@@ -1,0 +1,6 @@
+# header
+- botão "acessibilidade" precisa de uma página com conteúdo informativo
+- botão "contraste" precisa replicar o css todo adaptado para bg escuro , letras brancas e amarelas
+- menu do cabeçalho precisa criar uma lista de menu e aplicá-lo ao widget
+
+- limitar o número de inserções nos cards públicso

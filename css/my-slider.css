@@ -412,8 +412,8 @@ p.ism-badge a.ism-link:hover {
 
 #my-slider {
   width: 100%;
-  -webkit-border-radius: 5px 5px 0 0;
-  border-radius: 5px 5px 0 0;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
   height: 380px;
 }
 
@@ -487,13 +487,14 @@ p.ism-badge a.ism-link:hover {
 
 #my-slider .ism-radios {
   display: block;
-  height: 30px;
-  text-align: center;
+  height: 25px;
+  text-align: right;
+  margin-right: 10px;
 }
 
 #my-slider .ism-radios label {
-  width: 15px;
-  height: 15px;
+  width: 12px;
+  height: 12px;
   border-radius: 3px;
   color: #000;
   background-color: rgba(255, 255, 255, 0.5);
@@ -597,37 +598,6 @@ p.ism-badge a.ism-link:hover {
   animation: fadein 0.5s;
 }
 
-/* #my-slider .ism-slide-0 .ism-caption-1 {
-    font-size: 1.25em;
-    font-family: sans-serif;
-    position: absolute; top: 60%;
-    left: 40%;
-    border-radius: 4px;
-    border: none;
-    color: #fff; background-color: rgba(0, 0, 0, 0.70);
-}
-
-#my-slider .ism-slide-0 .ism-caption-2 {
-    font-size: 1.25em;
-    font-family: sans-serif;
-    position: absolute; top: 20%;
-    left: 60%;
-    border-radius: 4px;
-    border: none;
-    color: #fff; background-color: rgba(0, 0, 0, 0.70);
-}
-
-#my-slider .ism-slide-0 .ism-caption-0, #my-slider .ism-slide-1 .ism-caption-0 {
-  font-size: 10pt;
-  font-family: sans-serif;
-  letter-spacing: .05em;
-  position: absolute;
-  z-index: 1000;
-  bottom: 0;
-  left: 25px;
-  color: #a0bda9;
-} */
-
 div.imagemnoticiadestaque .ism-caption {
   font-size: 10pt;
   font-family: sans-serif;
@@ -639,53 +609,3 @@ div.imagemnoticiadestaque .ism-caption {
   color: #a0bda9;
   display: none;
 }
-
-/* #my-slider .ism-slide-1 .ism-caption-1 {
-    font-size: 1.25em;
-    font-family: sans-serif;
-    position: absolute; top: 60%;
-    left: 40%;
-    border-radius: 4px;
-    border: none;
-    color: #fff; background-color: rgba(0, 0, 0, 0.70);
-}
-
-#my-slider .ism-slide-1 .ism-caption-2 {
-    font-size: 1.25em;
-    font-family: sans-serif;
-    position: absolute; top: 20%;
-    left: 60%;
-    border-radius: 4px;
-    border: none;
-    color: #fff; background-color: rgba(0, 0, 0, 0.70);
-}
-
-#my-slider .ism-slide-2 .ism-caption-0 {
-    font-size: 1.1em;
-    font-family: sans-serif;
-    position: absolute; top: 10%;
-    left: 30px;
-    border-radius: 4px;
-    border: none;
-    color: #76f39c; background-color: rgba(0, 0, 0, 0.70);
-}
-
-#my-slider .ism-slide-2 .ism-caption-1 {
-    font-size: 1.25em;
-    font-family: sans-serif;
-    position: absolute; top: 60%;
-    left: 40%;
-    border-radius: 4px;
-    border: none;
-    color: #fff; background-color: rgba(0, 0, 0, 0.70);
-}
-
-#my-slider .ism-slide-2 .ism-caption-2 {
-    font-size: 1.25em;
-    font-family: sans-serif;
-    position: absolute; top: 20%;
-    left: 60%;
-    border-radius: 4px;
-    border: none;
-    color: #fff; background-color: rgba(0, 0, 0, 0.70);
-} */

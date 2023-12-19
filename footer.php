@@ -50,6 +50,7 @@
 
 </script>
 <script type='text/javascript' src='<?php bloginfo('template_url'); ?>/js/menu.js'></script>
+<script type='text/javascript' src='<?php bloginfo('template_url'); ?>/js/campus.js'></script>
 </body>
 
 </html>

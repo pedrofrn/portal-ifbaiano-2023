@@ -10,6 +10,9 @@
 
 	<div id="containerMeioCentroNoticia">
 		<div id="containerNoticiapost">
+			<div class="breadcrumb">
+				<?php get_breadcrumb(); ?>
+			</div>
 			<div class="concursosInscricoesAbertas"></div>
 			<div class="concursosForaPeriodo"></div>
 			<?php
