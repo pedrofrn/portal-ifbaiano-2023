@@ -1,4 +1,7 @@
-<?php get_header(); ?>
+<?php
+// Inclua o cabeçalho do WordPress
+get_header();
+?>
 
 <div id="containerMeio">
 	<div id="containerMeioEsquerda">
@@ -9,7 +12,6 @@
 	<div id="containerMeioCentro">
 		<div id="tituloNoticia">
 			<?php printf('Resultados da Pesquisa: <em>%s</em>', esc_html(get_search_query())); ?>
-			<br><span>Mostrando os resultados mais atuais</span>
 		</div>
 
 		<div id="textoNoticia">
@@ -23,56 +25,19 @@
 					'attachment' => 'Documento',
 				);
 
-				$total_results_by_post_type = get_total_search_results_by_post_type();
-				echo '<span class="numerosTotais">Filtre sua pesquisa por tipo:</span>';
+				echo '<span class="numerosTotais">Resultados exibidos pelos mais recentes</span>';
 				echo '<ul>';
-
-				foreach ($total_results_by_post_type as $post_type => $total) {
-					$label = isset($post_type_labels[$post_type]) ? $post_type_labels[$post_type] : ucfirst($post_type);
-
-					echo '<li>';
-					echo '<form action="' . esc_url(home_url('/')) . '" method="get">';
-					echo '<input type="hidden" name="post_type_filter" value="' . esc_attr($post_type) . '">';
-					echo '<input type="hidden" name="s" value="' . esc_attr(get_search_query()) . '">';
-					echo '<button type="submit" style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">';
-					echo $label . ': <span style="font-weight: 800; font-size:8pt;">' . $total . '</span>';
-					echo '</button>';
-					echo '</form>';
-					echo '</li>';
+				foreach ($post_type_labels as $post_type_slug => $label) {
+					$link = add_query_arg('post_type', $post_type_slug, home_url('/search-type.php'));
+					echo '<li><a href="' . esc_url($link) . '">' . esc_html($label) . '</a></li>';
 				}
-
 				echo '</ul>';
-				// Adicione a linha informativa após os botões
-				$filtro_aplicado = isset($_GET['post_type_filter']) ? $_GET['post_type_filter'] : 'Todos';
-				if ($filtro_aplicado !== 'Todos') {
-					echo '<p>Exibindo resultados por <span style="font-weight: 800;">' . $post_type_labels[$filtro_aplicado] . '</span></p>';
-				}
-
 				?>
 			</div>
 
 			<?php
-			$args = array(
-				's' => get_search_query(),
-				'post_type' => 'any',
-			);
-
-			if (isset($_GET['post_type_filter']) && in_array($_GET['post_type_filter'], array('post', 'cursos', 'concursos', 'attachment', 'page'))) {
-				$post_type_filter = sanitize_text_field($_GET['post_type_filter']);
-
-				if ($post_type_filter === 'attachment') {
-					$args['post_type'] = 'attachment';
-					$args['post_status'] = 'inherit';
-				} else {
-					$args['post_type'] = $post_type_filter;
-				}
-			}
-
-			$search_query = new WP_Query($args);
-
-			if ($search_query->have_posts()) :
-				while ($search_query->have_posts()) : $search_query->the_post();
-
+			if (have_posts()) :
+				while (have_posts()) : the_post();
 					$post_type = get_post_type();
 					$source_class = 'source-' . $post_type;
 
@@ -122,21 +87,21 @@
 							<div class="noticia-lista-inner">
 								<?php if (has_post_thumbnail()) : ?>
 									<div class="noticia-lista-thumbnail">
-										<a target="_blank" href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+										<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
 											<?php the_post_thumbnail('thumbnail'); ?>
 										</a>
 									</div>
 								<?php else : ?>
 									<div class="noticia-lista-thumbnail">
-										<a target="_blank" href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+										<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
 											<img src="<?php echo get_template_directory_uri() . '/imagens/thumb-noticia.jpg'; ?>" alt="Imagem Padrão" />
 										</a>
 									</div>
 								<?php endif; ?>
 
 								<div class="noticia-lista-resumo">
-									<h3><a target="_blank" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-									<a target="_blank" href="<?php the_permalink(); ?>"><?php the_excerpt(); ?></a>
+									<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+									<a href="<?php the_permalink(); ?>"><?php the_excerpt(); ?></a>
 								</div>
 							</div>
 						</div>
@@ -162,8 +127,7 @@
 					<p style="font-weight: 800;">Nada encontrado!</p>
 					<p>Nenhuma ocorrência foi encontrada com o termo '<em><?php echo esc_html(get_search_query()); ?></em>'.</p>
 				</div>
-			<?php endif;
-			wp_reset_postdata(); ?>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>
@@ -175,26 +139,20 @@
 		if (n.innerText.indexOf('Curso') !== -1) n.style.backgroundColor = '#43ff2f';
 		if (n.innerText.indexOf('Concurso') !== -1) {
 			n.style.backgroundColor = '#ff1313';
-			n.querySelector('button').style.color = '#fff'
+			n.style.color = '#fff'
 		}
 		if (n.innerText.indexOf('Notícia') !== -1) {
 			n.style.backgroundColor = '#797979';
-			n.querySelector('button').style.color = '#fff'
+			n.style.color = '#fff'
 		}
 		if (n.innerText.indexOf('Documento') !== -1) {
 			n.style.backgroundColor = '#51b1ff';
-			n.querySelector('button').style.color = '#fff'
+			n.style.color = '#fff'
 		}
 		n.style.textTransform = 'uppercase';
-
 	}
+
 	const noticiaLista = document.querySelectorAll('.noticia-lista');
-	const msgAtuais = document.querySelector('#tituloNoticia span');
-
-	msgAtuais.style.fontSize = '10pt';
-	msgAtuais.style.fontWeight = 'normal';
-	msgAtuais.style.fontStyle = 'italic';
-
 	for (n of noticiaLista) {
 		if (n.classList.contains('source-attachment')) {
 			n.style.padding = '30px 20px';
@@ -206,11 +164,10 @@
 		if (n.classList.contains('source-cursos')) n.querySelector('div.fonteSearch').style.borderLeft = '5px solid #43ff2f';
 		if (n.classList.contains('source-concursos')) n.querySelector('div.fonteSearch').style.borderLeft = '5px solid #ff1313';
 		if (n.classList.contains('source-post')) n.querySelector('div.fonteSearch').style.borderLeft = '5px solid #797979';
-		if (n.innerText.indexOf('Nenhuma ocorrência foi encontrada com o termo') !== -1) {
-			numerosTotais.remove();
-			msgAtuais.remove()
-		}
 	}
 </script>
 
-<?php get_footer(); ?>
+<?php
+// Inclua o rodapé do WordPress
+get_footer();
+?>

@@ -22,43 +22,82 @@ const cidadesCoordenadas = {
     'Xique-Xique': [158, 112, 'https://www.ifbaiano.edu.br/unidades/xique-xique'],
 }
 
+
 for (const c of Object.keys(cidadesCoordenadas)) {
     campusMapa(c, true)
 }
-
+let ultimaCidade;
 canvas.onmousemove = function (e) {
-    const coordenadas = [e.offsetX, e.offsetY]
-    const area = [[coordenadas[0] - 5, coordenadas[0] + 5], [coordenadas[1] - 5, coordenadas[1] + 5]]
+    const coordenadas = [e.offsetX, e.offsetY];
+    const area = [
+        [coordenadas[0] - 5, coordenadas[0] + 5],
+        [coordenadas[1] - 5, coordenadas[1] + 5]
+    ];
+    let cidadeEncontrada = null;
+
     for (const c of Object.keys(cidadesCoordenadas)) {
-        if ((cidadesCoordenadas[c][0] >= area[0][0] && cidadesCoordenadas[c][0] <= area[0][1]) &&
-            (cidadesCoordenadas[c][1] >= area[1][0] && cidadesCoordenadas[c][1] <= area[1][1])) {
+        if (
+            cidadesCoordenadas[c][0] >= area[0][0] &&
+            cidadesCoordenadas[c][0] <= area[0][1] &&
+            cidadesCoordenadas[c][1] >= area[1][0] &&
+            cidadesCoordenadas[c][1] <= area[1][1]
+        ) {
+            cidadeEncontrada = c;
             canvas.onclick = () => goLink(cidadesCoordenadas[c][2]);
-            campusMapa(c)
         }
-        else campusMapa(c, true)
     }
+
+    if (cidadeEncontrada) {
+        mostrarNomeCidade(cidadeEncontrada);
+        campusMapa(cidadeEncontrada)
+        ultimaCidade = cidadeEncontrada
+        
+    } else {
+        ocultarNomeCidade();
+        campusMapa(ultimaCidade, true)
+    }
+};
+
+canvas.onmouseout = function () {
+    ocultarNomeCidade();
+};
+
+function mostrarNomeCidade(cidade) {
+    ctx.font = '12px Arial';
+    ctx.fillStyle = '#000000';
+
+    // Coordenadas para o canto inferior esquerdo do canvas
+    const x = 10;
+    const y = canvas.height - 10;
+
+    ctx.clearRect(x, y - 15, ctx.measureText(cidade).width + 20, 20);
+    ctx.fillText(cidade, x, y);
+}
+
+function ocultarNomeCidade() {
+    ctx.clearRect(0, canvas.height - 25, canvas.width, 25);
 }
 
 function campusMapa(cidade, out = false) {
     
-    ctx.fillStyle = '#b3bbb0';
+    ctx.fillStyle = '#369837';
     const xpath = `//li[text()='${cidade}']`;
     let matchingElement = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
     
     if (!out) {
         canvas.style.cursor = 'pointer';
         ctx.fillStyle = '#c80710';
-        matchingElement.classList.add('hoverLiCampus')
+        matchingElement.classList.add('hoverLiCampus');
     }
     else {
-        if (matchingElement.classList.contains('hoverLiCampus')) {
+        if (matchingElement && matchingElement.classList.contains('hoverLiCampus')) {
             matchingElement.classList.remove('hoverLiCampus')
             canvas.style.cursor = 'initial';
         }
     }    
 
     const circle = new Path2D();
-    variavel = circle.arc(cidadesCoordenadas[cidade][0], cidadesCoordenadas[cidade][1], 6, 0, 5 * Math.PI);
+    variavel = cidadesCoordenadas[cidade] === undefined ? '' : circle.arc(cidadesCoordenadas[cidade][0], cidadesCoordenadas[cidade][1], 5, 0, 5 * Math.PI);
     return ctx.fill(circle);
 }
 

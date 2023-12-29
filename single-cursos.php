@@ -2,19 +2,17 @@
 <div id="containerMeio">
 	<div id="containerMeioEsquerda">
 		<div id="marcaCampus">
-			<img src="<?php bloginfo('template_url'); ?>/imagens/marca-if-baiano.svg" alt="Marca do IF Baiano" />
 		</div>
 		<?php include 'menu.php'; ?>
 	</div>
 
 	<div id="containerMeioCentroNoticia">
 		<div id="containerNoticiapost">
-			<!-- INICIO DA NOTICIA -->
 			<?php
 			if (have_posts()) {
 				while (have_posts()) {
 					the_post();
-					?>
+			?>
 
 					<div id="head">
 						<div id="nomeEdital">
@@ -30,7 +28,6 @@
 								if (has_excerpt()) { ?>
 									<?php the_excerpt(); ?>
 								<?php } else {
-
 								}
 								?>
 							</p>
@@ -138,7 +135,7 @@
 					$lattesCoo = get_post_meta(get_the_ID(), 'coordenacao_lattes', true);
 					$feture_template = get_post_meta($id, 'single_repeter_group', true);
 					if (!empty($feture_template)) {
-						?>
+					?>
 						<div id="secaoCD">
 							<h3 id="docsLista" class="cardsDocentes">Corpo docente</h3>
 							<div id="corpoDocente">
@@ -173,24 +170,13 @@
 								<?php } ?>
 
 							</div>
-							<script>
-								const corpoDocente = document.querySelector('div#corpoDocente');
-								corpoDocente.style.display = 'none';
-								document.querySelector('div#secaoCD').addEventListener('click', () => {
-									if (corpoDocente.style.display === 'flex') return corpoDocente.style.display = 'none';
-									else corpoDocente.style.display = 'flex';
-								})
-
-							</script>
 						</div>
-						<?php
+					<?php
 					}
 					?>
-					<!-- fim do print do corpo docente -->
-
 					<?php include 'table-documents.php'; ?>
 
-				<?php }
+			<?php }
 			}
 			?>
 			<!-- FIM DA NOTICIA -->

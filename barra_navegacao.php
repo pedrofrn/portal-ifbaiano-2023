@@ -15,6 +15,9 @@
 			document.querySelector(this.getAttribute('href')).scrollIntoView({
 				behavior: 'smooth'
 			});
+			if (e.target.innerText.indexOf('busca') !== -1) {
+				document.querySelector('input.caixaPesquisa').focus();
+			}
 		});
 	});
 </script>

@@ -1,15 +1,14 @@
-<?php if (get_post_meta($post->ID, 'post_banner_img', true)): ?>
-
+<?php if (get_post_meta($post->ID, 'post_doc_upload', true)): ?>
 
     <!-- tabela documentos -->
     <h3 id="docsLista">Lista de documentos</h3>
     <?php
-    // Use below code to show metabox values from anywhere
-    $id = get_the_ID();
-    $banner_img = get_post_meta($id, 'post_banner_img', true);
-    $banner_img = explode(',', $banner_img);
 
-    if (!empty($banner_img)) {
+    $id = get_the_ID();
+    $doc_upload = get_post_meta($id, 'post_doc_upload', true);
+    $doc_upload = explode(',', $doc_upload);
+
+    if (!empty($doc_upload)) {
 
         ?>
         <script>
@@ -30,7 +29,7 @@
 
             <tbody>
                 <script>reverseTable();</script>
-                <?php foreach ($banner_img as $attachment_id) { ?>
+                <?php foreach ($doc_upload as $attachment_id) { ?>
                     <tr>
                         <td colspan="2" class="tituloDocumentos">
                             <div class="docsBar">

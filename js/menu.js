@@ -1,9 +1,29 @@
 const menu = document.getElementById('MenuPrincipal');
-const titulosMenu = document.querySelectorAll('div#TituloMenu');
+const menuDestaque = document.querySelector('div#MenuDestaque');
+const titulosMenu = menu.querySelectorAll('div.TituloMenu');
 const ulSubMenu = document.querySelectorAll('ul.sub-menu');
 
-for (let i of titulosMenu) {
-    
+if (menuDestaque) {
+    const menuDestaqueItems = menuDestaque.querySelectorAll('li');
+    menuDestaqueItems.forEach(li => {
+        const link = li.querySelector('a');
+        if (link) {
+            const newLink = document.createElement('a');
+            newLink.href = link.href;
+            newLink.textContent = link.textContent;
+            li.parentNode.insertBefore(newLink, li);
+            li.parentNode.removeChild(li);
+        }
+    })
+}
+
+titulosMenu.forEach((element, index, array) => {
+    if (index === array.length - 1) {
+        element.classList.add('noMargin');
+    }
+}); 
+
+for (let i of titulosMenu) {    
     const isMenu = Array.from(i.nextElementSibling.classList).some(classe => classe.startsWith('menu-'));
     if (isMenu) i.nextElementSibling.classList.add('hidden');
 
@@ -19,7 +39,7 @@ for (let i of titulosMenu) {
         if (isMenu) i.nextElementSibling.classList.toggle('hidden');
 
         if (isMenu && !i.nextElementSibling.classList.contains('hidden')) {
-            i.nextElementSibling.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            i.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     });
 }

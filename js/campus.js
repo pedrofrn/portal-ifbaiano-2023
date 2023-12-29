@@ -1,11 +1,16 @@
 const localMarca = document.querySelector('#marcaCampus');
-const nomeUnidade = document.querySelector('a.nomeUnidade'); 
+const nomeUnidade = document.querySelector('a.nomeUnidade');
 const rodapeH2 = document.querySelector('h2.inforodape');
 const rodapeP = document.querySelector('p.inforodape');
 const localMapa = document.querySelector('#mapaCampus');
 const tituloDocentes = document.querySelector('h3.cardsDocentes');
 const corpoDocente = document.querySelector('div#corpoDocente');
 if (corpoDocente) {
+    corpoDocente.style.display = 'none';
+    document.querySelector('div#secaoCD').addEventListener('click', () => {
+        if (corpoDocente.style.display === 'flex') return corpoDocente.style.display = 'none';
+        else corpoDocente.style.display = 'flex';
+    })
     const expandir = tituloDocentes.appendChild(criaSpanExpand());
     tituloDocentes.addEventListener('click', () => {
         if (corpoDocente.classList.contains('displayNone')) {
@@ -236,13 +241,4 @@ function criaSpanExpand() {
     return span;
 }
 
-
-
-selecionaMarca();
-
-
-
-function sessaoCorpoDocente() {
-
-}
-sessaoCorpoDocente();
+if (!localMarca.querySelector('img')) selecionaMarca();
