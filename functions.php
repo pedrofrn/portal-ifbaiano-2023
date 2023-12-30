@@ -243,7 +243,6 @@ function get_total_search_results_by_post_type() {
     return $total_results_by_post_type;
 }
 
-// Adicionar a lógica de contagem de attachments na função
 function count_attachments_in_search() {
     global $wpdb;
 
@@ -257,7 +256,14 @@ function count_attachments_in_search() {
             LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id AND pm.meta_key = '_wp_attached_file'
             WHERE p.post_type = %s
             AND p.post_status = 'inherit'
-            AND (p.post_title LIKE %s OR p.post_content LIKE %s OR pm.meta_value LIKE %s)",
+            AND (
+                p.post_title LIKE %s
+                OR p.post_content LIKE %s
+                OR pm.meta_value LIKE %s
+            )
+            AND (
+                RIGHT(pm.meta_value, 3) IN ('doc', 'ocx', 'odt', 'pps', 'psx', 'pdf')
+            )",
             'attachment',
             '%' . $wpdb->esc_like($search_query) . '%',
             '%' . $wpdb->esc_like($search_query) . '%',
@@ -267,6 +273,7 @@ function count_attachments_in_search() {
 
     return $attachments_count;
 }
+
 
 function filter_search_results($query) {
     if ($query->is_search && !is_admin() && $query->is_main_query()) {

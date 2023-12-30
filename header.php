@@ -149,8 +149,8 @@
 				</div>
 
 				<div class="menuBarraInferiorHead">
-					<?php if (is_active_sidebar('menutopodireito')) : ?>
-						<?php dynamic_sidebar('menutopodireito'); ?>
+					<?php if (is_active_sidebar('menuheader')) : ?>
+						<?php dynamic_sidebar('menuheader'); ?>
 					<?php endif; ?>
 				</div>
 			</div>

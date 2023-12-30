@@ -52,118 +52,142 @@
 			</div>
 
 			<?php
-			$args = array(
-				's' => get_search_query(),
-				'post_type' => 'any',
-			);
+// Consulta para todos os tipos de postagem
+$args_all = array(
+	's'     => get_search_query(),
+	'post_type' => 'any',
+	'order' => 'DESC', // Ordenar por data decrescente (mais recente primeiro)
+);
 
-			if (isset($_GET['post_type_filter']) && in_array($_GET['post_type_filter'], array('post', 'cursos', 'concursos', 'attachment', 'page'))) {
-				$post_type_filter = sanitize_text_field($_GET['post_type_filter']);
+// Se um filtro está acionado, ajustar o tipo de postagem
+if (isset($_GET['post_type_filter']) && in_array($_GET['post_type_filter'], array('post', 'cursos', 'concursos', 'attachment', 'page'))) {
+	$post_type_filter = sanitize_text_field($_GET['post_type_filter']);
 
-				if ($post_type_filter === 'attachment') {
-					$args['post_type'] = 'attachment';
-					$args['post_status'] = 'inherit';
-				} else {
-					$args['post_type'] = $post_type_filter;
-				}
-			}
+	if ($post_type_filter === 'attachment') {
+		$args_all['post_type'] = 'attachment';
+		$args_all['post_status'] = 'inherit';
+	} else {
+		$args_all['post_type'] = $post_type_filter;
+	}
+}
 
-			$search_query = new WP_Query($args);
+// Inicializar consulta para todos os tipos de postagem
+$search_query_all = new WP_Query($args_all);
 
-			if ($search_query->have_posts()) :
-				while ($search_query->have_posts()) : $search_query->the_post();
+// Inicializar consulta para anexos (attachments) somente se não houver filtro
+if (!isset($_GET['post_type_filter']) || $_GET['post_type_filter'] === 'Todos') {
+	$args_attachment = array(
+		's'              => get_search_query(),
+		'post_type'      => 'attachment',
+		'posts_per_page' => -1,
+		'post_status'    => 'inherit',
+		'order'          => 'DESC', // Ordenar por data decrescente (mais recente primeiro)
+	);
 
-					$post_type = get_post_type();
-					$source_class = 'source-' . $post_type;
+	$search_query_attachment = new WP_Query($args_attachment);
 
-					if ($post_type === 'attachment') { ?>
-						<div class="noticia-lista <?php echo esc_attr($source_class); ?>">
-							<div class="head">
-								<div class="fonteSearch">DOCUMENTO</div>
-								<div class="noticia-lista-data">
-									<div class="imagem-data-publicacao"></div>
-									<?php echo get_the_date('j \d\e F \d\e Y, \à\s G\hi'); ?>
-								</div>
-							</div>
-							<h3><a target="_blank" href="<?php echo esc_url(wp_get_attachment_url()); ?>"><?php the_title(); ?></a></h3>
-						</div>
-					<?php } else { ?>
-						<div class="noticia-lista <?php echo esc_attr($source_class); ?>">
-							<div class="head">
-								<div class="fonteSearch">
-									<?php
-									$post_type = get_post_type();
-									$nome_fonte = '';
+	// Combinar resultados
+	$combined_results = array_merge($search_query_all->posts, $search_query_attachment->posts);
+	usort($combined_results, function ($a, $b) {
+		return strtotime($b->post_date) - strtotime($a->post_date);
+	});
+} else {
+	// Se houver um filtro acionado, usar apenas os resultados da consulta principal
+	$combined_results = $search_query_all->posts;
+}
 
-									switch ($post_type) {
-										case 'post':
-											$nome_fonte = 'Notícia';
-											break;
-										case 'concursos':
-											$nome_fonte = 'Concurso';
-											break;
-										case 'cursos':
-											$nome_fonte = 'Curso';
-											break;
-										case 'page':
-											$nome_fonte = 'Página';
-											break;
-									}
-
-									echo esc_html($nome_fonte);
-									?>
-								</div>
-								<div class="noticia-lista-data">
-									<div class="imagem-data-publicacao"></div>
-									<?php echo get_the_date('j \d\e F \d\e Y, \à\s G\hi'); ?>
-								</div>
-							</div>
-
-							<div class="noticia-lista-inner">
-								<?php if (has_post_thumbnail()) : ?>
-									<div class="noticia-lista-thumbnail">
-										<a target="_blank" href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
-											<?php the_post_thumbnail('thumbnail'); ?>
-										</a>
-									</div>
-								<?php else : ?>
-									<div class="noticia-lista-thumbnail">
-										<a target="_blank" href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
-											<img src="<?php echo get_template_directory_uri() . '/imagens/thumb-noticia.jpg'; ?>" alt="Imagem Padrão" />
-										</a>
-									</div>
-								<?php endif; ?>
-
-								<div class="noticia-lista-resumo">
-									<h3><a target="_blank" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-									<a target="_blank" href="<?php the_permalink(); ?>"><?php the_excerpt(); ?></a>
-								</div>
-							</div>
-						</div>
-					<?php } ?>
-				<?php endwhile; ?>
-
-				<div class="paginacao">
-					<?php
-					global $wp_query;
-					$big = 999999999;
-					$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-					echo paginate_links(array(
-						'base'    => @add_query_arg('paged', '%#%'),
-						'format'  => '?paged=%#%',
-						'current' => max(1, $paged),
-						'total'   => $wp_query->max_num_pages,
-					));
-					?>
+if (!empty($combined_results)) :
+	foreach ($combined_results as $post) : setup_postdata($post);
+		$post_type    = get_post_type();
+		$source_class = 'source-' . $post_type;
+		?>
+		<div class="noticia-lista <?php echo esc_attr($source_class); ?>">
+			<?php if ($post_type === 'attachment') : ?>
+				<div class="head">
+					<div class="fonteSearch">DOCUMENTO</div>
+					<div class="noticia-lista-data">
+						<div class="imagem-data-publicacao"></div>
+						<?php echo get_the_date('j \d\e F \d\e Y, \à\s G\hi'); ?>
+					</div>
 				</div>
-
+				<h3><a target="_blank" href="<?php echo esc_url(wp_get_attachment_url()); ?>"><?php the_title(); ?></a></h3>
 			<?php else : ?>
-				<div class="noticia-lista">
-					<p style="font-weight: 800;">Nada encontrado!</p>
-					<p>Nenhuma ocorrência foi encontrada com o termo '<em><?php echo esc_html(get_search_query()); ?></em>'.</p>
+				<div class="head">
+					<div class="fonteSearch">
+						<?php
+						$post_type   = get_post_type();
+						$nome_fonte  = '';
+
+						switch ($post_type) {
+							case 'post':
+								$nome_fonte = 'Notícia';
+								break;
+							case 'concursos':
+								$nome_fonte = 'Concurso';
+								break;
+							case 'cursos':
+								$nome_fonte = 'Curso';
+								break;
+							case 'page':
+								$nome_fonte = 'Página';
+								break;
+						}
+
+						echo esc_html($nome_fonte);
+						?>
+					</div>
+					<div class="noticia-lista-data">
+						<div class="imagem-data-publicacao"></div>
+						<?php echo get_the_date('j \d\e F \d\e Y, \à\s G\hi'); ?>
+					</div>
 				</div>
-			<?php endif;
-			wp_reset_postdata(); ?>
+
+				<div class="noticia-lista-inner">
+					<?php if (has_post_thumbnail()) : ?>
+						<div class="noticia-lista-thumbnail">
+							<a target="_blank" href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+								<?php the_post_thumbnail('thumbnail'); ?>
+							</a>
+						</div>
+					<?php else : ?>
+						<div class="noticia-lista-thumbnail">
+							<a target="_blank" href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+								<img src="<?php echo get_template_directory_uri() . '/imagens/thumb-noticia.jpg'; ?>" alt="Imagem Padrão" />
+							</a>
+						</div>
+					<?php endif; ?>
+
+					<div class="noticia-lista-resumo">
+						<h3><a target="_blank" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+						<a target="_blank" href="<?php the_permalink(); ?>"><?php the_excerpt(); ?></a>
+					</div>
+				</div>
+			<?php endif; ?>
+		</div>
+	<?php endforeach; ?>
+
+	<div class="paginacao">
+		<?php
+		global $wp_query;
+		$big   = 999999999;
+		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+		echo paginate_links(array(
+			'base'    => @add_query_arg('paged', '%#%'),
+			'format'  => '?paged=%#%',
+			'current' => max(1, $paged),
+			'total'   => $wp_query->max_num_pages,
+		));
+		?>
+	</div>
+
+<?php else : ?>
+	<div class="noticia-lista">
+		<p style="font-weight: 800;">Nada encontrado!</p>
+		<p>Nenhuma ocorrência foi encontrada com o termo '<em><?php echo esc_html(get_search_query()); ?></em>'.</p>
+	</div>
+<?php endif;
+wp_reset_postdata(); ?>
+
 		</div>
 	</div>
 </div>
@@ -175,19 +199,19 @@
 		if (n.innerText.indexOf('Curso') !== -1) n.style.backgroundColor = '#43ff2f';
 		if (n.innerText.indexOf('Concurso') !== -1) {
 			n.style.backgroundColor = '#ff1313';
-			n.querySelector('button').style.color = '#fff'
+			n.querySelector('button').style.color = '#fff';
 		}
 		if (n.innerText.indexOf('Notícia') !== -1) {
 			n.style.backgroundColor = '#797979';
-			n.querySelector('button').style.color = '#fff'
+			n.querySelector('button').style.color = '#fff';
 		}
 		if (n.innerText.indexOf('Documento') !== -1) {
 			n.style.backgroundColor = '#51b1ff';
-			n.querySelector('button').style.color = '#fff'
+			n.querySelector('button').style.color = '#fff';
 		}
 		n.style.textTransform = 'uppercase';
-
 	}
+
 	const noticiaLista = document.querySelectorAll('.noticia-lista');
 	const msgAtuais = document.querySelector('#tituloNoticia span');
 
@@ -208,7 +232,7 @@
 		if (n.classList.contains('source-post')) n.querySelector('div.fonteSearch').style.borderLeft = '5px solid #797979';
 		if (n.innerText.indexOf('Nenhuma ocorrência foi encontrada com o termo') !== -1) {
 			numerosTotais.remove();
-			msgAtuais.remove()
+			msgAtuais.remove();
 		}
 	}
 </script>

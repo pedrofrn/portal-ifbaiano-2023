@@ -1,6 +1,7 @@
 const menu = document.getElementById('MenuPrincipal');
+const menuRodape = document.querySelector('div.menuRodape');
 const menuDestaque = document.querySelector('div#MenuDestaque');
-const titulosMenu = menu.querySelectorAll('div.TituloMenu');
+const titulosMenu = document.querySelectorAll('div.TituloMenu');
 const ulSubMenu = document.querySelectorAll('ul.sub-menu');
 
 if (menuDestaque) {
@@ -51,5 +52,9 @@ for (const i of ulSubMenu) {
 }
 
 menu.addEventListener('mouseover', (e) => {
+    if (e.target.nextElementSibling && e.target.nextElementSibling.classList.contains('sub-menu')) e.target.nextElementSibling.classList.toggle('open')
+})
+
+menuRodape.addEventListener('mouseover', (e) => {
     if (e.target.nextElementSibling && e.target.nextElementSibling.classList.contains('sub-menu')) e.target.nextElementSibling.classList.toggle('open')
 })

@@ -316,6 +316,11 @@ div.menuBarraInferiorHead ul#menu-estudenoif_principal li:last-child {
 	justify-content: space-between;
 }
 
+#containerRodapeTopo div.menuRodape ul.sub-menu {
+	padding: 0 10px;
+	font-size: 8pt;
+}
+
 #containerRodapeTopo div.menuRodapeSingle {
 	border-left: 1px dotted #7dc48a;
 	padding: 0 20px;
@@ -727,6 +732,16 @@ div#avisosImportantes {
 	margin-bottom: 50px;
 	border-left: 3px solid #69bb66;
 	background: #f6f6f6;
+	overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+#avisosImportantes.show {
+    max-height: 600px; 
+    opacity: 1;
+	transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
 div#avisosImportantes span.spanX {
@@ -750,6 +765,7 @@ div#avisosImportantes span.spanX svg {
 div#avisosImportantes div.avisoInterno {
 	display: none;
 }
+
 
 div#avisosImportantes div.avisoInterno span.numberSlide {
 	position: absolute;
@@ -1309,7 +1325,6 @@ div#bannerLateral img {
 	min-width: 100% !important;
 	min-height: 100% !important;
 	object-fit: cover;
-	/* ou "contain", dependendo do efeito desejado */
 }
 
 div#bannerLateral div.bannerInterno span.numberSlide,
@@ -1332,6 +1347,11 @@ div#bannerLateral .dots .dot {
 
 div#bannerLateral .active {
 	background-color: #717171 !important;
+}
+
+div#bannerLateral div.fade {
+	animation-name: fade;
+	animation-duration: 500ms;
 }
 
 div#bannerLateral p {
