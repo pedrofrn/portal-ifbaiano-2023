@@ -12,30 +12,54 @@
 			if (have_posts()) {
 				while (have_posts()) {
 					the_post();
-					?>
+
+					$data_lancamento = get_post_meta(get_the_ID(), 'data_lancamento', true);
+					$dateTime = DateTime::createFromFormat('Y-m-d', $data_lancamento);
+					$numero_edital = get_post_meta(get_the_ID(), 'numero_edital', true);
+					if ($dateTime) {
+						$meses_pt = array(
+							'January'   => 'janeiro',
+							'February'  => 'fevereiro',
+							'March'     => 'março',
+							'April'     => 'abril',
+							'May'       => 'maio',
+							'June'      => 'junho',
+							'July'      => 'julho',
+							'August'    => 'agosto',
+							'September' => 'setembro',
+							'October'   => 'outubro',
+							'November'  => 'novembro',
+							'December'  => 'dezembro',
+						);
+
+						$mes = $meses_pt[$dateTime->format('F')];
+						$data_formatada = $dateTime->format('d \d\e ') . $mes . $dateTime->format(' \d\e Y');
+					}
+			?>
 					<div id="head">
-						<div id="imagemprocesso">
-							<?php
-							if (has_post_thumbnail()) { ?>
+						<?php
+						if (has_post_thumbnail()) { ?>
+							<div id="imagemprocesso">
 								<?php the_post_thumbnail(); ?>
-							<?php } else {
-
+							</div>
+						<?php } else {
+						}
+						?>
+						<script>
+							if (document.querySelector('div#imagemprocesso') && document.querySelector('div#imagemprocesso').getElementsByTagName('img').length === 0) {
+								document.querySelector('div#head div#imagemprocesso').style.display = 'none';
 							}
-							?>
-							<script>
-
-								if (document.querySelector('div#imagemprocesso').getElementsByTagName('img').length === 0) {
-									document.querySelector('div#head div#imagemprocesso').style.display = 'none';
-								}
-							</script>
-						</div>
-						<div>
+						</script>
+						<div class="headText">
 							<div class="avisoInscricoes"></div>
 							<div id="nomeEdital">
-								<h2>
-									<?php $nedital = get_post_meta(get_the_ID(), 'edital', true);
-									echo $nedital; ?>
-								</h2>
+								<?php if (!empty($numero_edital)) {
+								?>
+									<h2>
+										Edital nº<?php echo esc_html($numero_edital); ?>
+										de <?php echo esc_html($data_formatada); ?>
+									</h2>
+								<?php } ?>
 								<div id="tituloNoticia">
 									<?php the_title(); ?>
 								</div>
@@ -44,7 +68,6 @@
 									if (has_excerpt()) { ?>
 										<?php the_excerpt(); ?>
 									<?php } else {
-
 									}
 									?>
 								</p>
@@ -131,26 +154,26 @@
 
 											if (dataAtualParse >= inicioData + horaIni && dataAtualParse <= fimParseData) {
 												avisoInscricoes.innerText = 'Inscrições abertas';
-												avisoInscricoes.setAttribute('style', 'background: #44c767;color:#fff;text-transform: uppercase;font-weight: bold;font-size: 8pt;border-radius: 5px;padding: 4px 10px;');
+												avisoInscricoes.setAttribute('style', 'background: #44c767;color:#fff;text-transform: uppercase;font-weight: 800;font-size: 8pt;border-radius: 5px;padding: 4px 10px;margin-bottom:5px;');
+											} else if (dataAtualParse < inicioData + horaIni) {
+												avisoInscricoes.innerText = 'Inscrições em breve';
+												avisoInscricoes.setAttribute('style', 'background: #ffc579;color:#000;text-transform: uppercase;font-weight: 800;font-size: 8pt;border-radius: 5px;padding: 4px 10px;margin-bottom:5px;');
 											} else {
 												avisoInscricoes.innerText = 'Fora do período de inscrições';
-												avisoInscricoes.setAttribute('style', 'background: #afafaf;color:#fff;text-transform: uppercase;font-weight: bold;font-size: 8pt;border-radius: 5px;padding: 4px 10px;');
+												avisoInscricoes.setAttribute('style', 'background: #afafaf;color:#fff;text-transform: uppercase;font-weight: 800;font-size: 8pt;border-radius: 5px;padding: 4px 10px;margin-bottom:5px;');
 											}
 										}
 									})();
 								</script>
 							</div>
-							<!-- inscrições -->
 						</div>
 					</div>
 					<?php include 'table-documents.php'; ?>
-				<?php }
+			<?php }
 			}
 			?>
-			<!-- FIM DA NOTICIA -->
 		</div>
-
 	</div>
 </div>
-</div> <!-- FIM DA DIV TUDO -->
+</div>
 <?php get_footer(); ?>

@@ -24,7 +24,7 @@
 </div>
 </div>
 <?php wp_footer(); ?>
-<script type='text/javascript' defer="defer" src='https://barra.brasil.gov.br/barra.js' id='barra-brasil-js'></script>
+<script type='text/javascript' defer="defer" src='https://barra.brasil.gov.br/barra_2.0.js' id='barra-brasil-js'></script>
 <script type='text/javascript' src='<?php bloginfo('template_url'); ?>/js/menu.js'></script>
 <script type='text/javascript' src='<?php bloginfo('template_url'); ?>/js/campus.js'></script>
 </body>

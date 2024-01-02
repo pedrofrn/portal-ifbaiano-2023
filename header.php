@@ -5,6 +5,7 @@
 	<meta name="robots" content="index,follow">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta property="creator.productor" content="http://estruturaorganizacional.dados.gov.br/id/unidade-organizacional/100920">
 	<meta name="description" content="O IF Baiano - <?php bloginfo('name'); ?> é uma instituição pública de Ensino Médio e Superior, focado na Educação Profissional e Tecnológica.">
 	<meta name="author" content="Diretoria de Comunicação do Instituto Federal Baiano" />
 	<meta name="keywords" content="ifbaiano, ensino medio, escola, educacao, gratuito, publico, campus if baiano, site, institucional, tecnico, integrado, subsequente, fic, ensino, pesquisa, extensão, cursos">
@@ -40,6 +41,10 @@
 		const templateUrl = '<?php bloginfo('template_url'); ?>';
 	</script>
 	<?php wp_head(); ?>
+	<style>
+		/* #barra-brasil {background-color: #01420B !important;} */
+		#barra-brasil .conteudo-barra-brasil {max-width: 960px !important;}
+	</style>
 </head>
 
 <body>

@@ -4,16 +4,16 @@
     const aXAvisos = meioCentro.querySelector('#avisosImportantes span.spanX');
     let closed = false;
     let slideIndex = 0;
-
+    
     if (aXAvisos) {
         aXAvisos.innerHTML = "<svg fill='none' stroke='currentColor' stroke-width='1.5' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'><path stroke-linecap='round' stroke-linejoin='round' d='M6 18L18 6M6 6l12 12'></path></svg >";
         aXAvisos.addEventListener('click', () => {
             closed = true;
-            avisosBG.style.transition = "max-height 0.5s ease-in-out";
-            avisosBG.style.maxHeight = "0";
+            avisosBG.style.height = '0px';
             setTimeout(() => {
+                avisosBG.style.padding = '0';
                 avisosBG.remove();
-            }, 500);
+            }, 1000);
         });
     }
 
@@ -58,32 +58,38 @@
         }
 
         initDots();
-
+        
         slideIndex++;
+    
         if (slideIndex > slides.length) slideIndex = 1;
 
-        showSlide(slideIndex);
-
-        setTimeout(slidesAvisosImportantes, 8000);
+        showSlide(slideIndex)
+        setTimeout(slidesAvisosImportantes, 10000);
     }
 
     function showSlide(index, clicou = false) {
         for (let i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
+            slides[i]
+            slides[i].classList.remove('active');
         }
-    
+        
         if (dotsContainer) {
             let spanDots = dotsContainer.getElementsByClassName("dot");
             for (let i = 0; i < spanDots.length; i++) {
                 spanDots[i].classList.remove("active");
             }
         }
-    
+        
         if (!closed) {
             if (clicou) {
                 index = index % slides.length;
                 if (index < 0) index += slides.length;
                 slides[index].style.display = "block";
+                slides[index].classList.add('active');
+                const avisoAtivo = document.querySelector('.avisoInterno.active');
+                const alturaAviso = avisoAtivo.clientHeight;
+                slides[index].parentElement.style.height = `${alturaAviso}px`;
                 if (dotsContainer) {
                     dotsContainer.getElementsByClassName("dot")[index].classList.add("active");
                 }
@@ -91,14 +97,17 @@
                 slideIndex = index;
             } else {
                 slides[slideIndex - 1].style.display = "block";
+                slides[slideIndex - 1].classList.add('active');
+                const avisoAtivo = document.querySelector('.avisoInterno.active');
+                const alturaAviso = avisoAtivo.clientHeight;
+                slides[slideIndex - 1].parentElement.style.height = `${alturaAviso}px`;
                 if (dotsContainer) {
                     dotsContainer.getElementsByClassName("dot")[slideIndex - 1].classList.add("active");
                 }
                 updateNumberSlide(slideIndex - 1);
             }
-    
             setTimeout(() => {
-                avisosBG.classList.add('show');
+                avisosBG.classList.add('show');            
             }, 0);
         } else {
             return;

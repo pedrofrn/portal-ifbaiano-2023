@@ -2,34 +2,43 @@
 <?php get_header(); ?>
 <div id="containerMeio">
 	<div id="containerMeioEsquerda">
-		<div id="marcaCampus">
-			<img src="<?php bloginfo('template_url'); ?>/imagens/marca-if-baiano.svg" alt="Marca do IF Baiano" />
-		</div>
+		<div id="marcaCampus"></div>
 		<?php include 'menu.php'; ?>
 	</div>
 
 	<div id="containerMeioCentroNoticia">
 		<div id="containerNoticiapost">
-			<div class="breadcrumb">
-				<?php get_breadcrumb(); ?>
+			<div id="tituloNoticia">
+				<?php the_title(); ?>
 			</div>
+
 			<div class="concursosInscricoesAbertas"></div>
+			<div class="concursosInscricoesBreve"></div>
 			<div class="concursosForaPeriodo"></div>
+
 			<?php
+			while (have_posts()) {
+				the_post(); ?>
+				<div class="concursosListaManual">
+					<?php the_content(); ?>
+				</div>
+			<?php }
 			$args = array(
 				'post_type' => 'concursos',
 				'posts_per_page' => -1,
 			);
 			$posts = get_posts($args);
+
 			foreach ($posts as $post) {
 				setup_postdata($post);
 				cardConcursos();
 			}
+
 			wp_reset_postdata();
 			?>
 		</div>
 	</div>
 </div>
-</div> <!-- FIM DA DIV TUDO -->
+</div>
 <script type='text/javascript' src='<?php bloginfo('template_url'); ?>/js/app-lista-concursos.js'></script>
 <?php get_footer(); ?>

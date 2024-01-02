@@ -15,6 +15,21 @@
 			?>
 
 					<div id="head">
+					<div id="imagemprocesso">
+							<?php
+							if (has_post_thumbnail()) { ?>
+								<?php the_post_thumbnail(); ?>
+							<?php } else {
+
+							}
+							?>
+							<script>
+
+								if (document.querySelector('div#imagemprocesso').getElementsByTagName('img').length === 0) {
+									document.querySelector('div#head div#imagemprocesso').style.display = 'none';
+								}
+							</script>
+						</div>
 						<div id="nomeEdital">
 							<h2>
 								<?php $tipo = get_post_meta(get_the_ID(), 'tipo_curso', true);
@@ -120,14 +135,10 @@
 									</tr>
 								</table>
 							</div>
-							<!-- inscrições -->
 						</div>
 					</div>
-
-					<!-- entrada do print do corpo docente -->
+					
 					<?php
-
-					// Use below code to show metabox values from anywhere
 					$id = get_the_ID();
 					$nomeCoo = get_post_meta(get_the_ID(), 'coordenacao_nome', true);
 					$titulacaoCoo = get_post_meta(get_the_ID(), 'coordenacao_titulacao', true);

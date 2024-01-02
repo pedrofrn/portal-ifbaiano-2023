@@ -7,27 +7,20 @@ const tituloDocentes = document.querySelector('h3.cardsDocentes');
 const corpoDocente = document.querySelector('div#corpoDocente');
 if (corpoDocente) {
     corpoDocente.style.display = 'none';
-    document.querySelector('div#secaoCD').addEventListener('click', () => {
-        if (corpoDocente.style.display === 'flex') return corpoDocente.style.display = 'none';
-        else corpoDocente.style.display = 'flex';
-    })
     const expandir = tituloDocentes.appendChild(criaSpanExpand());
-    tituloDocentes.addEventListener('click', () => {
-        if (corpoDocente.classList.contains('displayNone')) {
-            corpoDocente.classList.remove('displayNone');
-            corpoDocente.classList.add('displayFlex');
-            expandir.classList.remove('down');
-            expandir.classList.add('up');
-            return;
-        }
-        if (corpoDocente.classList.contains('displayFlex')) {
-            corpoDocente.classList.remove('displayFlex');
-            corpoDocente.classList.add('displayNone');
+    document.querySelector('div#secaoCD').addEventListener('click', () => {
+        if (corpoDocente.style.display === 'flex') {
             expandir.classList.remove('up');
             expandir.classList.add('down');
-            return;
+            return corpoDocente.style.display = 'none';
+        }
+        else {
+            expandir.classList.remove('down');
+            expandir.classList.add('up');
+            return corpoDocente.style.display = 'flex';
         }
     })
+    
 }
 
 function selecionaMarca() {
