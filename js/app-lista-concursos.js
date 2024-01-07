@@ -1,15 +1,47 @@
-let inscricoesAbertas = '';
-let timestampInicioInscricoes = '';
 const cardsConcursos = document.querySelectorAll('.cardConcursos');
-
 const concursosInscricoesAbertas = document.querySelector('.concursosInscricoesAbertas');
 const concursosInscricoesBreve = document.querySelector('.concursosInscricoesBreve');
 const concursosForaPeriodo = document.querySelector('.concursosForaPeriodo');
 const concursosListaManual = document.querySelector('.concursosListaManual');
+const listOutrosEditais = concursosListaManual.querySelectorAll('ul');
+
+const todasUnidades = [
+    'Reitoria',
+    'Alagoinhas',
+    'Bom Jesus da Lapa',
+    'Catu',
+    'Governador Mangabeira',
+    'Guanambi',
+    'Itaberaba',
+    'Itapetinga',
+    'Santa Inês',
+    'Senhor do Bonfim',
+    'Teixeira de Freitas',
+    'Uruçuca',
+    'Valença',
+    'Xique-Xique'
+];
 
 document.querySelector('#tituloNoticia').insertAdjacentElement('afterend', criaInput());
+geraBotoesUnidades(todasUnidades, document.querySelector('input#inputP'));
+
 if (concursosListaManual.innerText === '') concursosListaManual.remove();
-else concursosListaManual.prepend
+
+if (listOutrosEditais) {
+    listOutrosEditais.forEach((element, index) => {
+        if (index > 0) {
+            element.classList.add('hidden');
+            const h1 = element.previousElementSibling;
+            h1.addEventListener('click', () => {
+                h1.classList.toggle('clicked');
+                element.classList.toggle('hidden');
+                if (!element.classList.contains('hidden')) h1.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            })
+        }
+    })
+}
+
+
 
 const arrConcursosInscricoesAbertas = Array.from(cardsConcursos).map(element => {
     if (element.querySelector('.timestampInicioInscricoes').innerHTML.split('</script>')[1].indexOf('aberta') !== -1) return element;
@@ -144,13 +176,23 @@ function procurarConcursos() {
         })
         concursosListaManual.querySelectorAll('li').forEach(element => {
             const data = element.innerText.toLowerCase();
-            if (!data.includes(searchTermValue)) element.style.display = 'none';
-            else element.style.display = 'block';
+            if (!data.includes(searchTermValue)) {
+                element.style.display = 'none';
+                if (!element.parentElement.previousElementSibling.classList.contains('tituloSecao')) element.parentElement.previousElementSibling.style.display = 'none';
+            }
+            else {
+                element.style.display = 'block';
+                element.parentElement.previousElementSibling.style.display = 'block';
+            }
         })
     } else {
         document.querySelectorAll('.cardConcursos').forEach(element => {
             element.style.display = 'block';
         });
+        concursosListaManual.querySelectorAll('li').forEach(element => {
+            element.style.display = 'block';
+            element.parentElement.previousElementSibling.style.display = 'block';
+        })
     }
 
     let flagconcursosInscricoesAbertas = 0;
@@ -191,7 +233,105 @@ function procurarConcursos() {
     }
     if (flagConcursosListaManual === 0) concursosListaManual.style.display = 'none';
     else concursosListaManual.style.display = 'block';
-
-
 }
 
+function geraBotoesUnidades(unidades, element) {
+    const divBotoes = document.createElement('div');
+    divBotoes.classList.add('botoesUnidades');
+    unidades.forEach((unidade) => {
+        const botao = document.createElement('button');
+        botao.innerText = unidade;
+        botao.classList.add('botaoUnidade');
+        botao.addEventListener('click', (event) => {
+            aplicarFiltro(unidade, event);
+        });
+        divBotoes.appendChild(botao);
+    });
+    return element.insertAdjacentElement('afterend', divBotoes);
+}
+
+function aplicarFiltro(unidade, event) {
+    document.querySelector('input#inputP').value = '';
+    const unidadeLowerCase = unidade.toLowerCase();
+    const listaElementos = document.querySelectorAll('.cardConcursos');
+    const listaElementosOutros = concursosListaManual.querySelectorAll('li');
+    const anoPublicacaoElements = concursosForaPeriodo.querySelectorAll('.anoContainer .anoPublicacao');
+    const ulElements = concursosListaManual.querySelectorAll('ul');
+
+    const resetDisplay = () => {
+        
+        listaElementos.forEach(elemento => (elemento.style.display = 'block'));
+        listaElementosOutros.forEach(elemento => (elemento.style.display = 'block'));
+        anoPublicacaoElements.forEach(element => {
+            const previousElement = element.previousElementSibling;
+            if (!todosConcursosFechados(element)) {
+                previousElement.style.display = 'block';
+            }
+        });
+
+        concursosInscricoesAbertas.style.display = 'block';
+        concursosInscricoesBreve.style.display = 'block';
+        concursosForaPeriodo.style.display = 'block';
+
+        ulElements.forEach(element => (element.previousElementSibling.style.display = 'block'));
+    };
+
+    const ocultarTodos = () => {
+        listaElementos.forEach(elemento => (elemento.style.display = textoContemUnidade(elemento, unidadeLowerCase) ? 'block' : 'none'));
+        listaElementosOutros.forEach(elemento => (elemento.style.display = textoContemUnidade(elemento, unidadeLowerCase) ? 'block' : 'none'));
+        anoPublicacaoElements.forEach(element => {
+            const previousElement = element.previousElementSibling;
+            if (previousElement && !element.classList.contains('hidden') && !textoContemUnidade(element, unidadeLowerCase)) {
+                previousElement.classList.remove('clicked');
+                previousElement.style.display = 'none';
+            }
+            if (previousElement && element.classList.contains('hidden') && !textoContemUnidade(element, unidadeLowerCase)) {
+                previousElement.classList.remove('clicked');
+                previousElement.style.display = 'none';
+            }
+        });
+
+        const shouldHideInscricoesAbertas = todosConcursosEscondidos(concursosInscricoesAbertas);
+        const shouldHideInscricoesBreve = todosConcursosEscondidos(concursosInscricoesBreve);
+        const shouldHideForaPeriodo = todosConcursosEscondidos(concursosForaPeriodo);
+
+        concursosInscricoesAbertas.style.display = shouldHideInscricoesAbertas ? 'none' : 'block';
+        concursosInscricoesBreve.style.display = shouldHideInscricoesBreve ? 'none' : 'block';
+        concursosForaPeriodo.style.display = shouldHideForaPeriodo ? 'none' : 'block';
+
+        ulElements.forEach((element, index) => {
+            if (index !== 0 && todosElementosEscondidos(element.querySelectorAll('li'))) {
+                element.previousElementSibling.style.display = 'none';
+            }
+        });
+    };
+
+    const allButtons = document.querySelectorAll('.botoesUnidades button');
+    const clickedButton = event.target;
+
+    if (clickedButton.classList.contains('clicked')) {
+        resetDisplay();
+        clickedButton.classList.remove('clicked');
+    } else {
+        resetDisplay();
+        allButtons.forEach(btn => btn.classList.remove('clicked'));
+        ocultarTodos();
+        clickedButton.classList.add('clicked');
+    }
+
+    function todosConcursosFechados(element) {
+        return Array.from(element.querySelectorAll('.cardConcursos')).every(el => el.style.display === 'none');
+    }
+
+    function textoContemUnidade(element, unidade) {
+        return element.innerText.toLowerCase().includes(unidade);
+    }
+
+    function todosConcursosEscondidos(container) {
+        return Array.from(container.querySelectorAll('.cardConcursos')).every(el => el.style.display === 'none');
+    }
+
+    function todosElementosEscondidos(elements) {
+        return Array.from(elements).every(el => el.style.display === 'none');
+    }
+}

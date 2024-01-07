@@ -7,7 +7,7 @@ if (strpos($blogName, "campus") === 0) { ?>
             Nossas Unidades
         </div>
         <div id="mapa">
-            <div style="display:grid">
+            <div style="display:contents">
                 <img src="<?php bloginfo('template_url'); ?>/imagens/mapa-bahia-500x500px.svg" alt="Mapa da Bahia" />
                 <canvas id="canvasMapa"></canvas>
             </div>

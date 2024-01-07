@@ -1,11 +1,6 @@
 <?php get_header(); ?>
 <div id="containerMeio">
-	<div id="containerMeioEsquerda">
-		<div id="marcaCampus">
-		</div>
-		<?php include 'menu.php'; ?>
-	</div>
-
+	<?php include 'coluna-menu.php'; ?>
 	<div id="containerMeioCentroNoticia">
 		<div id="containerNoticiapost">
 			<?php
@@ -13,25 +8,32 @@
 				while (have_posts()) {
 					the_post();
 			?>
-
 					<div id="head">
-					<div id="imagemprocesso">
+						<div id="imagemprocesso">
 							<?php
+							$definirUnidade = get_post_meta(get_the_ID(), 'definirUnidade', true);
 							if (has_post_thumbnail()) { ?>
 								<?php the_post_thumbnail(); ?>
 							<?php } else {
-
 							}
 							?>
 							<script>
-
 								if (document.querySelector('div#imagemprocesso').getElementsByTagName('img').length === 0) {
 									document.querySelector('div#head div#imagemprocesso').style.display = 'none';
 								}
 							</script>
 						</div>
 						<div id="nomeEdital">
-							<h2>
+							<?php if (!empty($definirUnidade)) { ?>
+								<div class="unidadesHead">
+									<?php
+									foreach ($definirUnidade as $elemento) {
+										echo '<div>' . $elemento . '</div>';
+									}
+									?>
+								</div>
+							<?php } ?>
+							<h2 style="font-weight:800;">
 								<?php $tipo = get_post_meta(get_the_ID(), 'tipo_curso', true);
 								echo $tipo; ?>
 							</h2>
@@ -137,7 +139,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<?php
 					$id = get_the_ID();
 					$nomeCoo = get_post_meta(get_the_ID(), 'coordenacao_nome', true);

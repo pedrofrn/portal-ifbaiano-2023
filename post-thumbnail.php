@@ -1,16 +1,17 @@
 <?php if (has_post_thumbnail()): ?>
     <div class="thumbNoticia">
         <?php the_post_thumbnail(); ?>
-    </div>
-    <div class="thumbNoticiaLegenda">
-        <?php $title = get_post(get_post_thumbnail_id())->post_title;
-            echo $title; ?>
-        <script>
-            (() => {
-                const thumbNoticiaLegenda = document.querySelector('div.thumbNoticiaLegenda');
-                if (thumbNoticiaLegenda.innerText.length > 0) thumbNoticiaLegenda.style.marginBottom = '20px';
-            })();
-        </script>
+        <div class="thumbNoticiaLegenda">
+            <?php $title = get_post(get_post_thumbnail_id())->post_title;
+                echo $title; ?>
+            <script>
+                (() => {
+                    const thumbNoticiaLegenda = document.querySelector('div.thumbNoticiaLegenda');
+                    if (thumbNoticiaLegenda.innerText.length > 0) thumbNoticiaLegenda.style.marginTop = '20px';
+                    else thumbNoticiaLegenda.remove();
+                })();
+            </script>
+        </div>
     </div>
     <script>
         (() => {

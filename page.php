@@ -1,10 +1,6 @@
 <?php get_header(); ?>
 <div id="containerMeio">
-	<div id="containerMeioEsquerda">
-		<div id="marcaCampus"></div>
-		<?php include 'menu.php'; ?>
-	</div>
-
+	<?php include 'coluna-menu.php'; ?>
 	<div id="containerMeioCentroNoticia">
 		<div id="containerNoticiapost">
 

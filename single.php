@@ -1,17 +1,14 @@
 <?php get_header(); ?>
 <div id="containerMeio">
-	<div id="containerMeioEsquerda">
-		<div id="marcaCampus"></div>
-		<?php include 'menu.php'; ?>
-	</div>
-
+	<?php include 'coluna-menu.php'; ?>
 	<div id="containerMeioCentroNoticia">
 		<div id="containerNoticiapost">
+			<?php include 'banner-publicidade.php'; ?>
 			<?php
 			if (have_posts()) {
 				while (have_posts()) {
 					the_post();
-					?>
+			?>
 
 					<div id="tituloNoticia">
 						<?php the_title(); ?>
@@ -41,8 +38,8 @@
 						<?php the_content(); ?>
 					</div>
 					<?php include 'table-documents.php'; ?>
-					
-				<?php }
+
+			<?php }
 			}
 			?>
 			<!-- FIM DA NOTICIA -->

@@ -1,13 +1,10 @@
 <!--?php /* Template name: Concursos */ ?-->
 <?php get_header(); ?>
 <div id="containerMeio">
-	<div id="containerMeioEsquerda">
-		<div id="marcaCampus"></div>
-		<?php include 'menu.php'; ?>
-	</div>
-
+	<?php include 'coluna-menu.php'; ?>
 	<div id="containerMeioCentroNoticia">
 		<div id="containerNoticiapost">
+			<?php include 'banner-publicidade.php'; ?>
 			<div id="tituloNoticia">
 				<?php the_title(); ?>
 			</div>

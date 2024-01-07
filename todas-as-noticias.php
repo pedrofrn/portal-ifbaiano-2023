@@ -6,10 +6,7 @@
 
 get_header(); ?>
 <div id="containerMeio">
-    <div id="containerMeioEsquerda">
-        <div id="marcaCampus"></div>
-        <?php include 'menu.php'; ?>
-    </div>
+    <?php include 'coluna-menu.php'; ?>
     <div id="containerMeioCentro">
 
         <div id="tituloNoticia">
@@ -23,7 +20,7 @@ get_header(); ?>
                 'posts_per_page' => 10,
                 'orderby'        => 'date',
                 'order'          => 'DESC',
-                'paged'          => get_query_var('paged') ? get_query_var('paged') : 1, // Para a paginação
+                'paged'          => get_query_var('paged') ? get_query_var('paged') : 1,
             );
 
             $query = new WP_Query($args);
@@ -66,7 +63,6 @@ get_header(); ?>
                 endwhile; ?>
                 <div class="paginacao">
                     <?php
-                    // Adiciona a paginação
                     $big = 999999999;
                     echo paginate_links(array(
                         'base'    => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),

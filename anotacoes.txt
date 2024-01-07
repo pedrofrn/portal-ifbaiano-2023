@@ -1,6 +1,7 @@
 # header
-- botão "acessibilidade" precisa de uma página com conteúdo informativo
-- botão "contraste" precisa replicar o css todo adaptado para bg escuro , letras brancas e amarelas
-- menu do cabeçalho precisa criar uma lista de menu e aplicá-lo ao widget
+- botão "acessibilidade" precisa de uma página com conteúdo informativo (provisoriamente oculto)
+- botão "contraste" precisa replicar o css todo adaptado para bg escuro (feito um modo escuro)
 
-- limitar o número de inserções nos cards públicso
+* é importante que a imagem destacada da notícia tenha um título em seu arquivo na biblioteca de mídia - ou não tenha título algum - porque esse título será disponibilizado na página da notícia. é essencial o procedimento de conferir o título do arquivo escolhido para ser a imagem destacada, pois ele pode assumir o nome do arquivo que estava em sua máquina local. ex: WhatsApp-Image-2023-10-31-at-14.45.36
+
+ FALTA AJUSTAR O CSS DO FRONT TAG:TERMO PARA MOBILE

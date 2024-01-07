@@ -6,10 +6,7 @@
 
 get_header(); ?>
 <div id="containerMeio">
-    <div id="containerMeioEsquerda">
-        <div id="marcaCampus"></div>
-        <?php include 'menu.php'; ?>
-    </div>
+    <?php include 'coluna-menu.php'; ?>
     <div id="containerMeioCentro">
 
         <div id="tituloNoticia">
@@ -51,40 +48,40 @@ get_header(); ?>
                                     </a>
                                 </div>
                             <?php endif; ?>
-                            
-                        <div class="noticia-lista-resumo">
-                            <div class="noticia-lista-data">
-                                <div class="imagem-data-publicacao"></div>
-                                <?php echo get_the_date('j \d\e F \d\e Y, \à\s G\hi'); ?>
-                            </div>
 
-                            <a href="<?php the_permalink(); ?>"><?php the_excerpt(); ?></a>
+                            <div class="noticia-lista-resumo">
+                                <div class="noticia-lista-data">
+                                    <div class="imagem-data-publicacao"></div>
+                                    <?php echo get_the_date('j \d\e F \d\e Y, \à\s G\hi'); ?>
+                                </div>
+
+                                <a href="<?php the_permalink(); ?>"><?php the_excerpt(); ?></a>
+                            </div>
                         </div>
                     </div>
-        </div>
-    <?php
+                <?php
                 endwhile; ?>
-    <div class="paginacao">
-        <?php
-                // Adiciona a paginação
-                $big = 999999999;
-                echo paginate_links(array(
-                    'base'    => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
-                    'format'  => '?paged=%#%',
-                    'current' => max(1, get_query_var('paged')),
-                    'total'   => $query->max_num_pages,
-                ));
-        ?>
-    </div>
-<?php
+                <div class="paginacao">
+                    <?php
+                    // Adiciona a paginação
+                    $big = 999999999;
+                    echo paginate_links(array(
+                        'base'    => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                        'format'  => '?paged=%#%',
+                        'current' => max(1, get_query_var('paged')),
+                        'total'   => $query->max_num_pages,
+                    ));
+                    ?>
+                </div>
+            <?php
                 wp_reset_postdata();
             else :
                 echo '<p>Não há informes disponíveis.</p>';
             endif;
-?>
-    </div>
+            ?>
+        </div>
 
-</div>
+    </div>
 </div>
 
 </div>

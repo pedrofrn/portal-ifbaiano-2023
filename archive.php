@@ -1,15 +1,9 @@
 <?php get_header(); ?>
 <div id="containerMeio">
-	<div id="containerMeioEsquerda">
-		<div id="marcaCampus"></div>
-		<?php include 'menu.php'; ?>
-	</div>
+	<?php include 'coluna-menu.php'; ?>
 	<div id="containerMeioCentro">
 		<div id="tituloNoticia">
-			<?php
-			// Obter o título do arquivo de arquivo (archives.php) com mês e ano
-			echo get_the_archive_title();
-			?>
+			<?php echo get_the_archive_title();	?>
 		</div>
 		<div id="textoNoticia">
 			<?php
@@ -50,7 +44,6 @@
 				endwhile; ?>
 				<div class="paginacao">
 					<?php
-					// Adiciona a paginação
 					$big = 999999999;
 					echo paginate_links(array(
 						'base'    => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),

@@ -4,7 +4,9 @@
     const aXAvisos = meioCentro.querySelector('#avisosImportantes span.spanX');
     let closed = false;
     let slideIndex = 0;
-    
+    let touchStartX = 0;
+    let touchEndX = 0;
+
     if (aXAvisos) {
         aXAvisos.innerHTML = "<svg fill='none' stroke='currentColor' stroke-width='1.5' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'><path stroke-linecap='round' stroke-linejoin='round' d='M6 18L18 6M6 6l12 12'></path></svg >";
         aXAvisos.addEventListener('click', () => {
@@ -58,57 +60,55 @@
         }
 
         initDots();
-        
-        slideIndex++;
-    
-        if (slideIndex > slides.length) slideIndex = 1;
 
-        showSlide(slideIndex)
-        setTimeout(slidesAvisosImportantes, 10000);
+        showSlide(0); // Iniciar do primeiro slide
+
+        setInterval(function () {
+            plusSlides(1);
+        }, 10000); // Trocar o slide automaticamente a cada 10 segundos
+    }
+
+    function handleSwipe() {
+        const SWIPE_THRESHOLD = 50;
+        const deltaX = touchEndX - touchStartX;
+
+        if (deltaX > SWIPE_THRESHOLD) {
+            plusSlides(-1); // Swipe para a esquerda
+        } else if (deltaX < -SWIPE_THRESHOLD) {
+            plusSlides(1); // Swipe para a direita
+        }
+    }
+
+    function plusSlides(n) {
+        showSlide(slideIndex + n);
     }
 
     function showSlide(index, clicou = false) {
         for (let i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
-            slides[i]
             slides[i].classList.remove('active');
         }
-        
+
         if (dotsContainer) {
             let spanDots = dotsContainer.getElementsByClassName("dot");
             for (let i = 0; i < spanDots.length; i++) {
                 spanDots[i].classList.remove("active");
             }
         }
-        
+
         if (!closed) {
-            if (clicou) {
-                index = index % slides.length;
-                if (index < 0) index += slides.length;
-                slides[index].style.display = "block";
-                slides[index].classList.add('active');
-                const avisoAtivo = document.querySelector('.avisoInterno.active');
-                const alturaAviso = avisoAtivo.clientHeight;
-                slides[index].parentElement.style.height = `${alturaAviso}px`;
-                if (dotsContainer) {
-                    dotsContainer.getElementsByClassName("dot")[index].classList.add("active");
-                }
-                updateNumberSlide(index);
-                slideIndex = index;
-            } else {
-                slides[slideIndex - 1].style.display = "block";
-                slides[slideIndex - 1].classList.add('active');
-                const avisoAtivo = document.querySelector('.avisoInterno.active');
-                const alturaAviso = avisoAtivo.clientHeight;
-                slides[slideIndex - 1].parentElement.style.height = `${alturaAviso}px`;
-                if (dotsContainer) {
-                    dotsContainer.getElementsByClassName("dot")[slideIndex - 1].classList.add("active");
-                }
-                updateNumberSlide(slideIndex - 1);
+            index = index % slides.length;
+            if (index < 0) index += slides.length;
+            slides[index].style.display = "block";
+            slides[index].classList.add('active');
+            const avisoAtivo = document.querySelector('.avisoInterno.active');
+            const alturaAviso = avisoAtivo.clientHeight;
+            avisosBG.style.height = `${alturaAviso}px`;
+            if (dotsContainer) {
+                dotsContainer.getElementsByClassName("dot")[index].classList.add("active");
             }
-            setTimeout(() => {
-                avisosBG.classList.add('show');            
-            }, 0);
+            updateNumberSlide(index);
+            slideIndex = index;
         } else {
             return;
         }
@@ -122,6 +122,15 @@
             numberSlideElement.innerText = `${index + 1}/${totalSlides}`;
         }
     }
+
+    avisosBG.addEventListener('touchstart', function (event) {
+        touchStartX = event.touches[0].clientX;
+    });
+
+    avisosBG.addEventListener('touchend', function (event) {
+        touchEndX = event.changedTouches[0].clientX;
+        handleSwipe();
+    });
 
     slidesAvisosImportantes();
 })();

@@ -1,6 +1,19 @@
 <?php
 if (function_exists('register_sidebar')) {
 
+	# Area de widgets do Banner Publicidade
+	register_sidebar(
+		array(
+			'name' => 'Banner Publicidade',
+			'id' => 'publicidade',
+			'description' => 'Banner de 800x200px de publicidade temporária',
+			'before_widget' => '<div class="bannerPublicidade">',
+			'after_widget' => '</div>',
+			'before_title' => '',
+			'after_title' => '',
+		)
+	);
+
 	# Area de widgets dos Avisos importantes
 	register_sidebar(
 		array(
@@ -80,9 +93,9 @@ if (function_exists('register_sidebar')) {
 	# Area de banners laterais
 	register_sidebar(
 		array(
-			'name' => 'Banner Lateral',
+			'name' => 'Mural Banner Lateral',
 			'id' => 'banner',
-			'description' => 'Banner Lateral',
+			'description' => 'Mural Banner Lateral',
 			'before_widget' => '<div class="bannerInterno fade">',
 			'after_widget' => '</div>',
 			'before_title' => '',
@@ -156,21 +169,20 @@ add_filter('post_thumbnail_html', 'lazy_load_images');
 function fix_search_pagination($query)
 {
 	if (is_search() && $query->is_main_query()) {
-		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-		$query->set('paged', $paged);
-		$query->set('post_type', 'post');  // Adicione esta linha
+		if ($query->is_search()) {
+			$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+			$query->set('paged', $paged);
+		}
 	}
 }
 add_action('pre_get_posts', 'fix_search_pagination');
 
 function incluir_tipos_na_pesquisa($query)
 {
-	// Verifica se não é uma solicitação no painel de administração
 	if (!is_admin() && $query->is_search && $query->is_main_query()) {
 		$query->set('post_type', array('post', 'page', 'concursos', 'cursos', 'attachment'));
 		$query->set('post_status', array('publish', 'inherit'));
 
-		// Adicionamos uma condição extra para incluir anexos na pesquisa
 		add_filter('posts_join', 'filtro_por_tipo_de_arquivo_join');
 		add_filter('posts_where', 'filtro_por_tipo_de_arquivo_where');
 	}
@@ -180,20 +192,14 @@ function incluir_tipos_na_pesquisa($query)
 function filtro_por_tipo_de_arquivo_join($join)
 {
 	global $wpdb;
-
-	// Juntamos a tabela postmeta para obter a informação de MIME type
 	$join .= " LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id AND $wpdb->postmeta.meta_key = '_wp_attached_file')";
-
 	return $join;
 }
 
 function filtro_por_tipo_de_arquivo_where($where)
 {
 	global $wpdb;
-
-	// Adicione as extensões dos arquivos de documentos
 	$allowed_extensions = array('doc', 'docx', 'odt', 'pps', 'ppsx', 'pdf');
-
 	$where .= " AND (
         $wpdb->posts.post_type != 'attachment' OR
         (
@@ -201,7 +207,6 @@ function filtro_por_tipo_de_arquivo_where($where)
             SUBSTRING($wpdb->postmeta.meta_value, -3) IN ('" . implode("', '", $allowed_extensions) . "')
         )
     )";
-
 	return $where;
 }
 
@@ -231,21 +236,18 @@ function get_total_search_results_by_post_type()
 		}
 	}
 
-	// Contar os attachments
 	$attachments_count = count_attachments_in_search();
 	$total_results_by_post_type['attachment'] = $attachments_count;
 
-	wp_reset_postdata(); // Restaura as configurações globais do post
+	wp_reset_postdata();
 	return $total_results_by_post_type;
 }
 
 function count_attachments_in_search()
 {
 	global $wpdb;
-
 	$search_query = get_search_query();
 
-	// Conta os attachments que correspondem à pesquisa
 	$attachments_count = $wpdb->get_var(
 		$wpdb->prepare(
 			"SELECT COUNT(p.ID) 
@@ -669,6 +671,121 @@ function txtInscricoes_save_postdata($post_id)
 
 	update_post_meta($post_ID, 'txtInscricoes', $tInscricoes);
 }
+
+function definirUnidade_add_custom_box()
+{
+	$screens = array('cursos', 'concursos');
+	foreach ($screens as $screen) {
+		add_meta_box(
+			'definirUnidade_sectionid',
+			__('Escolha a(s) unidade(s)', 'definirUnidade_textdomain'),
+			'definirUnidade_inner_custom_box',
+			$screen,
+			'normal',
+			'high'
+		);
+	}
+}
+
+function definirUnidade_inner_custom_box($post)
+{
+	wp_nonce_field(plugin_basename(__FILE__), 'definirUnidade_noncename');
+	$definirUnidade = get_post_meta($post->ID, 'definirUnidade', true);
+
+	$unidades = array(
+		'Reitoria',
+		'Alagoinhas',
+		'Bom Jesus da Lapa',
+		'Catu',
+		'Governador Mangabeira',
+		'Guanambi',
+		'Itaberaba',
+		'Itapetinga',
+		'Santa Inês',
+		'Senhor do Bonfim',
+		'Teixeira de Freitas',
+		'Uruçuca',
+		'Valença',
+		'Xique-Xique'
+	);
+
+	echo '<div class="checkboxUnidades">';
+	foreach ($unidades as $unidade) {
+		$definirUnidade = is_array($definirUnidade) ? $definirUnidade : array();
+		$checked = in_array($unidade, $definirUnidade) ? 'checked' : '';
+		echo '<div><input type="checkbox" name="definirUnidade[]" value="' . esc_attr($unidade) . '" ' . $checked . '>';
+		echo '<label>' . esc_html($unidade) . '</label></div>';
+	}
+	echo '<div><input type="checkbox" id="definirUnidadeTodas" value="Todas as unidades">';
+	echo '<label for="definirUnidadeTodas">Todas as unidades</label></div>';
+?>
+	<style>
+		div.checkboxUnidades {
+			display: flex;
+			flex-flow: wrap;
+			line-height: 2;
+		}
+
+		div.checkboxUnidades label {
+			margin-right: 15px;
+		}
+	</style>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const todasCheckbox = document.getElementById('definirUnidadeTodas');
+			const checkboxes = document.querySelectorAll('[name="definirUnidade[]"]');
+
+			todasCheckbox.addEventListener('change', function() {
+				checkboxes.forEach(function(checkbox) {
+					checkbox.checked = todasCheckbox.checked;
+				});
+			});
+
+			checkboxes.forEach(function(checkbox) {
+				checkbox.addEventListener('change', function() {
+					todasCheckbox.checked = checkboxes.every(function(cb) {
+						return cb.checked;
+					});
+				});
+			});
+		});
+	</script>
+<?php
+}
+
+
+function definirUnidade_save_postdata($post_id)
+{
+	if (!isset($_POST['post_type']) || !isset($_POST['definirUnidade_noncename'])) {
+		return;
+	}
+
+	if (!wp_verify_nonce($_POST['definirUnidade_noncename'], plugin_basename(__FILE__))) {
+		return;
+	}
+
+	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+		return;
+	}
+
+	if ('page' == $_POST['post_type']) {
+		if (!current_user_can('edit_page', $post_id)) {
+			return;
+		}
+	} else {
+		if (!current_user_can('edit_post', $post_id)) {
+			return;
+		}
+	}
+
+	$definirUnidade = isset($_POST['definirUnidade']) ? array_map('sanitize_text_field', $_POST['definirUnidade']) : '';
+
+	update_post_meta($post_id, 'definirUnidade', $definirUnidade);
+}
+
+add_action('add_meta_boxes', 'definirUnidade_add_custom_box');
+add_action('save_post', 'definirUnidade_save_postdata');
+
 
 
 add_action('add_meta_boxes', 'linkEdital_add_custom_box');
@@ -1264,7 +1381,7 @@ function cardConcursos()
 	$horainiecho = date("H", strtotime($horaini));
 	$horafimecho = date("H", strtotime($horafim));
 	$anoPublicacao = get_the_time('Y');
-
+	$definirUnidade = get_post_meta(get_the_ID(), 'definirUnidade', true);
 	echo '<div class="cardConcursos" data-title="' . get_the_title() . '"><a href="' . get_permalink() . '"><div class="imagemCardConcursos">';
 
 	if (has_post_thumbnail())
@@ -1298,8 +1415,17 @@ function cardConcursos()
 
 		})();
 	</script>
-<?php
-	echo '<div class="avisoInscricoes" style="width:100%"><span class="timestampInicioInscricoes" style="display:none"><script>document.write(timestampInicioInscricoes)</script></span>';
+	<?php
+	echo '<div class="avisoInscricoes" style="width:100%"><span class="timestampInicioInscricoes" style="display:none"><script>document.write(timestampInicioInscricoes)</script></span><div class="unidadeInscricoesRow">';
+	if (!empty($definirUnidade)) { ?>
+		<div class="unidadesHead">
+			<?php
+			foreach ($definirUnidade as $elemento) {
+				echo '<div>' . $elemento . '</div>';
+			}
+			?>
+		</div>
+<?php }
 	if ($dataini && $datafim && $horaini && $horafim) {
 		$dataAtual = date("d/m/Y");
 		$horaAtual = date("H:i");
@@ -1307,12 +1433,12 @@ function cardConcursos()
 		$dataFimTimestamp = strtotime(DateTime::createFromFormat('d/m/Y', $datafim)->format('Y-m-d') . ' ' . $horafim);
 		$dataAtualTimestamp = strtotime($dataAtual . ' ' . $horaAtual);
 		if ($dataAtualTimestamp > $dataIniTimestamp && $dataAtualTimestamp < $dataFimTimestamp) {
-			echo "<span class='prazoInscricoesConcurso'><span style='color:#72d38f;font-size:7pt;'>&#10148;</span> Inscrições até " . $datafim . "</span>";
+			echo "<div class='prazoInscricoesConcurso'><span style='color:#72d38f;font-size:7pt;'>&#10148;</span> Inscrições até " . $datafim . "</div>";
 		} elseif ($dataAtualTimestamp < $dataIniTimestamp) {
-			echo "<span class='prazoInscricoesConcurso'><span style='color:#72d38f;font-size:7pt;'>&#10148;</span> Inscrições a partir de " . (DateTime::createFromFormat('Y-m-d', $dataini)->format('d/m/Y')) . "</span>";
+			echo "<div class='prazoInscricoesConcurso'><span style='color:#72d38f;font-size:7pt;'>&#10148;</span> Inscrições a partir de " . (DateTime::createFromFormat('Y-m-d', $dataini)->format('d/m/Y')) . "</div>";
 		}
 	}
-	echo '<div class="ultimoDocConcurso">Último documento adicionado:<br>';
+	echo '</div><div class="ultimoDocConcurso">Último documento adicionado:<br>';
 	echo '<span class="ultimoDocConcurso">' . $ultimo_documento . '</span> <span class="ultimoDocDataConcurso">- às ' . $data_formatada . '</span></div>';
 	echo '</div></div></a></div>';
 }

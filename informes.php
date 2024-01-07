@@ -35,6 +35,7 @@
                 echo "<div style='padding-top:10px' id='boxSidebarSingle'><span>Sem informes.</span></div>";
             } ?>
             <div class="maisNoticias"><a href="<?php echo get_permalink(get_page_by_title('Todos os Informes')); ?>" alt="Todos os informes"><span class="maisNoticias"> + informes</span></a></div>
+            <?php wp_reset_postdata(); ?>
         </div>
     </div>
 </div>

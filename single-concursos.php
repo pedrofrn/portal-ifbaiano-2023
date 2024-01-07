@@ -1,10 +1,6 @@
 <?php get_header(); ?>
 <div id="containerMeio">
-	<div id="containerMeioEsquerda">
-		<div id="marcaCampus"></div>
-		<?php include 'menu.php'; ?>
-	</div>
-
+	<?php include 'coluna-menu.php'; ?>
 	<div id="containerMeioCentroNoticia">
 		<div id="containerNoticiapost">
 			<!-- INICIO DA NOTICIA -->
@@ -38,6 +34,7 @@
 			?>
 					<div id="head">
 						<?php
+						$definirUnidade = get_post_meta(get_the_ID(), 'definirUnidade', true);
 						if (has_post_thumbnail()) { ?>
 							<div id="imagemprocesso">
 								<?php the_post_thumbnail(); ?>
@@ -53,7 +50,16 @@
 						<div class="headText">
 							<div class="avisoInscricoes"></div>
 							<div id="nomeEdital">
-								<?php if (!empty($numero_edital)) {
+								<?php if (!empty($definirUnidade)) { ?>
+									<div class="unidadesHead">
+										<?php
+										foreach ($definirUnidade as $elemento) {
+											echo '<div>' . $elemento . '</div>';
+										}
+										?>
+									</div>
+								<?php }
+								if (!empty($numero_edital)) {
 								?>
 									<h2>
 										Edital nº<?php echo esc_html($numero_edital); ?>
@@ -154,7 +160,7 @@
 
 											if (dataAtualParse >= inicioData + horaIni && dataAtualParse <= fimParseData) {
 												avisoInscricoes.innerText = 'Inscrições abertas';
-												avisoInscricoes.setAttribute('style', 'background: #44c767;color:#fff;text-transform: uppercase;font-weight: 800;font-size: 8pt;border-radius: 5px;padding: 4px 10px;margin-bottom:5px;');
+												avisoInscricoes.setAttribute('style', 'background: #44c767;color:#fff;text-transform: uppercase;font-weight: 800;font-size: 8pt;border-radius: 5px;padding: 4px 10px;margin:0 0 5px -10px;');
 											} else if (dataAtualParse < inicioData + horaIni) {
 												avisoInscricoes.innerText = 'Inscrições em breve';
 												avisoInscricoes.setAttribute('style', 'background: #ffc579;color:#000;text-transform: uppercase;font-weight: 800;font-size: 8pt;border-radius: 5px;padding: 4px 10px;margin-bottom:5px;');

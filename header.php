@@ -17,7 +17,6 @@
 	<link rel="preconnect" href="https://barra.brasil.gov.br">
 	<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/my-slider.css" />
 	<script src="<?php bloginfo('template_url'); ?>/js/ism-2.2.min.js"></script>
-
 	<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/contrastePreto.css" type="text/css" id="contrastePreto" media="screen" disabled />
 	<link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" title="default" id="estiloPadrao" media="screen" />
 	<title>
@@ -39,11 +38,23 @@
 	<meta name="twitter:site" content="@ifbaianooficial" />
 	<script type="text/javascript">
 		const templateUrl = '<?php bloginfo('template_url'); ?>';
+		document.addEventListener("DOMContentLoaded", function() {
+			const loadingOverlay = document.getElementById("loadingOverlay");
+			loadingOverlay.style.width = screen.width;
+			loadingOverlay.style.height = screen.height;
+			window.addEventListener("load", function() {
+				loadingOverlay.style.opacity = 0;
+				setTimeout(function() {
+					loadingOverlay.remove();
+				}, 500);
+			});
+		});
 	</script>
 	<?php wp_head(); ?>
 	<style>
-		/* #barra-brasil {background-color: #01420B !important;} */
-		#barra-brasil .conteudo-barra-brasil {max-width: 960px !important;}
+		#barra-brasil .conteudo-barra-brasil {
+			max-width: 960px !important;
+		}
 	</style>
 </head>
 
@@ -52,16 +63,42 @@
 		function toggleStyleSheet() {
 			const estiloPadrao = document.getElementById('estiloPadrao');
 			const contrastePreto = document.getElementById('contrastePreto');
-
-			if (estiloPadrao.disabled) {
+			let styleChosen = localStorage.getItem('style') || 'padrao';
+			if (styleChosen === 'padrao') {
+				estiloPadrao.disabled = true;
+				contrastePreto.disabled = false;
+				styleChosen = 'contraste';
+			} else {
+				estiloPadrao.disabled = false;
+				contrastePreto.disabled = true;
+				styleChosen = 'padrao';
+			}
+			localStorage.setItem('style', styleChosen);
+		}
+		
+		document.addEventListener('DOMContentLoaded', function() {
+			const estiloPadrao = document.getElementById('estiloPadrao');
+			const contrastePreto = document.getElementById('contrastePreto');
+			let styleChosen = localStorage.getItem('style') || 'padrao';
+			if (styleChosen === 'padrao') {
 				estiloPadrao.disabled = false;
 				contrastePreto.disabled = true;
 			} else {
 				estiloPadrao.disabled = true;
 				contrastePreto.disabled = false;
 			}
-		}
+		});
 	</script>
+	<div class="loading-overlay" id="loadingOverlay">
+		<div id="marcaInstituto">
+		</div>
+		<div class="loading-dots">
+			<div class="loading-dot"></div>
+			<div class="loading-dot"></div>
+			<div class="loading-dot"></div>
+		</div>
+
+	</div>
 	<div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;">
 		<ul id="menu-barra-temp" style="list-style:none;">
 			<li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED">
@@ -80,16 +117,18 @@
 					<?php include(TEMPLATEPATH . '/barra_navegacao.php'); ?>
 				</div>
 				<div id="Acessibilidade">
-					<a href="<?php echo get_option('home'); ?>/acessibilidade">ACESSIBILIDADE</a>
+					<!-- <a href="<?php echo get_option('home'); ?>/acessibilidade">ACESSIBILIDADE</a> -->
 					<a href="#" onclick="toggleStyleSheet(); return false;">CONTRASTE</a>
 				</div>
 			</div>
 
 			<div id="CentroHeader">
 				<div id="CentroHeaderEsquerda">
-					<div id="CentroHeaderEsquerdaTopo">
-						<span>Instituto Federal de Educação, Ciência e Tecnologia Baiano</span>
-					</div>
+					<a href="<?php echo bloginfo('home'); ?>">
+						<div id="CentroHeaderEsquerdaTopo">
+							<span>Instituto Federal de Educação, Ciência e Tecnologia Baiano</span>
+						</div>
+					</a>
 					<div id="CentroHeaderEsquerdaMeio">
 						<a class="nomeUnidade" href="<?php echo bloginfo('home'); ?>">
 							<?php bloginfo('name'); ?>
@@ -161,6 +200,8 @@
 			</div>
 		</div>
 	</div>
+
+	<?php include 'menu-mobile.php'; ?>
 
 	<div id="tudo">
 		<div class="breadcrumb">

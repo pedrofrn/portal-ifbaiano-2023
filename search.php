@@ -1,11 +1,6 @@
 <?php get_header(); ?>
-
 <div id="containerMeio">
-	<div id="containerMeioEsquerda">
-		<div id="marcaCampus"></div>
-		<?php include 'menu.php'; ?>
-	</div>
-
+	<?php include 'coluna-menu.php'; ?>
 	<div id="containerMeioCentro">
 		<div id="tituloNoticia">
 			<?php printf('Resultados da Pesquisa: <em>%s</em>', esc_html(get_search_query())); ?>
@@ -42,7 +37,7 @@
 				}
 
 				echo '</ul>';
-				// Adicione a linha informativa após os botões
+
 				$filtro_aplicado = isset($_GET['post_type_filter']) ? $_GET['post_type_filter'] : 'Todos';
 				if ($filtro_aplicado !== 'Todos') {
 					echo '<p class="filtroAplicado">Exibindo resultados por <span style="font-weight: 800;">' . $post_type_labels[$filtro_aplicado] . ':</span></p>';
@@ -52,14 +47,14 @@
 			</div>
 
 			<?php
-			// Consulta para todos os tipos de postagem
+			wp_reset_query();
 			$args_all = array(
 				's'     => get_search_query(),
 				'post_type' => 'any',
-				'order' => 'DESC', // Ordenar por data decrescente (mais recente primeiro)
+				'order' => 'DESC',
+				'paged'      => $paged,
 			);
 
-			// Se um filtro está acionado, ajustar o tipo de postagem
 			if (isset($_GET['post_type_filter']) && in_array($_GET['post_type_filter'], array('post', 'cursos', 'concursos', 'attachment', 'page'))) {
 				$post_type_filter = sanitize_text_field($_GET['post_type_filter']);
 
@@ -71,35 +66,33 @@
 				}
 			}
 
-			// Inicializar consulta para todos os tipos de postagem
 			$search_query_all = new WP_Query($args_all);
 
-			// Inicializar consulta para anexos (attachments) somente se não houver filtro
 			if (!isset($_GET['post_type_filter']) || $_GET['post_type_filter'] === 'Todos') {
 				$args_attachment = array(
 					's'              => get_search_query(),
 					'post_type'      => 'attachment',
-					'posts_per_page' => -1,
 					'post_status'    => 'inherit',
-					'order'          => 'DESC', // Ordenar por data decrescente (mais recente primeiro)
+					'order'          => 'DESC',
+					'paged'      => $paged,
 				);
 
 				$search_query_attachment = new WP_Query($args_attachment);
 
-				// Combinar resultados
 				$combined_results = array_merge($search_query_all->posts, $search_query_attachment->posts);
 				usort($combined_results, function ($a, $b) {
 					return strtotime($b->post_date) - strtotime($a->post_date);
 				});
+				$limited_results = array_slice($combined_results, 0, 10);
 			} else {
-				// Se houver um filtro acionado, usar apenas os resultados da consulta principal
-				$combined_results = $search_query_all->posts;
+				$limited_results = array_slice($search_query_all->posts, 0, 10);
 			}
 
-			if (!empty($combined_results)) :
-				foreach ($combined_results as $post) : setup_postdata($post);
+			if (!empty($limited_results)) :
+				foreach ($limited_results as $post) : setup_postdata($post);
 					$post_type    = get_post_type();
 					$source_class = 'source-' . $post_type;
+					$definirUnidade = get_post_meta(get_the_ID(), 'definirUnidade', true);
 			?>
 					<div class="noticia-lista <?php echo esc_attr($source_class); ?>">
 						<?php if ($post_type === 'attachment') : ?>
@@ -158,6 +151,15 @@
 								<?php endif; ?>
 
 								<div class="noticia-lista-resumo">
+									<?php if (!empty($definirUnidade)) { ?>
+										<div class="unidadesHead">
+											<?php
+											foreach ($definirUnidade as $elemento) {
+												echo '<div>' . $elemento . '</div>';
+											}
+											?>
+										</div>
+									<?php } ?>
 									<h3><a target="_blank" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 									<a target="_blank" href="<?php the_permalink(); ?>"><?php the_excerpt(); ?></a>
 								</div>
@@ -175,7 +177,7 @@
 						'base'    => @add_query_arg('paged', '%#%'),
 						'format'  => '?paged=%#%',
 						'current' => max(1, $paged),
-						'total'   => $wp_query->max_num_pages,
+						'total'   => $search_query_all->max_num_pages,
 					));
 					?>
 				</div>
@@ -199,8 +201,8 @@
 	for (n of numerosTotais.querySelectorAll('li')) {
 		let numero = parseInt(n.innerText, 10);
 		let numeroDoc = n.innerText.indexOf('Documento') !== -1 ? parseInt(n.innerText.replace('Documento:', '')) : 0;
-		contador += numero;		
-		isNaN(numeroDoc) ? numeroDoc = 0 : contadorDoc += numeroDoc;		
+		contador += numero;
+		isNaN(numeroDoc) ? numeroDoc = 0 : contadorDoc += numeroDoc;
 		if (n.innerText.indexOf('Página') !== -1) n.style.backgroundColor = '#ffa31a';
 		if (n.innerText.indexOf('Curso') !== -1) n.style.backgroundColor = '#43ff2f';
 		if (n.innerText.indexOf('Concurso') !== -1) {
