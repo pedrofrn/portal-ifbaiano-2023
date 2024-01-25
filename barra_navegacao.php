@@ -4,6 +4,7 @@
 		<a href="#MenuPrincipal">Ir para o menu <span>2</span></a></li>
 		<a href="#Busca">Ir para a busca <span>3</span></a></li>
 		<a href="#containerRodape">Ir para o rodapé <span>4</span></a>
+		<a href="#acessoRapido">Acesso Rápido <span>5</span></a>
 	</nav>
 </div>
 

@@ -2,7 +2,7 @@
     <div class="tituloSecao">
         Agenda e Eventos
     </div>
-    <div class="agenda-eventos-agendaReitor">
+    <div class="agenda-eventos-agendaReitor scrollAnimation">
         <div id="eventosImportantes">
             <?php dynamic_sidebar('eventos'); ?>
         </div>

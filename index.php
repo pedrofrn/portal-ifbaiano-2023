@@ -17,7 +17,7 @@
 
 		<?php include 'agenda-eventos.php'; ?>
 
-		<div class="cursosMapa">
+		<div class="cursosMapa scrollAnimation">
 			<?php include 'botoes-cursos.php'; ?>
 			<?php include 'mapa.php'; ?>
 		</div>
@@ -27,6 +27,24 @@
 </div>
 
 </div>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const elementsScroll = document.querySelectorAll('.scrollAnimation');
+
+		function checkScroll() {
+			elementsScroll.forEach((element) => {
+				const elementPosition = element.getBoundingClientRect().top;
+				const screenHeight = window.innerHeight;
+
+				if (elementPosition < screenHeight * 0.75) {
+					element.classList.add('active');
+				}
+			});
+		}
+		document.addEventListener('scroll', checkScroll);
+		checkScroll();
+	});
+</script>
 <script type='text/javascript' src='<?php bloginfo('template_url'); ?>/js/avisos-importantes.js'></script>
 <script type='text/javascript' src='<?php bloginfo('template_url'); ?>/js/mapa.js'></script>
 <script type='text/javascript' src='<?php bloginfo('template_url'); ?>/js/eventos-importantes.js'></script>

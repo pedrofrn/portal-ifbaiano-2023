@@ -118,14 +118,14 @@ a:hover {
 	width: 100%;
 	background-color: #195128;
 	border-top: 1px solid #72d38f;
-	background-image: -moz-radial-gradient(center, ellipse cover, #17882c 1%, #00510f 100%);
-	background-image: -webkit-radial-gradient(center center, circle farthest-side, #17882c 1%, #00510f 100%);
-	background-image: radial-gradient(circle farthest-side at center center, #17882c 1%, #00510f 100%);
-	background-image: -webkit-radial-gradient(center, ellipse cover, #17882c 1%, #00510f 100%);
-	background-image: -o-radial-gradient(center, ellipse cover, #17882c 1%, #00510f 100%);
-	background-image: -ms-radial-gradient(center, ellipse cover, #17882c 1%, #00510f 100%);
-	background-image: radial-gradient(ellipse at center, #17882c 1%, #00510f 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#157b28, endColorstr=#00510f, GradientType=1);
+	background-image: -moz-radial-gradient(center, ellipse cover, #17882c 1%, #0c463d 100%);
+	background-image: -webkit-radial-gradient(center center, circle farthest-side, #17882c 1%, #0c463d 100%);
+	background-image: radial-gradient(circle farthest-side at center center, #17882c 1%, #0c463d 100%);
+	background-image: -webkit-radial-gradient(center, ellipse cover, #17882c 1%, #0c463d 100%);
+	background-image: -o-radial-gradient(center, ellipse cover, #17882c 1%, #0c463d 100%);
+	background-image: -ms-radial-gradient(center, ellipse cover, #17882c 1%, #0c463d 100%);
+	background-image: radial-gradient(ellipse at center, #17882c 1%, #0c463d 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#157b28, endColorstr=#0c463d, GradientType=1);
 }
 
 #containerCabecalhoInterno {
@@ -711,8 +711,6 @@ div.breadcrumb a {
 	background-color: #00420C;
 }
 
-
-
 #MenuPrincipal ul.menu ul.sub-menu {
 	padding-left: 0px;
 	list-style: none;
@@ -834,7 +832,7 @@ div#boxSidebar .boxSidebarSingle .boxSidebarSingleTitulo a:hover {
 div#bannerPublicidade {
 	overflow: hidden;
 	width: 100%;
-	height: 120px;
+	height: 170px;
 	margin-bottom: 30px;
 }
 
@@ -875,12 +873,12 @@ div.bannerPublicidade::before {
 			rgba(255, 255, 255, 0) 0%,
 			rgba(255, 255, 255, 0.1) 5%,
 			rgba(255, 255, 255, 0) 10%);
-	animation: faixaBrilhoAnimacao 2500ms linear infinite;
+	animation: faixaBrilhoAnimacao 8s linear infinite;
 }
 
 @keyframes faixaBrilhoAnimacao {
 	to {
-		transform: translateX(100%);
+		transform: translateX(calc(100% + 50%));
 	}
 }
 
@@ -994,7 +992,7 @@ div#avisosImportantes h6.tituloAviso {
 #cardsPublicos {
 	display: flex;
 	margin-bottom: 50px;
-	gap: 10px;
+	gap: 5px;
 	flex-wrap: wrap;
 	justify-content: space-between;
 }
@@ -1266,7 +1264,7 @@ div.destaque-section {
 
 div.destaque-section div.destaque-container {
 	display: flex;
-	gap: 20px;
+	gap: 15px;
 	justify-content: space-between;
 	flex-wrap: wrap;
 }
@@ -1331,6 +1329,10 @@ div.coluna-cursos {
 
 div.coluna-cursos a {
 	text-decoration: none;
+}
+
+div.coluna-cursos a:last-of-type p {
+	margin-bottom: 0;
 }
 
 div.coluna-cursos p:hover {
@@ -1576,7 +1578,7 @@ div.agendaReitor a:hover .reitor {
 }
 
 #mapaCampus iframe {
-	min-height: 90%;
+	min-height: 92%;
 }
 
 div#mapa {
@@ -1622,17 +1624,13 @@ div#mapa .legendaMapa ul li:hover,
 	cursor: pointer;
 }
 
-div.acessoRapido {
-	margin-top: 50px;
-}
-
 /* FIM DO MIOLO INDEX */
 /* SEARCH, ARCHIVE */
 div.noticia-lista {
 	margin-bottom: 10px;
 	border-bottom: 1px dashed #e1e1e1;
 	border-top: 1px dashed #e1e1e1;
-	padding: 30px 20px;
+	padding: 30px 15px;
 }
 
 div.noticia-lista:hover {
@@ -1780,7 +1778,7 @@ div.noticia-lista-resumo a {
 div.noticia-lista-resumo p {
 	margin-top: 5px;
 	font-size: 8pt !important;
-	line-height: normal;
+	line-height: normal !important;
 }
 
 div.paginacao {
@@ -1889,6 +1887,18 @@ div.thumbNoticiaLegenda {
 	word-wrap: break-word;
 	line-height: 1.5em;
 	padding: 10px 20px;
+}
+
+#textoNoticia ul {
+	line-height: 1.8em;
+}
+
+#textoNoticia ul li {
+	margin-bottom: 10px;
+}
+
+#textoNoticia ul li:last-of-type {
+	margin-bottom: 0;
 }
 
 #textoNoticia div.wp-block-image, #textoNoticia figure.wp-block-gallery {
@@ -2478,6 +2488,78 @@ div.concursosListaManual li {
 
 /* FIM PAGE CONCURSO */
 
+/* ACESSO RÁPIDO ÍCONES */
+
+#acessoRapido {
+	display: inline-block;
+	margin-top: 50px;
+	width: 100%;
+}
+
+#acessoRapido div.icones-container {
+	display: flex;
+	flex-flow: wrap;
+	justify-content: flex-start;
+	gap: 10px;
+}
+
+#acessoRapido div.icone {
+	flex-basis: calc(13% - 9px);
+	aspect-ratio: 1 / 1;
+	padding: 5px;
+	position: relative;
+}
+
+#acessoRapido div.icone a {
+	width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    display: grid;
+    z-index: 5;
+    position: absolute;
+}
+
+#acessoRapido div.icone:hover::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background:rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+	transition: 2s ease-in;
+}
+
+#acessoRapido div.icone div {
+	position: absolute;
+	bottom: 5px;
+	font-size: 95%;
+	padding-right: 10px;
+    color: #fff;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 800;
+	text-wrap: balance;
+}
+
+#acessoRapido div.icone img {
+	max-width: 80%;
+	max-height: 50px;
+	float: right;
+}
+
+.scrollAnimation {
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.5s, transform 0.5s;
+  }
+  
+  .scrollAnimation.active {
+	opacity: 1;
+	transform: translateY(0);
+  }
+
+/* FIM ACESSO RÁPIDO ÍCONES */
+
 /* =================================== RESPONSIVO =================================== */
 @media (max-width: 730px) and (orientation: portrait) {
 
@@ -2566,6 +2648,10 @@ div.concursosListaManual li {
 
 	div.breadcrumb {
 		margin: 20px 0 30px 0 !important;
+	}
+
+	div#bannerPublicidade {
+		height: 100px !important;
 	}
 
 	#cardsPublicos .card {
@@ -2669,6 +2755,19 @@ div.concursosListaManual li {
 
 	div.coluna-cursos .cursoDestaque, div.agendaReitor p .reitor, a.btnEditais {
 		font-size:20pt !important;
+	}
+
+	div.informesSecao {
+		margin-bottom: 0 !important;
+	}
+	
+	#acessoRapido div.icone {
+		flex-basis: calc(30% - 5px) !important;
+	}
+
+	#acessoRapido div.icone img {
+		max-height: 60px !important;
+		width: auto !important;
 	}
 }
 

@@ -48,7 +48,6 @@ for (let i of titulosMenu) {
 for (const i of ulSubMenu) {
     i.previousElementSibling.style.fontWeight = '800';
     i.classList.add('hidden')
-    console.log('tem que ajustar os submenus para acesso via mobile')
 }
 
 menu.addEventListener('mouseover', (e) => {

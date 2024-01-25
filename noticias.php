@@ -96,7 +96,7 @@
 
         if ($destaque_posts) :
         ?>
-            <div class="destaque-section">
+            <div class="destaque-section scrollAnimation">
                 <div class="tituloSecao">
                     Destaques
                 </div>

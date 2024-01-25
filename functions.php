@@ -158,6 +158,255 @@ if (function_exists('register_sidebar')) {
 
 add_filter('widget_text', 'do_shortcode');
 
+// ícones
+function registrar_pagina_opcoes_icones()
+{
+	add_menu_page(
+		'Acesso Rápido',
+		'Acesso Rápido',
+		'edit_theme_options',
+		'opcoes_icones',
+		'pagina_opcoes_icones',
+		'dashicons-admin-generic',
+		30
+	);
+}
+
+add_action('admin_menu', 'registrar_pagina_opcoes_icones');
+
+function pagina_opcoes_icones()
+{
+?>
+	<div class="wrap">
+		<h1>Acesso Rápido</h1>
+		<form method="post" action="options.php">
+			<?php
+			settings_fields('opcoes_icones');
+			do_settings_sections('opcoes_icones');
+			submit_button();
+			?>
+		</form>
+	</div>
+<?php
+}
+
+function registrar_opcoes_icones()
+{
+	register_setting('opcoes_icones', 'opcoes_icones', 'sanitize_opcoes_icones');
+
+	add_settings_section(
+		'secao_icones',
+		'Configurações dos Ícones',
+		'secao_icones_callback',
+		'opcoes_icones'
+	);
+
+	add_settings_field(
+		'opcoes_icones',
+		'Ícones',
+		'campo_icones_callback',
+		'opcoes_icones',
+		'secao_icones'
+	);
+}
+
+add_action('admin_init', 'registrar_opcoes_icones');
+
+function sanitize_opcoes_icones($input)
+{
+	$sanitized_input = array();
+
+	foreach ($input as $indice => $icone) {
+		if (!empty($icone['nome']) && !empty($icone['link'])) {
+			$sanitized_input[$indice]['nome']   = sanitize_text_field($icone['nome']);
+			$sanitized_input[$indice]['imagem'] = esc_url_raw($icone['imagem']);
+			$sanitized_input[$indice]['cor']    = sanitize_text_field($icone['cor']);
+			$sanitized_input[$indice]['link']   = esc_url_raw($icone['link']);
+		}
+	}
+
+	return $sanitized_input;
+}
+
+function secao_icones_callback()
+{
+	echo '<p>Adicione, reordene, edite ou exclua ícones de acesso rápido do site.</p>';
+}
+
+function adicionar_color_picker()
+{
+	wp_enqueue_style('wp-color-picker');
+	wp_enqueue_script('wp-color-picker');
+	wp_enqueue_script('custom-color-picker', get_template_directory_uri() . '/js/custom-color-picker.js', array('wp-color-picker'), false, true);
+}
+
+add_action('admin_enqueue_scripts', 'adicionar_color_picker');
+
+function campo_icones_callback()
+{ ?>
+	<style>
+		div.icone-item {
+			display: flex;
+			gap: 15px;
+			margin-bottom: 15px;
+			align-items: flex-start;
+		}
+
+		div.icone-item div button {
+			margin: 0 !important;
+			min-height: 30px;
+		}
+
+		div.wp-picker-holder {
+			position: absolute;
+		}
+	</style>
+<?php
+	$opcoes_icones = get_option('opcoes_icones', array());
+
+	echo '<div id="icones-container" class="sortable">';
+
+	if (empty($opcoes_icones)) {
+		$opcoes_icones[] = array('nome' => '', 'imagem' => '', 'cor' => '', 'link' => '');
+	}
+
+	foreach ($opcoes_icones as $indice => $icone) {
+		echo '<div class="icone-item">';
+
+		echo '<div style="display:grid;"><label for="opcoes_icones[' . $indice . '][nome]">Nome</label>';
+		echo '<input type="text" name="opcoes_icones[' . $indice . '][nome]" placeholder="Nome do ícone" value="' . esc_attr($icone['nome']) . '"></div>';
+
+		echo '<div style="display:grid;"><label for="opcoes_icones[' . $indice . '][imagem]">URL da imagem</label>';
+		echo '<input type="text" name="opcoes_icones[' . $indice . '][imagem]" placeholder="Endereço da imagem" value="' . esc_url($icone['imagem']) . '"></div>';
+
+		echo '<div style="display:grid;"><label for="opcoes_icones[' . $indice . '][cor]">Cor do ícone</label>';
+		echo '<input type="text" class="cor-input" name="opcoes_icones[' . $indice . '][cor]" value="' . esc_attr($icone['cor']) . '" data-wp-color-picker></div>';
+
+		echo '<div style="display:grid;"><label for="opcoes_icones[' . $indice . '][link]">Link de destino</label>';
+		echo '<input type="text" name="opcoes_icones[' . $indice . '][link]" placeholder="URL a ser acessada" value="' . esc_url($icone['link']) . '"></div>';
+
+		echo '<div style="align-self:end;"><button type="button" class="remover_icone" data-indice="' . $indice . '">Remover</button></div>';
+
+		echo '</div>';
+	}
+
+	echo '</div>';
+
+	echo '<button type="button" id="adicionar_icone">Adicionar Ícone</button>';
+	echo '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const botaoAdicionar = document.getElementById("adicionar_icone");
+                const containerIcones = document.getElementById("icones-container");
+
+                botaoAdicionar.addEventListener("click", function() {
+                    const novoIndice = containerIcones.childElementCount;
+                    const novoIcone = document.createElement("div");
+					novoIcone.classList.add("icone-item");
+
+                    novoIcone.innerHTML = 
+                        \'<div style="display:grid;"><label for="opcoes_icones[\' + novoIndice + \'][nome]">Nome:</label>\' +
+                        \'<input type="text" name="opcoes_icones[\' + novoIndice + \'][nome]" value=""></div>\' +
+                        \'<div style="display:grid;"><label for="opcoes_icones[\' + novoIndice + \'][imagem]">Imagem URL:</label>\' +
+                        \'<input type="text" name="opcoes_icones[\' + novoIndice + \'][imagem]" value=""></div>\' +
+                        \'<div style="display:grid;"><label for="opcoes_icones[\' + novoIndice + \'][cor]">Cor:</label>\' +
+                        \'<input type="text" class="cor-input" name="opcoes_icones[\' + novoIndice + \'][cor]" value=""></div>\' +
+                        \'<div style="display:grid;"><label for="opcoes_icones[\' + novoIndice + \'][link]">Link:</label>\' +
+                        \'<input type="text" name="opcoes_icones[\' + novoIndice + \'][link]" value=""></div>\' +
+                        \'<div style="align-self:end;"><button type="button" class="remover_icone" data-indice="\' + novoIndice + \'">Remover</button></div>\';
+
+                    containerIcones.appendChild(novoIcone);
+					jQuery(novoIcone).find(".cor-input").wpColorPicker();
+                });
+				
+                jQuery("#icones-container.sortable").sortable({
+                    update: function(event, ui) {
+                        jQuery("#icones-container .icone-item").each(function(indice) {
+                            jQuery(this).find("input[type=text]").each(function(el) {
+                                const nomeAntigo = jQuery(this).attr("name");
+                                const novoNome = nomeAntigo.replace(/\[(\d+)\]/, "[" + indice + "]");
+                                jQuery(this).attr("name", novoNome);
+                            });
+                        });
+                    }
+                });
+                jQuery("#icones-container.sortable").disableSelection();
+
+            });
+			document.querySelectorAll("button.remover_icone").forEach(btn => {
+				btn.addEventListener("click", event => {
+					event.target.parentElement.parentElement.remove();
+					jQuery("#icones-container .icone-item").each(function(indice) {
+						jQuery(this).find("input[type=text]").each(function() {
+							const nomeAntigo = jQuery(this).attr("name");
+							const novoNome = nomeAntigo.replace(/\[(\d+)\]/, "[" + indice + "]");
+							jQuery(this).attr("name", novoNome);
+						});
+				});
+				})
+			})			
+          </script>';
+}
+
+function adicionar_jquery_ui()
+{
+	wp_enqueue_script('jquery-ui-sortable');
+}
+
+add_action('admin_enqueue_scripts', 'adicionar_jquery_ui');
+
+function obter_icones_salvos()
+{
+	return get_option('opcoes_icones', array());
+}
+
+function exibir_icones_frontend()
+{
+	$icones = obter_icones_salvos();
+
+	if (!empty($icones)) {
+		echo '<div id="acessoRapido" class="scrollAnimation">
+                 <div class="tituloSecao">Acesso rápido</div>
+                 <div class="icones-container">';
+
+		foreach ($icones as $indice => $icone) {
+			$cor = !empty($icone['cor']) ? $icone['cor'] : '#000';
+			echo '<div class="icone" style="background-color: ' . esc_attr($cor) . '; border-radius: 5px;">';
+			echo '<a title="' . esc_html($icone['nome']) . '" href="' . esc_url($icone['link']) . '" target="_blank"></a>';
+			echo '';
+			echo '<div class="nome-icone">' . esc_html($icone['nome']) . '</div>
+			<script>
+            function isBackgroundColorLight(rgbColor) {
+				const hexColor = rgbToHex(rgbColor);
+                const r = parseInt(hexColor.slice(1, 3), 16);
+                const g = parseInt(hexColor.slice(3, 5), 16);
+                const b = parseInt(hexColor.slice(5, 7), 16);
+                const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+                return brightness > 128;
+            }
+			function rgbToHex(rgbColor) {
+				const rgbArray = rgbColor.match(/\d+/g);
+				const hex = rgbArray.map(value => {
+					const hexValue = parseInt(value).toString(16);
+					return hexValue.length === 1 ? "0" + hexValue : hexValue;
+				});
+			
+				return "#" + hex.join("");
+			}
+			Array.from(document.querySelectorAll(".nome-icone")).forEach(element => {
+				element.style.color = isBackgroundColorLight(element.parentElement.style.backgroundColor) ? "#000000" : "#ffffff";	
+			})
+        	</script>';
+
+			if (!empty($icone['imagem'])) {
+				echo '<img src="' . esc_url($icone['imagem']) . '" alt="' . esc_attr($icone['nome']) . '">';
+			}
+			echo '</div>';
+		}
+		echo '</div></div>';
+	}
+}
+// fim ícones
+
 function lazy_load_images($content)
 {
 	return preg_replace('/<img(.*?)src=([\'"])(.+?)\\2(.*?)>/i', '<img$1loading="lazy" src=$2$3$2$4>', $content);
@@ -1427,11 +1676,12 @@ function cardConcursos()
 		</div>
 <?php }
 	if ($dataini && $datafim && $horaini && $horafim) {
+		$timezone = new DateTimeZone('America/Sao_Paulo');
 		$dataAtual = date("d/m/Y");
-		$horaAtual = date("H:i");
+		$horaAtual = (new DateTime('now', $timezone))->format('H:i');
 		$dataIniTimestamp = strtotime($dataini . ' ' . $horaini);
 		$dataFimTimestamp = strtotime(DateTime::createFromFormat('d/m/Y', $datafim)->format('Y-m-d') . ' ' . $horafim);
-		$dataAtualTimestamp = strtotime($dataAtual . ' ' . $horaAtual);
+		$dataAtualTimestamp = strtotime(DateTime::createFromFormat('d/m/Y', $dataAtual)->format('Y-m-d') . ' ' . $horaAtual);
 		if ($dataAtualTimestamp > $dataIniTimestamp && $dataAtualTimestamp < $dataFimTimestamp) {
 			echo "<div class='prazoInscricoesConcurso'><span style='color:#72d38f;font-size:7pt;'>&#10148;</span> Inscrições até " . $datafim . "</div>";
 		} elseif ($dataAtualTimestamp < $dataIniTimestamp) {
@@ -1442,5 +1692,37 @@ function cardConcursos()
 	echo '<span class="ultimoDocConcurso">' . $ultimo_documento . '</span> <span class="ultimoDocDataConcurso">- às ' . $data_formatada . '</span></div>';
 	echo '</div></div></a></div>';
 }
+
+// Remove a aba "Comentários" do painel de administração
+function remove_comments_menu() {
+    remove_menu_page('edit-comments.php');
+}
+add_action('admin_menu', 'remove_comments_menu');
+
+// Remove suporte a comentários em postagens e páginas
+function disable_comments_support() {
+    remove_post_type_support('post', 'comments');
+    remove_post_type_support('page', 'comments');
+}
+add_action('init', 'disable_comments_support');
+
+// Fecha os comentários na tela de edição de postagem
+function close_comments() {
+    $post_types = get_post_types();
+    foreach ($post_types as $post_type) {
+        if (post_type_supports($post_type, 'comments')) {
+            remove_post_type_support($post_type, 'comments');
+            remove_post_type_support($post_type, 'trackbacks');
+        }
+    }
+}
+add_action('admin_init', 'close_comments');
+
+// Remove links de comentários do painel de administração
+function remove_comment_links() {
+    remove_filter('comment_row_actions', 'wp_comment_row_actions', 10, 2);
+    remove_filter('page_row_actions', 'wp_comment_row_actions', 10, 2);
+}
+add_action('admin_init', 'remove_comment_links');
 
 ?>
