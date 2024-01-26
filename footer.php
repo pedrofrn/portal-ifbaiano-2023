@@ -31,11 +31,4 @@
 <script type='text/javascript' src='<?php bloginfo('template_url'); ?>/js/campus.js'></script>
 <script type='text/javascript' src='<?php bloginfo('template_url'); ?>/js/banner-lateral.js'></script>
 </body>
-<script>
-	const imgs = document.querySelectorAll('figure.wp-block-image img');
-	imgs.forEach(element => {
-		if (element.src.includes('localhost')) element.src = element.src.replace('localhost', '192.168.15.82')
-	});
-</script>
-
 </html>
