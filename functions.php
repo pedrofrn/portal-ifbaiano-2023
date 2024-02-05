@@ -60,8 +60,8 @@ if (function_exists('register_sidebar')) {
 			'description' => '',
 			'before_widget' => '',
 			'after_widget' => '',
-			'before_title' => '',
-			'after_title' => '',
+			'before_title' => '<span class="displayNone">',
+			'after_title' => '</span>',
 		)
 	);
 
