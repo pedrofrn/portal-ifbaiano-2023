@@ -19,3 +19,4 @@
         if (event.target !== inputToggle && !menuResponsivo.contains(event.target)) inputToggle.checked = false;
     })
 })();
+

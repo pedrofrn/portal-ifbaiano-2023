@@ -6,7 +6,7 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Banner Publicidade',
 			'id' => 'publicidade',
-			'description' => 'Banner de 800x200px de publicidade temporária',
+			'description' => 'Banner de 800x200px de publicidade temporária. Alimentado por 01 bloco de imagem com link.',
 			'before_widget' => '<div class="bannerPublicidade">',
 			'after_widget' => '</div>',
 			'before_title' => '',
@@ -19,7 +19,7 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Avisos importantes',
 			'id' => 'avisos',
-			'description' => 'No topo da página inicial, cadastre até 3 avisos',
+			'description' => 'No topo da página inicial, cadastre até 03 avisos (bloco de texto ou imagem).',
 			'before_widget' => '<div class="avisoInterno fade">',
 			'after_widget' => '</div>',
 			'before_title' => '<h6 class="tituloAviso">',
@@ -32,11 +32,11 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Menu Header',
 			'id' => 'menuheader',
-			'description' => 'Menu localizado no cabeçalho da página, lado direito',
+			'description' => 'Menu localizado no cabeçalho da página, lado direito. Bloco menu.',
 			'before_widget' => '',
 			'after_widget' => '',
-			'before_title' => '',
-			'after_title' => '',
+			'before_title' => '<span class="displayNone">',
+			'after_title' => '</span>',
 		)
 	);
 
@@ -45,7 +45,7 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Cards Públicos',
 			'id' => 'cards',
-			'description' => 'Cards dos Públicos: coloque até 4 imagens com dimensão de YxY pixels',
+			'description' => 'Alimentado por 04 blocos de imagens, cada um com sua legenda e link.',
 			'before_widget' => '<div class="card">',
 			'after_widget' => '</div>',
 			'before_title' => '<span>',
@@ -57,7 +57,7 @@ if (function_exists('register_sidebar')) {
 	register_sidebar(
 		array(
 			'name' => 'Menu Destaque',
-			'description' => '',
+			'description' => 'Menu na coluna lateral. Bloco menu.',
 			'before_widget' => '',
 			'after_widget' => '',
 			'before_title' => '<span class="displayNone">',
@@ -69,7 +69,7 @@ if (function_exists('register_sidebar')) {
 	register_sidebar(
 		array(
 			'name' => 'Menu Principal',
-			'description' => '',
+			'description' => 'Alimentado por blocos menu (preencha também o título de cada bloco).',
 			'before_widget' => '',
 			'after_widget' => '',
 			'before_title' => '<div class="TituloMenu">',
@@ -82,7 +82,7 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Botões Cursos',
 			'id' => 'cursos',
-			'description' => 'Botões para cursos',
+			'description' => 'Cada botão é 01 bloco de texto. Deve ter 06 blocos e cada com palavra destacada em negrito e todo o conteúdo em link.',
 			'before_widget' => '',
 			'after_widget' => '',
 			'before_title' => '',
@@ -95,7 +95,7 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Mural Banner Lateral',
 			'id' => 'banner',
-			'description' => 'Mural Banner Lateral',
+			'description' => 'Blocos de imagem (imagens quadradas com link). Quantidade a definir.',
 			'before_widget' => '<div class="bannerInterno fade">',
 			'after_widget' => '</div>',
 			'before_title' => '',
@@ -108,7 +108,7 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Eventos importantes',
 			'id' => 'eventos',
-			'description' => 'Eventos importantes',
+			'description' => 'Blocos de texto. Quantidade a definir.',
 			'before_widget' => '<div class="eventoInterno fade">',
 			'after_widget' => '</div>',
 			'before_title' => '<h6 class="tituloEvento">',
@@ -121,20 +121,7 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Agenda do Reitor',
 			'id' => 'agendareitor',
-			'description' => 'Link para agenda do Reitor',
-			'before_widget' => '',
-			'after_widget' => '',
-			'before_title' => '',
-			'after_title' => '',
-		)
-	);
-
-	# Area de Acesso Rápido
-	register_sidebar(
-		array(
-			'name' => 'Acesso Rápido',
-			'id' => 'acesso',
-			'description' => 'Botões para acesso rápido',
+			'description' => 'Gerado por 01 bloco de texto com link e palavra em negrito.',
 			'before_widget' => '',
 			'after_widget' => '',
 			'before_title' => '',

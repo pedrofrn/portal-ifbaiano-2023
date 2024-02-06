@@ -22,9 +22,9 @@ titulosMenu.forEach((element, index, array) => {
     if (index === array.length - 1) {
         element.classList.add('noMargin');
     }
-}); 
+});
 
-for (let i of titulosMenu) {    
+for (let i of titulosMenu) {
     const isMenu = Array.from(i.nextElementSibling.classList).some(classe => classe.startsWith('menu-'));
     if (isMenu) i.nextElementSibling.classList.add('hidden');
 
@@ -54,6 +54,11 @@ menu.addEventListener('mouseover', (e) => {
     if (e.target.nextElementSibling && e.target.nextElementSibling.classList.contains('sub-menu')) e.target.nextElementSibling.classList.toggle('open')
 })
 
-menuRodape.addEventListener('mouseover', (e) => {
-    if (e.target.nextElementSibling && e.target.nextElementSibling.classList.contains('sub-menu')) e.target.nextElementSibling.classList.toggle('open')
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+menuRodape.addEventListener(isMobile ? 'click' : 'mouseover', (e) => {
+    if (e.target.nextElementSibling && e.target.nextElementSibling.classList.contains('sub-menu')) {
+        e.preventDefault();
+        e.target.nextElementSibling.classList.toggle('open')
+    }
 })
