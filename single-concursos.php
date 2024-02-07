@@ -83,14 +83,14 @@
 					</div>
 					<div id="editalContent">
 						<div id="editalApresentacao">
-							<h3 id="docsLista">Apresentação</h3>
+						<h3 class="headerSecao">Apresentação</h3>
 							<div id="textoNoticia">
 								<?php the_content(); ?>
 
 							</div>
 						</div>
 						<div id="editalInscricoes">
-							<h3 id="docsLista">Inscrições</h3>
+							<h3 class="headerSecao">Inscrições</h3>
 							<!-- inscrições -->
 							<div id="periodoInscricoes">
 								<div id="textoNoticia">

@@ -54,14 +54,14 @@
 
 					<div id="editalContent">
 						<div id="editalApresentacao">
-							<h3 id="docsLista">Apresentação</h3>
+						<h3 class="headerSecao">Apresentação</h3>
 							<div id="textoNoticia">
 								<?php the_content(); ?>
 
 							</div>
 						</div>
 						<div id="editalInscricoes" style="flex:5;">
-							<h3 id="docsLista">Informações Gerais</h3>
+						<h3 class="headerSecao">Informações Gerais</h3>
 							<!-- inscrições -->
 							<div id="periodoInscricoes">
 								<?php
@@ -150,7 +150,7 @@
 					if (!empty($feture_template)) {
 					?>
 						<div id="secaoCD">
-							<h3 id="docsLista" class="cardsDocentes">Corpo docente</h3>
+						<h3 class="headerSecao cardsDocentes">Corpo docente</h3>
 							<div id="corpoDocente">
 								<div class="docente coordenador">
 									<h4 class="docenteNome">
