@@ -674,6 +674,14 @@ function get_breadcrumb()
 					echo '<a href="' . esc_url(get_tag_link($tag->term_id)) . '">' . esc_html($tag->name) . '</a> &nbsp;&nbsp;&#187;&nbsp;&nbsp; ';
 				}
 			}
+			if (is_singular('concursos')) {
+				echo '<a href="' . get_permalink(get_page_by_title('Concursos e Seleções')) . '">Concursos e Seleções</a>';
+				echo " &nbsp;&nbsp;&#187;&nbsp;&nbsp; ";
+			}
+			if (is_singular('cursos')) {
+				echo '<a href="' . esc_url(get_post_type_archive_link('cursos')) . '">Cursos</a>';
+				echo " &nbsp;&nbsp;&#187;&nbsp;&nbsp; ";
+			}
 			the_title();
 		}
 	} elseif (is_page()) {
@@ -688,23 +696,21 @@ function get_breadcrumb()
 		echo " &nbsp;&nbsp;&#187;&nbsp;&nbsp; ";
 		echo the_title();
 	} elseif (is_archive()) {
-		echo " &nbsp;&nbsp;&#187;&nbsp;&nbsp; ";
-
-		if (is_date()) {
-			echo '<a href="' . get_month_link(get_query_var('year'), get_query_var('monthnum')) . '">';
-			echo get_the_date('F Y');
-			echo '</a>';
-		} elseif (is_category()) {
-			single_cat_title();
-		} elseif (is_tag()) {
-			single_tag_title();
+		if (is_date() || is_category() || is_tag()) {
+			echo " &nbsp;&nbsp;&#187;&nbsp;&nbsp; ";
+			if (is_date()) {
+				echo '<a href="' . get_month_link(get_query_var('year'), get_query_var('monthnum')) . '">';
+				echo get_the_date('F Y');
+				echo '</a>';
+			} elseif (is_category()) {
+				single_cat_title();
+			} elseif (is_tag()) {
+				single_tag_title();
+			}
 		}
 	}
-
 	echo '</div>';
 }
-
-
 
 function get_the_post_thumbnail_src($img)
 {
@@ -1681,34 +1687,38 @@ function cardConcursos()
 }
 
 // Remove a aba "Comentários" do painel de administração
-function remove_comments_menu() {
-    remove_menu_page('edit-comments.php');
+function remove_comments_menu()
+{
+	remove_menu_page('edit-comments.php');
 }
 add_action('admin_menu', 'remove_comments_menu');
 
 // Remove suporte a comentários em postagens e páginas
-function disable_comments_support() {
-    remove_post_type_support('post', 'comments');
-    remove_post_type_support('page', 'comments');
+function disable_comments_support()
+{
+	remove_post_type_support('post', 'comments');
+	remove_post_type_support('page', 'comments');
 }
 add_action('init', 'disable_comments_support');
 
 // Fecha os comentários na tela de edição de postagem
-function close_comments() {
-    $post_types = get_post_types();
-    foreach ($post_types as $post_type) {
-        if (post_type_supports($post_type, 'comments')) {
-            remove_post_type_support($post_type, 'comments');
-            remove_post_type_support($post_type, 'trackbacks');
-        }
-    }
+function close_comments()
+{
+	$post_types = get_post_types();
+	foreach ($post_types as $post_type) {
+		if (post_type_supports($post_type, 'comments')) {
+			remove_post_type_support($post_type, 'comments');
+			remove_post_type_support($post_type, 'trackbacks');
+		}
+	}
 }
 add_action('admin_init', 'close_comments');
 
 // Remove links de comentários do painel de administração
-function remove_comment_links() {
-    remove_filter('comment_row_actions', 'wp_comment_row_actions', 10, 2);
-    remove_filter('page_row_actions', 'wp_comment_row_actions', 10, 2);
+function remove_comment_links()
+{
+	remove_filter('comment_row_actions', 'wp_comment_row_actions', 10, 2);
+	remove_filter('page_row_actions', 'wp_comment_row_actions', 10, 2);
 }
 add_action('admin_init', 'remove_comment_links');
 

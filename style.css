@@ -1897,8 +1897,8 @@ div.thumbNoticiaLegenda {
 	margin-bottom: 10px;
 }
 
-#textoNoticia ul li:last-of-type {
-	margin-bottom: 0;
+#textoNoticia ul li:last-of-type, .numerosTotais ul li {
+	margin-bottom: 0 !important;
 }
 
 #textoNoticia div.wp-block-image, #textoNoticia figure.wp-block-gallery {
