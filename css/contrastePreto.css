@@ -128,9 +128,9 @@ a:hover {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	font-size: 8pt;
+	font-size: 7pt;
 	letter-spacing: .05em;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 }
 
 #NavegacaoInterno nav {
@@ -149,7 +149,7 @@ a:hover {
 
 #NavegacaoInterno nav {
 	display: flex;
-	gap: 15px;
+	gap: 10px;
 }
 
 #NavegacaoInterno nav a span {
