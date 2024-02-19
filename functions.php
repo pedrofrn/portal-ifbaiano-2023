@@ -1722,4 +1722,9 @@ function remove_comment_links()
 }
 add_action('admin_init', 'remove_comment_links');
 
+function custom_login_styles()
+{
+	wp_enqueue_style('custom-login-styles', get_template_directory_uri() . '/login-style.css');
+}
+add_action('login_enqueue_scripts', 'custom_login_styles');
 ?>
