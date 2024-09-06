@@ -23,7 +23,7 @@ const todasUnidades = [
 ];
 
 document.querySelector('#tituloNoticia').insertAdjacentElement('afterend', criaInput());
-geraBotoesUnidades(todasUnidades, document.querySelector('input#inputP'));
+if (!document.querySelector('a.nomeUnidade').textContent.includes("Campus")) geraBotoesUnidades(todasUnidades, document.querySelector('input#inputP'));
 
 if (concursosListaManual.innerText === '') concursosListaManual.remove();
 
@@ -259,7 +259,7 @@ function aplicarFiltro(unidade, event) {
     const ulElements = concursosListaManual.querySelectorAll('ul');
 
     const resetDisplay = () => {
-        
+
         listaElementos.forEach(elemento => (elemento.style.display = 'block'));
         listaElementosOutros.forEach(elemento => (elemento.style.display = 'block'));
         anoPublicacaoElements.forEach(element => {

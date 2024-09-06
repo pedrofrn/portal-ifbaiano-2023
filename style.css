@@ -1057,7 +1057,7 @@ div.tituloSecao {
 	text-transform: uppercase;
 	letter-spacing: .1em;
 	font-size: 8pt;
-	font-weight: 800;
+	font-weight: 700;
 	margin-bottom: 10px;
 	color: #949494;
 }
@@ -1901,7 +1901,7 @@ div.thumbNoticiaLegenda {
 	margin-bottom: 0;
 }
 
-#textoNoticia div.wp-block-image, #textoNoticia figure.wp-block-gallery {
+#textoNoticia div.wp-block-image, #textoNoticia figure.wp-block-gallery, #textoNoticia figure.wp-block-image {
 	margin: 30px 0;
 }
 
@@ -2356,6 +2356,7 @@ div.cardConcursos .imagemCardConcursos img {
 }
 
 div.cardConcursos .infoCardConcursos {
+	align-content: center;
 	font-weight: normal !important;
 	flex: 5;
 }
@@ -2404,7 +2405,7 @@ div.cardConcursos:hover .infoCardConcursos .ultimoDocConcurso {
 }
 
 div.cardConcursos .infoCardConcursos span.ultimoDocConcurso {
-	font-weight: 800 !important;
+	font-weight: 700 !important;
 	color: #01420b;
 	font-style: normal;
 }

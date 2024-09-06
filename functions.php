@@ -145,13 +145,13 @@ if (function_exists('register_sidebar')) {
 	# Area de widgets do Menu do Rodapé
 	register_sidebar(
 		array(
-			'name'          => 'Menu do Rodapé',
-			'id'            => 'rodape',
-			'description'   => 'Menu do Rodapé',
+			'name' => 'Menu do Rodapé',
+			'id' => 'rodape',
+			'description' => 'Menu do Rodapé',
 			'before_widget' => '<div class="menuRodapeSingle">',
-			'after_widget'  => '</div>',
-			'before_title'  => '<span class="tituloMenuRodape">',
-			'after_title'   => '</span>',
+			'after_widget' => '</div>',
+			'before_title' => '<span class="tituloMenuRodape">',
+			'after_title' => '</span>',
 		)
 	);
 }
@@ -176,7 +176,7 @@ add_action('admin_menu', 'registrar_pagina_opcoes_icones');
 
 function pagina_opcoes_icones()
 {
-?>
+	?>
 	<div class="wrap">
 		<h1>Acesso Rápido</h1>
 		<form method="post" action="options.php">
@@ -187,7 +187,7 @@ function pagina_opcoes_icones()
 			?>
 		</form>
 	</div>
-<?php
+	<?php
 }
 
 function registrar_opcoes_icones()
@@ -218,10 +218,10 @@ function sanitize_opcoes_icones($input)
 
 	foreach ($input as $indice => $icone) {
 		if (!empty($icone['nome']) && !empty($icone['link'])) {
-			$sanitized_input[$indice]['nome']   = sanitize_text_field($icone['nome']);
+			$sanitized_input[$indice]['nome'] = sanitize_text_field($icone['nome']);
 			$sanitized_input[$indice]['imagem'] = esc_url_raw($icone['imagem']);
-			$sanitized_input[$indice]['cor']    = sanitize_text_field($icone['cor']);
-			$sanitized_input[$indice]['link']   = esc_url_raw($icone['link']);
+			$sanitized_input[$indice]['cor'] = sanitize_text_field($icone['cor']);
+			$sanitized_input[$indice]['link'] = esc_url_raw($icone['link']);
 		}
 	}
 
@@ -261,7 +261,7 @@ function campo_icones_callback()
 			position: absolute;
 		}
 	</style>
-<?php
+	<?php
 	$opcoes_icones = get_option('opcoes_icones', array());
 
 	echo '<div id="icones-container" class="sortable">';
@@ -464,7 +464,7 @@ add_filter('pre_get_posts', 'incluir_tipos_na_pesquisa');
 function get_total_search_results_by_post_type()
 {
 	$args = array(
-		's'              => get_search_query(),
+		's' => get_search_query(),
 		'posts_per_page' => -1,
 	);
 
@@ -622,48 +622,6 @@ function callback_campo_youtube()
 	echo '<input type="text" id="campo_youtube" name="campo_youtube" value="' . esc_attr($valor_atual) . '" placeholder="Insira o link do YouTube">';
 }
 
-function wt_get_category_count($input = '')
-{
-	global $wpdb;
-
-	if ($input === '') {
-		$category = get_the_category();
-		return isset($category[0]) ? $category[0]->category_count : 0;
-	} elseif (is_numeric($input)) {
-		$SQL = $wpdb->prepare("SELECT $wpdb->term_taxonomy.count FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.term_id = %d", $input);
-		return $wpdb->get_var($SQL);
-	} else {
-		$SQL = $wpdb->prepare("SELECT $wpdb->term_taxonomy.count FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->terms.slug = %s", $input);
-		return $wpdb->get_var($SQL);
-	}
-}
-
-function __popular_posts($no_posts = 6, $before = "<li>", $after = "</li>", $show_pass_post = false, $duration = "")
-{
-	global $wpdb;
-	$request = "SELECT ID, post_title, COUNT($wpdb->comments.comment_post_ID) AS \"comment_count\" FROM $wpdb->posts, $wpdb->comments";
-	$request .= " WHERE comment_approved=\"1\" AND $wpdb->posts.ID=$wpdb->comments.comment_post_ID AND post_status=\"publish\"";
-	if (!$show_pass_post)
-		$request .= " AND post_password =\"\"";
-	if ($duration != "") {
-		$request .= " AND DATE_SUB(CURDATE(),INTERVAL " . $duration . " DAY) < post_date ";
-	}
-	$request .= " GROUP BY $wpdb->comments.comment_post_ID ORDER BY comment_count DESC LIMIT $no_posts";
-	$posts = $wpdb->get_results($request);
-	$output = "";
-	if ($posts) {
-		foreach ($posts as $post) {
-			$post_title = stripslashes($post->post_title);
-			$comment_count = $post->comment_count;
-			$permalink = get_permalink($post->ID);
-			$output .= $before . " <a href=\"" . $permalink . "\" title=\"" . $post_title . "\">" . $post_title . "</a> " . $after;
-		}
-	} else {
-		$output .= $before . "None found" . $after;
-	}
-	return $output;
-}
-
 function get_breadcrumb()
 {
 	echo '<div class="breadcrumbs">Você está aqui &nbsp;&nbsp;»&nbsp;&nbsp; <a href="' . home_url() . '">Página Inicial</a>';
@@ -717,8 +675,6 @@ function get_breadcrumb()
 	echo '</div>';
 }
 
-
-
 function get_the_post_thumbnail_src($img)
 {
 	return (preg_match('~\bsrc="([^"]++)"~', $img, $matches)) ? $matches[1] : '';
@@ -750,7 +706,6 @@ add_theme_support('post-thumbnails', array('post', 'concursos', 'cursos'));
 
 add_action('add_meta_boxes', 'edital_add_custom_box');
 add_action('save_post', 'edital_save_postdata');
-
 
 function edital_add_custom_box()
 {
@@ -785,17 +740,22 @@ function edital_inner_custom_box($post)
 
 function edital_save_postdata($post_id)
 {
-	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+		return;
 
-	if (!isset($_POST['post_type'])) return;
+	if (!isset($_POST['post_type']))
+		return;
 
 	if ('page' == $_POST['post_type']) {
-		if (!current_user_can('edit_page', $post_id)) return;
+		if (!current_user_can('edit_page', $post_id))
+			return;
 	} else {
-		if (!current_user_can('edit_post', $post_id)) return;
+		if (!current_user_can('edit_post', $post_id))
+			return;
 	}
 
-	if (!isset($_POST['edital_noncename']) || !wp_verify_nonce($_POST['edital_noncename'], plugin_basename(__FILE__))) return;
+	if (!isset($_POST['edital_noncename']) || !wp_verify_nonce($_POST['edital_noncename'], plugin_basename(__FILE__)))
+		return;
 
 	if (isset($_POST['numero_edital'])) {
 		$numero_edital = sanitize_text_field($_POST['numero_edital']);
@@ -845,7 +805,8 @@ function inicioInscricoes_inner_custom_box($post)
 
 function inicioInscricoes_save_postdata($post_id)
 {
-	if (!isset($_POST['post_type'])) return;
+	if (!isset($_POST['post_type']))
+		return;
 
 	if ('page' == $_POST['post_type']) {
 		if (!current_user_can('edit_page', $post_id))
@@ -901,7 +862,8 @@ function txtInscricoes_inner_custom_box($post)
 
 function txtInscricoes_save_postdata($post_id)
 {
-	if (!isset($_POST['post_type'])) return;
+	if (!isset($_POST['post_type']))
+		return;
 
 	if ('page' == $_POST['post_type']) {
 		if (!current_user_can('edit_page', $post_id))
@@ -967,7 +929,7 @@ function definirUnidade_inner_custom_box($post)
 	}
 	echo '<div><input type="checkbox" id="definirUnidadeTodas" value="Todas as unidades">';
 	echo '<label for="definirUnidadeTodas">Todas as unidades</label></div>';
-?>
+	?>
 	<style>
 		div.checkboxUnidades {
 			display: flex;
@@ -980,26 +942,26 @@ function definirUnidade_inner_custom_box($post)
 		}
 	</style>
 	<script>
-		document.addEventListener('DOMContentLoaded', function() {
+		document.addEventListener('DOMContentLoaded', function () {
 			const todasCheckbox = document.getElementById('definirUnidadeTodas');
 			const checkboxes = document.querySelectorAll('[name="definirUnidade[]"]');
 
-			todasCheckbox.addEventListener('change', function() {
-				checkboxes.forEach(function(checkbox) {
+			todasCheckbox.addEventListener('change', function () {
+				checkboxes.forEach(function (checkbox) {
 					checkbox.checked = todasCheckbox.checked;
 				});
 			});
 
-			checkboxes.forEach(function(checkbox) {
-				checkbox.addEventListener('change', function() {
-					todasCheckbox.checked = checkboxes.every(function(cb) {
+			checkboxes.forEach(function (checkbox) {
+				checkbox.addEventListener('change', function () {
+					todasCheckbox.checked = checkboxes.every(function (cb) {
 						return cb.checked;
 					});
 				});
 			});
 		});
 	</script>
-<?php
+	<?php
 }
 
 
@@ -1066,7 +1028,8 @@ function linkEdital_inner_custom_box($post)
 
 function linkEdital_save_postdata($post_id)
 {
-	if (!isset($_POST['post_type'])) return;
+	if (!isset($_POST['post_type']))
+		return;
 
 	if ('page' == $_POST['post_type']) {
 		if (!current_user_can('edit_page', $post_id))
@@ -1135,7 +1098,8 @@ function infoCurso_inner_custom_box($post)
 
 function infoCurso_save_postdata($post_id)
 {
-	if (!isset($_POST['post_type'])) return;
+	if (!isset($_POST['post_type']))
+		return;
 
 	if ('page' == $_POST['post_type']) {
 		if (!current_user_can('edit_page', $post_id))
@@ -1275,7 +1239,7 @@ function multi_media_uploader_meta_box_func($post)
 {
 	wp_nonce_field('post_doc_upload', 'post_doc_upload_nonce');
 	$doc_upload = get_post_meta($post->ID, 'post_doc_upload', true);
-?>
+	?>
 	<style type="text/css">
 		.multi-upload-medias ul li .delete-img {
 			margin: 0 10px;
@@ -1314,9 +1278,9 @@ function multi_media_uploader_meta_box_func($post)
 	</table>
 
 	<script type="text/javascript">
-		jQuery(function($) {
+		jQuery(function ($) {
 
-			$('body').on('click', '.wc_multi_upload_image_button', function(e) {
+			$('body').on('click', '.wc_multi_upload_image_button', function (e) {
 				e.preventDefault();
 
 				var button = $(this),
@@ -1326,13 +1290,13 @@ function multi_media_uploader_meta_box_func($post)
 							text: 'Aplicar'
 						},
 						multiple: true
-					}).on('select', function() {
+					}).on('select', function () {
 						var attech_ids = '';
 						attachments
 						var attachments = custom_uploader.state().get('selection'),
 							attachment_ids = new Array(),
 							i = 0;
-						attachments.each(function(attachment) {
+						attachments.each(function (attachment) {
 							attachment_ids[i] = attachment['id'];
 							attech_ids += ',' + attachment['id'];
 							if (attachment.attributes.type == 'application/pdf') {
@@ -1353,10 +1317,10 @@ function multi_media_uploader_meta_box_func($post)
 						}
 						$(button).siblings('.wc_multi_remove_image_button').show();
 					})
-					.open();
+						.open();
 			});
 
-			$('body').on('click', '.wc_multi_remove_image_button', function() {
+			$('body').on('click', '.wc_multi_remove_image_button', function () {
 				$(this).hide().prev().val('').prev().addClass('button').html('Add Media');
 				$(this).parent().find('ul').empty();
 				return false;
@@ -1364,19 +1328,19 @@ function multi_media_uploader_meta_box_func($post)
 
 		});
 
-		jQuery(document).ready(function() {
-			jQuery(document).on('click', '.multi-upload-medias ul li i.delete-img', function() {
+		jQuery(document).ready(function () {
+			jQuery(document).on('click', '.multi-upload-medias ul li i.delete-img', function () {
 				var ids = [];
 				var this_c = jQuery(this);
 				jQuery(this).parent().remove();
-				jQuery('.multi-upload-medias ul li').each(function() {
+				jQuery('.multi-upload-medias ul li').each(function () {
 					ids.push(jQuery(this).attr('data-attechment-id'));
 				});
 				jQuery('.multi-upload-medias').find('input[type="hidden"]').attr('value', ids);
 			});
 		})
 	</script>
-<?php
+	<?php
 }
 
 function multi_media_uploader_field($name, $value = '')
@@ -1442,17 +1406,17 @@ function single_repeatable_meta_box_callback($post)
 	$doc_upload = get_post_meta($post->ID, 'post_doc_upload', true);
 
 	wp_nonce_field('repeterBox', 'formType');
-?>
+	?>
 	<script type="text/javascript">
-		jQuery(document).ready(function($) {
-			$('#add-row').on('click', function() {
+		jQuery(document).ready(function ($) {
+			$('#add-row').on('click', function () {
 				var row = $('.empty-row.custom-repeter-text').clone(true);
 				row.removeClass('empty-row custom-repeter-text').css('display', 'table-row');
 				row.insertBefore('#repeatable-fieldset-one tbody>tr:last');
 				return false;
 			});
 
-			$('.remove-row').on('click', function() {
+			$('.remove-row').on('click', function () {
 				$(this).parents('tr').remove();
 				return false;
 			});
@@ -1462,23 +1426,23 @@ function single_repeatable_meta_box_callback($post)
 	<table id="repeatable-fieldset-one" width="100%">
 		<tbody>
 			<?php
-			if ($single_repeter_group) :
+			if ($single_repeter_group):
 				foreach ($single_repeter_group as $field) {
-			?>
+					?>
 					<tr>
 						<td><input type="text" style="width:98%;" name="nome[]" value="<?php if ($field['nome'] != '')
-																							echo esc_attr($field['nome']); ?>" placeholder="Nome do(a) docente" /></td>
+							echo esc_attr($field['nome']); ?>" placeholder="Nome do(a) docente" /></td>
 						<td><input type="text" style="width:98%;" name="titulacao[]" value="<?php if ($field['titulacao'] != '')
-																								echo esc_attr($field['titulacao']); ?>" placeholder="Titulação" /></td>
+							echo esc_attr($field['titulacao']); ?>" placeholder="Titulação" /></td>
 						<td><input type="text" style="width:98%;" name="email[]" value="<?php if ($field['email'] != '')
-																							echo esc_attr($field['email']); ?>" placeholder="docente@ifbaiano.edu.br" /></td>
+							echo esc_attr($field['email']); ?>" placeholder="docente@ifbaiano.edu.br" /></td>
 						<td><input type="text" style="width:98%;" name="lattes[]" value="<?php if ($field['lattes'] != '')
-																								echo esc_attr($field['lattes']); ?>" placeholder="http://lattes.cnpq.br/docente" /></td>
+							echo esc_attr($field['lattes']); ?>" placeholder="http://lattes.cnpq.br/docente" /></td>
 						<td><a class="button remove-row" href="#1">Remover</a></td>
 					</tr>
-				<?php
+					<?php
 				}
-			else :
+			else:
 				?>
 				<tr>
 					<td><input type="text" style="width:98%;" name="nome[]" placeholder="Nome do(a) docente" /></td>
@@ -1502,7 +1466,7 @@ function single_repeatable_meta_box_callback($post)
 		</tbody>
 	</table>
 	<p><a id="add-row" class="button" href="#">Adicionar</a></p>
-<?php
+	<?php
 }
 
 function single_repeatable_meta_box_save($post_id)
@@ -1581,7 +1545,8 @@ function coordenacao_inner_custom_box($post)
 
 function coordenacao_save_postdata($post_id)
 {
-	if (!isset($_POST['post_type'])) return;
+	if (!isset($_POST['post_type']))
+		return;
 
 	if ('page' == $_POST['post_type']) {
 		if (!current_user_can('edit_page', $post_id))
@@ -1639,7 +1604,7 @@ function cardConcursos()
 		echo '<img src="https://ifbaiano.edu.br/portal/wp-content/uploads/2021/04/imagem-marca-site-concursos-2021.png" alt="Concurso IF Baiano" />';
 
 	echo '</div><div class="infoCardConcursos"><span class="titulo">' . get_the_title() . '</span>';
-?>
+	?>
 	<script>
 		(() => {
 			const dataAtual = new Date();
@@ -1674,7 +1639,7 @@ function cardConcursos()
 			}
 			?>
 		</div>
-<?php }
+	<?php }
 	if ($dataini && $datafim && $horaini && $horafim) {
 		$timezone = new DateTimeZone('America/Sao_Paulo');
 		$dataAtual = date("d/m/Y");
@@ -1688,41 +1653,143 @@ function cardConcursos()
 			echo "<div class='prazoInscricoesConcurso'><span style='color:#72d38f;font-size:7pt;'>&#10148;</span> Inscrições a partir de " . (DateTime::createFromFormat('Y-m-d', $dataini)->format('d/m/Y')) . "</div>";
 		}
 	}
-	echo '</div><div class="ultimoDocConcurso">Último documento adicionado:<br>';
-	echo '<span class="ultimoDocConcurso">' . $ultimo_documento . '</span> <span class="ultimoDocDataConcurso">- às ' . $data_formatada . '</span></div>';
+	echo '</div>';
+	if ($ultimo_documento) {
+		echo '<div class="ultimoDocConcurso">Último documento adicionado:<br>';
+		echo '<span class="ultimoDocConcurso">' . $ultimo_documento . '</span> <span class="ultimoDocDataConcurso">- às ' . $data_formatada . '</span></div>';
+	}
 	echo '</div></div></a></div>';
 }
 
 // Remove a aba "Comentários" do painel de administração
-function remove_comments_menu() {
-    remove_menu_page('edit-comments.php');
+function remove_comments_menu()
+{
+	remove_menu_page('edit-comments.php');
 }
 add_action('admin_menu', 'remove_comments_menu');
 
 // Remove suporte a comentários em postagens e páginas
-function disable_comments_support() {
-    remove_post_type_support('post', 'comments');
-    remove_post_type_support('page', 'comments');
+function disable_comments_support()
+{
+	remove_post_type_support('post', 'comments');
+	remove_post_type_support('page', 'comments');
 }
 add_action('init', 'disable_comments_support');
 
 // Fecha os comentários na tela de edição de postagem
-function close_comments() {
-    $post_types = get_post_types();
-    foreach ($post_types as $post_type) {
-        if (post_type_supports($post_type, 'comments')) {
-            remove_post_type_support($post_type, 'comments');
-            remove_post_type_support($post_type, 'trackbacks');
-        }
-    }
+function close_comments()
+{
+	$post_types = get_post_types();
+	foreach ($post_types as $post_type) {
+		if (post_type_supports($post_type, 'comments')) {
+			remove_post_type_support($post_type, 'comments');
+			remove_post_type_support($post_type, 'trackbacks');
+		}
+	}
 }
 add_action('admin_init', 'close_comments');
 
 // Remove links de comentários do painel de administração
-function remove_comment_links() {
-    remove_filter('comment_row_actions', 'wp_comment_row_actions', 10, 2);
-    remove_filter('page_row_actions', 'wp_comment_row_actions', 10, 2);
+function remove_comment_links()
+{
+	remove_filter('comment_row_actions', 'wp_comment_row_actions', 10, 2);
+	remove_filter('page_row_actions', 'wp_comment_row_actions', 10, 2);
 }
 add_action('admin_init', 'remove_comment_links');
+
+function compress_convert($file, $new_file_name = null)
+{
+	$supported_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+	if (!in_array($file['type'], $supported_types)) {
+		return $file;
+	}
+
+	$wp_upload_dir = wp_upload_dir();
+
+	$timestamp_suffix = substr(strval(time()), -4);
+	$old_file_path = $file['file'];
+	$file_name = basename($file['file']);
+	if ($new_file_name) {
+		$file_name = $new_file_name;
+	}
+	$file_name = $timestamp_suffix . '-' . $file_name;
+	$webp_file_path = $wp_upload_dir['path'] . '/' . pathinfo($file_name, PATHINFO_FILENAME) . '.webp';
+
+	if (pathinfo($old_file_path, PATHINFO_EXTENSION) === 'webp') {
+		return $file;
+	}
+
+	$image_info = @exif_read_data($old_file_path);
+	$orientation = isset($image_info['Orientation']) ? $image_info['Orientation'] : 1;
+
+	if ($orientation === 3 || $orientation === 6 || $orientation === 8) {
+		$image = imagecreatefromjpeg($old_file_path);
+		if ($orientation === 3) {
+			$image = imagerotate($image, 180, 0);
+		} elseif ($orientation === 6) {
+			$image = imagerotate($image, -90, 0);
+		} elseif ($orientation === 8) {
+			$image = imagerotate($image, 90, 0);
+		}
+		imagejpeg($image, $old_file_path, 90);
+	}
+
+	$image_info = getimagesize($old_file_path);
+	$image_type = $image_info[2];
+
+	if ($image_type === IMAGETYPE_JPEG) {
+		$image = imagecreatefromjpeg($old_file_path);
+	} elseif ($image_type === IMAGETYPE_PNG) {
+		$image = imagecreatefrompng($old_file_path);
+	} else {
+		return $file;
+	}
+
+	$image_height = imagesy($image);
+	if ($image_height > 1080) {
+		$aspect_ratio = imagesx($image) / $image_height;
+		$new_width = 1080 * $aspect_ratio;
+		$resized_image = imagescale($image, $new_width, 1080);
+		imagedestroy($image);
+		$image = $resized_image;
+	}
+
+	if (!imagewebp($image, $webp_file_path, 80)) {
+		return $file;
+	}
+
+	imagedestroy($image);
+	unlink($old_file_path);
+
+
+	return [
+		'file' => $webp_file_path,
+		'url' => $wp_upload_dir['url'] . '/' . basename($webp_file_path),
+		'type' => 'image/webp'
+	];
+}
+
+add_filter('wp_handle_upload', 'compress_convert');
+
+///
+
+function allow_editors_access_to_widgets()
+{
+	$editor = get_role('editor');
+
+	if ($editor && !$editor->has_cap('edit_theme_options')) {
+		$editor->add_cap('edit_theme_options');
+	}
+}
+add_action('admin_init', 'allow_editors_access_to_widgets');
+
+function hide_appearance_menu_for_editors()
+{
+	if (current_user_can('editor')) {
+		remove_submenu_page('themes.php', 'themes.php');
+		remove_submenu_page('themes.php', 'customize.php');
+	}
+}
+add_action('admin_menu', 'hide_appearance_menu_for_editors', 999);
 
 ?>

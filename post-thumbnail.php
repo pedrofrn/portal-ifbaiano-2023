@@ -16,7 +16,7 @@
     <script>
         (() => {
             const postThumbnail = document.querySelector('div.thumbNoticia img');
-            if (postThumbnail.height > 400) {
+            if (postThumbnail && postThumbnail.height > 400) {
                 const diffFrame = postThumbnail.height - 400 > 0 ? postThumbnail.height - 400 : (postThumbnail.height - 400) * -1;
                 postThumbnail.style.transform = `translateY(-${diffFrame / 2}px)`;
             }

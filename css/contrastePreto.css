@@ -563,9 +563,9 @@ div.breadcrumb a {
 
 .TituloMenu {
 	position: relative;
-	background-color: #fff;
-	border-top: 4px solid #00510f;
-	color: #00510f;
+	background-color: transparent;
+	border-top: 2px solid #61dd74;
+	color: rgb(97, 221, 116);
 	padding: 8px 35px 24px 10px;
 	font-size: 9pt;
 	font-weight: 800;
@@ -574,7 +574,7 @@ div.breadcrumb a {
 }
 
 .TituloMenu:hover {
-	border-top: 4px solid #4a7d53;
+	border-top: 2px solid #fff;
 }
 
 .TituloMenu.clicked {
@@ -589,11 +589,11 @@ div.breadcrumb a {
 	transform: translateY(-50%);
 	width: 12px;
 	height: 12px;
-	background: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%2300510f" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path></svg>') center/contain no-repeat;
+	background: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%2361dd74" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path></svg>') center/contain no-repeat;
 }
 
 .TituloMenu.clicked::after {
-	background: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%2300510f" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"></path></svg>') center/contain no-repeat;
+	background: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%2361dd74" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"></path></svg>') center/contain no-repeat;
 }
 
 .hidden {
@@ -1259,9 +1259,9 @@ div.destaque-section div.destaque-container .destaque-item a {
 }
 
 div.destaque-section div.destaque-container .destaque-item span.destaque-tag {
-	background-color: #fff;
-	border-top: 2px solid #177b28;
-	color: #00510f;
+	background-color: transparent;
+	border-top: 2px solid #61dd74;
+	color: #61dd74;
 	padding: 8px 35px 8px 10px;
 	font-size: 8pt;
 	line-height: 1.2;
@@ -1273,7 +1273,7 @@ div.destaque-section div.destaque-container .destaque-item span.destaque-tag {
 }
 
 div.destaque-section div.destaque-container .destaque-item span.destaque-tag:hover {
-	border-top: 2px solid #2d9ffc;
+	border-top: 2px solid #fff;
 }
 
 div.destaque-section div.destaque-container .destaque-item .destaque-imagem {
@@ -1890,7 +1890,8 @@ div.thumbNoticiaLegenda {
 	margin-bottom: 0;
 }
 
-#textoNoticia div.wp-block-image, #textoNoticia figure.wp-block-gallery {
+#textoNoticia div.wp-block-image, #textoNoticia figure.wp-block-gallery, 
+#textoNoticia figure.wp-block-image {
 	margin: 30px 0;
 }
 
@@ -2342,6 +2343,7 @@ div.cardConcursos .imagemCardConcursos img {
 }
 
 div.cardConcursos .infoCardConcursos {
+	align-content: center;
 	font-weight: normal !important;
 	flex: 5;
 }
@@ -2386,7 +2388,7 @@ div.cardConcursos .infoCardConcursos div.ultimoDocConcurso {
 }
 
 div.cardConcursos .infoCardConcursos span.ultimoDocConcurso {
-	font-weight: 800 !important;
+	font-weight: 700 !important;
 	color: #72d38f;
 	font-style: normal;
 }
