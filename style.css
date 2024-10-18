@@ -5,7 +5,7 @@
 Theme Name:		Portal IF Baiano 2023
 Theme URI:		https://www.ifbaiano.edu.br
 Version:		1.0
-Description:	Tema Wordpress criado pela Diretoria de Comunicação do IF Baiano
+Description:	VERSÃO 05/02/2024 - Tema Wordpress criado pela Diretoria de Comunicação do IF Baiano
 Author:			DICOM
 Author URI:		http://www.ifbaiano.edu.br
 Tags:			ifbaiano, campi, campus, unidades, portal
@@ -139,9 +139,9 @@ a:hover {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	font-size: 8pt;
+	font-size: 7pt;
 	letter-spacing: .05em;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 }
 
 #NavegacaoInterno nav {
@@ -160,7 +160,7 @@ a:hover {
 
 #NavegacaoInterno nav {
 	display: flex;
-	gap: 15px;
+	gap: 10px;
 }
 
 #NavegacaoInterno nav a span {
@@ -228,11 +228,11 @@ a:hover {
 	display: none;
 }
 
-
 #CentroHeaderEsquerdaTopo span,
 #CentroHeaderEsquerdaBaixo span {
 	color: #72d38f;
-	font-size: 10pt;
+	font-size: 9pt;
+	text-wrap: balance;
 }
 
 #CentroHeaderEsquerdaMeio {
@@ -1897,8 +1897,8 @@ div.thumbNoticiaLegenda {
 	margin-bottom: 10px;
 }
 
-#textoNoticia ul li:last-of-type {
-	margin-bottom: 0;
+#textoNoticia ul li:last-of-type, .numerosTotais ul li {
+	margin-bottom: 0 !important;
 }
 
 #textoNoticia div.wp-block-image, #textoNoticia figure.wp-block-gallery, #textoNoticia figure.wp-block-image {
@@ -2024,8 +2024,8 @@ div#editalContent #editalApresentacao {
 	margin-right: 20px;
 }
 
-#editalApresentacao h3#docsLista,
-#editalInscricoes h3#docsLista {
+#editalApresentacao h3.headerSecao,
+#editalInscricoes h3.headerSecao {
 	margin: 0;
 }
 
@@ -2092,7 +2092,7 @@ a.linkEdital:hover {
 	background-color: #ddd;
 }
 
-#docsLista {
+#docsLista, h3.headerSecao {
 	font-size: small;
 	color: #00510F;
 	font-weight: 600;
@@ -2192,16 +2192,21 @@ a.linkEdital:hover {
 }
 
 #corpoDocente {
-	flex-wrap: wrap;
+	flex-flow: wrap;
 	justify-content: space-between;
 }
 
 #corpoDocente .docente {
 	font-size: small;
 	padding: 20px 15px;
-	flex: auto;
-	min-width: 28%;
+	width: 28%;
+	align-self: end;
 	border-right: 1px dotted #e1e1e1;
+}
+
+#corpoDocente::after {
+	content: '';
+	flex: auto;
 }
 
 #corpoDocente .coordenador {
@@ -2223,13 +2228,13 @@ a.linkEdital:hover {
 }
 
 #corpoDocente h4.docenteNome {
-	font-size: 11pt;
+	font-size: 10pt;
 	margin: 0;
 	color: #373737;
 }
 
 #corpoDocente p.docenteTitulacao {
-	margin: 8px 0;
+	margin: 10px 0 0 0;
 	font-style: italic;
 	font-weight: normal;
 	font-size: 9pt;
@@ -2241,12 +2246,14 @@ a.linkEdital:hover {
 	background-size: 15px;
 	padding-left: 20px;
 	margin: 8px 0;
+	font-size: 8pt;
 }
 
 #corpoDocente div.docenteLattes {
 	background: url("imagens/icone-lattes.png")left no-repeat;
 	background-size: 15px;
 	padding-left: 20px;
+	font-size: 8pt;
 }
 
 .arrow {
@@ -2666,6 +2673,10 @@ div.concursosListaManual li {
 		width: 100% !important;
 	}
 
+	div#head div#imagemprocesso img {
+		width: auto !important;
+	}
+
 	#Noticias div.coluna-noticia-recente {
 		margin-top: 20px;
 	}
@@ -2709,6 +2720,10 @@ div.concursosListaManual li {
 		margin-bottom: 10px !important;
 	}
 
+	.headText #tituloNoticia {
+		text-align: center;
+	}
+
 	#textoNoticia {
 		padding: 0 10px !important;
 	}
@@ -2725,7 +2740,7 @@ div.concursosListaManual li {
 		flex: none !important;
 	}
 
-	div#head div#imagemprocesso {
+	div#head div#imagemprocesso, div#editalContent #editalApresentacao {
 		margin: 0 !important;
 	}
 
@@ -2740,6 +2755,7 @@ div.concursosListaManual li {
 
 	div#nomeEdital {
 		text-align: center;
+		margin-top: 10px;
 	}
 
 	div#nomeEdital div.unidadesHead {
@@ -2756,6 +2772,16 @@ div.concursosListaManual li {
 
 	div.coluna-cursos .cursoDestaque, div.agendaReitor p .reitor, a.btnEditais {
 		font-size:20pt !important;
+	}
+
+	#corpoDocente .docente {
+		width: 100% !important;
+		border-bottom: 1px dotted #e1e1e1;
+		border-right: 0 !important;
+	}
+
+	#corpoDocente .docente:last-of-type {
+		border-bottom: 0 !important;
 	}
 
 	div.informesSecao {

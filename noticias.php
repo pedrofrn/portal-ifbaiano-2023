@@ -47,7 +47,7 @@
                 <?php
                 $args_noticias_recentes = array(
                     'posts_per_page' => 3,
-                    'category__not_in' => array(get_cat_ID('slideshow'), get_cat_ID('informes')),
+                    'category__not_in' => array(get_cat_ID('slideshow'), get_cat_ID('destaque'), get_cat_ID('informes')),
                 );
                 $noticias_recentes = get_posts($args_noticias_recentes);
 

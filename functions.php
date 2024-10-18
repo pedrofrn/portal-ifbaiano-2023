@@ -6,7 +6,7 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Banner Publicidade',
 			'id' => 'publicidade',
-			'description' => 'Banner de 800x200px de publicidade temporária',
+			'description' => 'Banner de 800x200px de publicidade temporária. Alimentado por 01 bloco de imagem com link.',
 			'before_widget' => '<div class="bannerPublicidade">',
 			'after_widget' => '</div>',
 			'before_title' => '',
@@ -19,7 +19,7 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Avisos importantes',
 			'id' => 'avisos',
-			'description' => 'No topo da página inicial, cadastre até 3 avisos',
+			'description' => 'No topo da página inicial, cadastre até 03 avisos (bloco de texto ou imagem).',
 			'before_widget' => '<div class="avisoInterno fade">',
 			'after_widget' => '</div>',
 			'before_title' => '<h6 class="tituloAviso">',
@@ -32,11 +32,11 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Menu Header',
 			'id' => 'menuheader',
-			'description' => 'Menu localizado no cabeçalho da página, lado direito',
+			'description' => 'Menu localizado no cabeçalho da página, lado direito. Bloco menu.',
 			'before_widget' => '',
 			'after_widget' => '',
-			'before_title' => '',
-			'after_title' => '',
+			'before_title' => '<span class="displayNone">',
+			'after_title' => '</span>',
 		)
 	);
 
@@ -45,7 +45,7 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Cards Públicos',
 			'id' => 'cards',
-			'description' => 'Cards dos Públicos: coloque até 4 imagens com dimensão de YxY pixels',
+			'description' => 'Alimentado por 04 blocos de imagens, cada um com sua legenda e link.',
 			'before_widget' => '<div class="card">',
 			'after_widget' => '</div>',
 			'before_title' => '<span>',
@@ -57,7 +57,7 @@ if (function_exists('register_sidebar')) {
 	register_sidebar(
 		array(
 			'name' => 'Menu Destaque',
-			'description' => '',
+			'description' => 'Menu na coluna lateral. Bloco menu.',
 			'before_widget' => '',
 			'after_widget' => '',
 			'before_title' => '<span class="displayNone">',
@@ -69,7 +69,7 @@ if (function_exists('register_sidebar')) {
 	register_sidebar(
 		array(
 			'name' => 'Menu Principal',
-			'description' => '',
+			'description' => 'Alimentado por blocos menu (preencha também o título de cada bloco).',
 			'before_widget' => '',
 			'after_widget' => '',
 			'before_title' => '<div class="TituloMenu">',
@@ -82,7 +82,7 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Botões Cursos',
 			'id' => 'cursos',
-			'description' => 'Botões para cursos',
+			'description' => 'Cada botão é 01 bloco de texto. Deve ter 06 blocos e cada com palavra destacada em negrito e todo o conteúdo em link.',
 			'before_widget' => '',
 			'after_widget' => '',
 			'before_title' => '',
@@ -95,7 +95,7 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Mural Banner Lateral',
 			'id' => 'banner',
-			'description' => 'Mural Banner Lateral',
+			'description' => 'Blocos de imagem (imagens quadradas com link). Quantidade a definir.',
 			'before_widget' => '<div class="bannerInterno fade">',
 			'after_widget' => '</div>',
 			'before_title' => '',
@@ -108,7 +108,7 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Eventos importantes',
 			'id' => 'eventos',
-			'description' => 'Eventos importantes',
+			'description' => 'Blocos de texto. Quantidade a definir.',
 			'before_widget' => '<div class="eventoInterno fade">',
 			'after_widget' => '</div>',
 			'before_title' => '<h6 class="tituloEvento">',
@@ -121,20 +121,7 @@ if (function_exists('register_sidebar')) {
 		array(
 			'name' => 'Agenda do Reitor',
 			'id' => 'agendareitor',
-			'description' => 'Link para agenda do Reitor',
-			'before_widget' => '',
-			'after_widget' => '',
-			'before_title' => '',
-			'after_title' => '',
-		)
-	);
-
-	# Area de Acesso Rápido
-	register_sidebar(
-		array(
-			'name' => 'Acesso Rápido',
-			'id' => 'acesso',
-			'description' => 'Botões para acesso rápido',
+			'description' => 'Gerado por 01 bloco de texto com link e palavra em negrito.',
 			'before_widget' => '',
 			'after_widget' => '',
 			'before_title' => '',
@@ -645,6 +632,14 @@ function get_breadcrumb()
 					echo '<a href="' . esc_url(get_tag_link($tag->term_id)) . '">' . esc_html($tag->name) . '</a> &nbsp;&nbsp;&#187;&nbsp;&nbsp; ';
 				}
 			}
+			if (is_singular('concursos')) {
+				echo '<a href="' . get_permalink(get_page_by_title('Concursos e Seleções')) . '">Concursos e Seleções</a>';
+				echo " &nbsp;&nbsp;&#187;&nbsp;&nbsp; ";
+			}
+			if (is_singular('cursos')) {
+				echo '<a href="' . esc_url(get_post_type_archive_link('cursos')) . '">Cursos</a>';
+				echo " &nbsp;&nbsp;&#187;&nbsp;&nbsp; ";
+			}
 			the_title();
 		}
 	} elseif (is_page()) {
@@ -659,19 +654,19 @@ function get_breadcrumb()
 		echo " &nbsp;&nbsp;&#187;&nbsp;&nbsp; ";
 		echo the_title();
 	} elseif (is_archive()) {
-		echo " &nbsp;&nbsp;&#187;&nbsp;&nbsp; ";
-
-		if (is_date()) {
-			echo '<a href="' . get_month_link(get_query_var('year'), get_query_var('monthnum')) . '">';
-			echo get_the_date('F Y');
-			echo '</a>';
-		} elseif (is_category()) {
-			single_cat_title();
-		} elseif (is_tag()) {
-			single_tag_title();
+		if (is_date() || is_category() || is_tag()) {
+			echo " &nbsp;&nbsp;&#187;&nbsp;&nbsp; ";
+			if (is_date()) {
+				echo '<a href="' . get_month_link(get_query_var('year'), get_query_var('monthnum')) . '">';
+				echo get_the_date('F Y');
+				echo '</a>';
+			} elseif (is_category()) {
+				single_cat_title();
+			} elseif (is_tag()) {
+				single_tag_title();
+			}
 		}
 	}
-
 	echo '</div>';
 }
 
@@ -700,9 +695,129 @@ function posts_custom_columns($column_name, $id)
 	}
 }
 add_theme_support('post-thumbnails', array('post', 'concursos', 'cursos'));
-?>
 
-<?php
+// cronograma
+add_action('add_meta_boxes', 'cronograma_add_custom_box');
+add_action('save_post', 'cronograma_save_postdata');
+
+function cronograma_add_custom_box()
+{
+	$screens = array('concursos');
+	foreach ($screens as $screen) {
+		add_meta_box(
+			'cronograma_sectionid',                   // ID do metabox
+			__('Principais Datas do Cronograma', 'textdomain'), // Título do metabox
+			'cronograma_inner_custom_box',            // Callback para exibir o conteúdo
+			$screen                                  // Post type
+		);
+	}
+}
+
+function cronograma_inner_custom_box($post)
+{
+	wp_nonce_field(plugin_basename(__FILE__), 'cronograma_noncename');
+
+	// Recupera os valores salvos dos metadados
+	$cronograma = get_post_meta($post->ID, 'cronograma', true);
+	$cronograma_link = get_post_meta($post->ID, 'cronograma_link', true); // Campo para o link do documento.
+
+	if (empty($cronograma)) {
+		$cronograma = array(array('texto' => '', 'data' => ''));
+	}
+
+	echo '<div id="cronograma-container">';
+
+	foreach ($cronograma as $index => $item) {
+		echo '<div class="cronograma-item" style="display:flex;gap:10px;align-items:center;margin-bottom:5px;">';
+		echo '<input type="text" name="cronograma[' . $index . '][texto]" maxlength="50" value="' . esc_attr($item['texto']) . '" placeholder="Descrição" style="width:200px;" />';
+		echo '<input type="date" name="cronograma[' . $index . '][data]" value="' . esc_attr($item['data']) . '" />';
+		echo '<button type="button" class="remove-cronograma-item" style="color:red;">Remover</button>';
+		echo '</div>';
+	}
+
+	echo '</div>';
+	echo '<button type="button" id="add-cronograma-item" style="margin-top:10px;">Adicionar Cronograma</button>';
+
+	// Campo para o link do cronograma
+	echo '<div style="margin-top:15px;">';
+	echo '<label for="cronograma_link">Link do documento do cronograma:</label>';
+	echo '<input type="url" id="cronograma_link" name="cronograma_link" value="' . esc_attr($cronograma_link) . '" placeholder="https://..." style="width:100%;" />';
+	echo '</div>';
+
+	echo '<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const container = document.getElementById("cronograma-container");
+            const addButton = document.getElementById("add-cronograma-item");
+
+            addButton.addEventListener("click", function() {
+                const index = container.children.length;
+                const item = document.createElement("div");
+                item.classList.add("cronograma-item");
+                item.style.display = "flex";
+                item.style.gap = "10px";
+                item.style.alignItems = "center";
+                item.style.marginBottom = "5px";
+
+                item.innerHTML = `
+                    <input type="text" name="cronograma[${index}][texto]" maxlength="50" placeholder="Descrição" style="width:200px;" />
+                    <input type="date" name="cronograma[${index}][data]" />
+                    <button type="button" class="remove-cronograma-item" style="color:red;">Remover</button>
+                `;
+
+                container.appendChild(item);
+                item.querySelector(".remove-cronograma-item").addEventListener("click", function() {
+                    container.removeChild(item);
+                });
+            });
+
+            container.addEventListener("click", function(e) {
+                if (e.target.classList.contains("remove-cronograma-item")) {
+                    e.target.parentElement.remove();
+                }
+            });
+        });
+    </script>';
+}
+
+function cronograma_save_postdata($post_id)
+{
+	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+		return;
+
+	if (!isset($_POST['post_type']) || $_POST['post_type'] !== 'concursos')
+		return;
+
+	if (!current_user_can('edit_post', $post_id))
+		return;
+
+	if (!isset($_POST['cronograma_noncename']) || !wp_verify_nonce($_POST['cronograma_noncename'], plugin_basename(__FILE__)))
+		return;
+
+	if (isset($_POST['cronograma']) && is_array($_POST['cronograma'])) {
+		$cronograma = array();
+		foreach ($_POST['cronograma'] as $index => $item) {
+			if (!empty($item['texto']) || !empty($item['data'])) {
+				$cronograma[] = array(
+					'texto' => sanitize_text_field($item['texto']),
+					'data' => sanitize_text_field($item['data']),
+				);
+			}
+		}
+		update_post_meta($post_id, 'cronograma', $cronograma);
+	} else {
+		delete_post_meta($post_id, 'cronograma');
+	}
+
+	// Salva o link do cronograma
+	if (isset($_POST['cronograma_link'])) {
+		update_post_meta($post_id, 'cronograma_link', esc_url_raw($_POST['cronograma_link']));
+	} else {
+		delete_post_meta($post_id, 'cronograma_link');
+	}
+}
+
+
+// cronograma
 
 add_action('add_meta_boxes', 'edital_add_custom_box');
 add_action('save_post', 'edital_save_postdata');
@@ -885,6 +1000,9 @@ function txtInscricoes_save_postdata($post_id)
 
 function definirUnidade_add_custom_box()
 {
+	if (verifica_se_campus())
+		return;
+
 	$screens = array('cursos', 'concursos');
 	foreach ($screens as $screen) {
 		add_meta_box(
@@ -1241,14 +1359,29 @@ function multi_media_uploader_meta_box_func($post)
 	$doc_upload = get_post_meta($post->ID, 'post_doc_upload', true);
 	?>
 	<style type="text/css">
-		.multi-upload-medias ul li .delete-img {
-			margin: 0 10px;
-			background: red;
+		.multi-upload-medias ul li .delete-img,
+		.multi-upload-medias ul li .copy-link {
+			margin: 0 5px;
 			border-radius: 50%;
 			cursor: pointer;
 			text-decoration: none;
 			line-height: 20px;
 			color: white;
+		}
+
+		.multi-upload-medias ul li .delete-img {
+			background: red;
+		}
+
+		.multi-upload-medias ul li .copy-link {
+			background: #e1e1e1;
+			border-radius: 5px !important;
+			border: none;
+			color: #333;
+			font-size: x-small;
+			text-transform: uppercase;
+			letter-spacing: .1em;
+			border-radius: 50%;
 		}
 
 		.multi-upload-medias ul li {
@@ -1329,6 +1462,7 @@ function multi_media_uploader_meta_box_func($post)
 		});
 
 		jQuery(document).ready(function () {
+			// Deletar documento
 			jQuery(document).on('click', '.multi-upload-medias ul li i.delete-img', function () {
 				var ids = [];
 				var this_c = jQuery(this);
@@ -1338,7 +1472,17 @@ function multi_media_uploader_meta_box_func($post)
 				});
 				jQuery('.multi-upload-medias').find('input[type="hidden"]').attr('value', ids);
 			});
-		})
+
+			// Função de copiar link
+			jQuery(document).on('click', '.multi-upload-medias ul li button.copy-link', function () {
+				var link = jQuery(this).siblings('a').attr('href');
+				navigator.clipboard.writeText(link).then(function () {
+					alert('Link copiado: ' + link);
+				}, function (err) {
+					console.error('Erro ao copiar link: ', err);
+				});
+			});
+		});
 	</script>
 	<?php
 }
@@ -1356,7 +1500,7 @@ function multi_media_uploader_field($name, $value = '')
 			if ($image_attributes = wp_get_attachment_url($values, $image_size)) {
 				$attachment_title = get_the_title($values);
 				$attachment_time = get_the_time('d/m/Y \à\s H\hi', $values);
-				$image_str .= '<li data-attechment-id=' . $values . '><a href="' . $image_attributes . '" target="_blank"><strong>' . $attachment_title . '</strong></a> - ' . $attachment_time . '<i class="dashicons dashicons-no delete-img"></i></li>';
+				$image_str .= '<li data-attechment-id=' . $values . '><a href="' . $image_attributes . '" target="_blank"><strong>' . $attachment_title . '</strong></a> - ' . $attachment_time . '<button class="copy-link">Copiar Link</button><i class="dashicons dashicons-no delete-img"></i></li>';
 			}
 		}
 	}
@@ -1712,7 +1856,7 @@ function compress_convert($file, $new_file_name = null)
 	if ($new_file_name) {
 		$file_name = $new_file_name;
 	}
-	$file_name = $timestamp_suffix . '-' . $file_name;
+	$file_name = $file_name . '-' . $timestamp_suffix;
 	$webp_file_path = $wp_upload_dir['path'] . '/' . pathinfo($file_name, PATHINFO_FILENAME) . '.webp';
 
 	if (pathinfo($old_file_path, PATHINFO_EXTENSION) === 'webp') {
@@ -1771,8 +1915,6 @@ function compress_convert($file, $new_file_name = null)
 
 add_filter('wp_handle_upload', 'compress_convert');
 
-///
-
 function allow_editors_access_to_widgets()
 {
 	$editor = get_role('editor');
@@ -1792,4 +1934,275 @@ function hide_appearance_menu_for_editors()
 }
 add_action('admin_menu', 'hide_appearance_menu_for_editors', 999);
 
+function custom_login_styles()
+{
+	wp_enqueue_style('custom-login-styles', get_template_directory_uri() . '/login-style.css');
+}
+add_action('login_enqueue_scripts', 'custom_login_styles');
+
+function verifica_se_campus()
+{
+	$nome_site = get_bloginfo('name');
+
+	if (strpos($nome_site, 'Campus') === 0)
+		return true;
+	else
+		return false;
+}
+
+
+//
+// Adiciona a ação para criar o metabox
+add_action('add_meta_boxes', 'add_passo_a_passo_metabox');
+function add_passo_a_passo_metabox()
+{
+	add_meta_box(
+		'passo_a_passo_metabox',          // ID do metabox
+		'Link de Passo a Passo',          // Título do metabox
+		'render_passo_a_passo_metabox',   // Função de callback para renderizar o metabox
+		'concursos',                      // Post type onde o metabox aparecerá
+		'normal',                         // Contexto: normal, side, advanced
+		'high'                            // Prioridade: high, core, default, low
+	);
+}
+
+// Renderiza o conteúdo do metabox
+function render_passo_a_passo_metabox($post)
+{
+	// Recupera os valores salvos dos metadados, se existirem
+	$passo_a_passo_url = get_post_meta($post->ID, '_passo_a_passo_url', true);
+	$passo_a_passo_rotulo = get_post_meta($post->ID, '_passo_a_passo_rotulo', true);
+
+	// Campo nonce para segurança
+	wp_nonce_field('save_passo_a_passo_metabox', 'passo_a_passo_nonce');
+
+	echo '<div style="display:flex;gap:10px;">';
+	echo '<p style="margin:0;">';
+	echo '<label for="passo_a_passo_rotulo">Insira o rótulo para o link:</label>';
+	echo '<input type="text" id="passo_a_passo_rotulo" placeholder="Rótulo do campo" name="passo_a_passo_rotulo" value="' . esc_attr($passo_a_passo_rotulo) . '" style="width: 100%;">';
+	echo '</p>';
+	// Exibe os campos de entrada de URL e rótulo
+	echo '<p style="margin:0;">';
+	echo '<label for="passo_a_passo_url">Insira o link do passo a passo:</label>';
+	echo '<input type="url" id="passo_a_passo_url" placeholder="Link do campo" name="passo_a_passo_url" value="' . esc_attr($passo_a_passo_url) . '" style="width: 100%;">';
+	echo '</p>';
+	echo '</div>';
+}
+
+// Salva os dados do metabox
+add_action('save_post', 'save_passo_a_passo_metabox');
+function save_passo_a_passo_metabox($post_id)
+{
+	// Verifica o campo nonce para garantir que a requisição é segura
+	if (!isset($_POST['passo_a_passo_nonce']) || !wp_verify_nonce($_POST['passo_a_passo_nonce'], 'save_passo_a_passo_metabox')) {
+		return;
+	}
+
+	// Verifica se o usuário tem permissão para salvar os dados
+	if (!current_user_can('edit_post', $post_id)) {
+		return;
+	}
+
+	// Salva o valor do campo de URL
+	if (isset($_POST['passo_a_passo_url'])) {
+		$passo_a_passo_url = sanitize_text_field($_POST['passo_a_passo_url']);
+		update_post_meta($post_id, '_passo_a_passo_url', esc_url($passo_a_passo_url));
+	}
+
+	// Salva o valor do campo de rótulo
+	if (isset($_POST['passo_a_passo_rotulo'])) {
+		$passo_a_passo_rotulo = sanitize_text_field($_POST['passo_a_passo_rotulo']);
+		update_post_meta($post_id, '_passo_a_passo_rotulo', $passo_a_passo_rotulo);
+	}
+}
+
+// Adiciona a ação para criar o metabox
+add_action('add_meta_boxes', 'add_perguntas_respostas_metabox');
+function add_perguntas_respostas_metabox()
+{
+	add_meta_box(
+		'perguntas_respostas_metabox',          
+		'Perguntas e Respostas',                
+		'render_perguntas_respostas_metabox',
+		'concursos',    
+		'normal',               
+		'high'                     
+	);
+}
+
+// Renderiza o conteúdo do metabox
+function render_perguntas_respostas_metabox($post)
+{
+	// Recupera os valores salvos dos metadados, se existirem
+	$perguntas_respostas = get_post_meta($post->ID, '_perguntas_respostas', true);
+
+	// Campo nonce para segurança
+	wp_nonce_field('save_perguntas_respostas_metabox', 'perguntas_respostas_nonce');
+
+	// Estrutura inicial do container
+	echo '<div id="perguntas-respostas-container">';
+
+	// Exibe as perguntas e respostas salvas, se houver
+	if (!empty($perguntas_respostas) && is_array($perguntas_respostas)) {
+		foreach ($perguntas_respostas as $index => $item) {
+			echo '<div class="pergunta-resposta-group"  style="max-width: 500px;" data-index="' . $index . '">';
+			echo '<p><label>Pergunta:</label><input type="text" name="perguntas_respostas[' . $index . '][pergunta]" value="' . esc_attr($item['pergunta']) . '" style="width: 100%; margin-top: 5px;"></p>';
+			echo '<p><label>Resposta:</label><textarea name="perguntas_respostas[' . $index . '][resposta]" style="width: 100%; margin-top: 5px;">' . esc_textarea($item['resposta']) . '</textarea></p>';
+			echo '<button type="button" class="remove-group button">Remover</button>';
+			echo '</div>';
+		}
+	} else {
+		// Exibe um grupo vazio se não houver dados salvos
+		echo '<div class="pergunta-resposta-group" style="max-width: 500px;" data-index="0">';
+		echo '<p><label>Pergunta:</label><input type="text" name="perguntas_respostas[0][pergunta]" style="width: 100%; margin-top: 5px;"></p>';
+		echo '<p><label>Resposta:</label><textarea name="perguntas_respostas[0][resposta]" style="width: 100%; margin-top: 5px;"></textarea></p>';
+		echo '<button type="button" class="remove-group button">Remover</button>';
+		echo '</div>';
+	}
+
+	echo '</div>'; // Fecha o container principal
+
+	// Botão para adicionar mais perguntas e respostas
+	echo '<button type="button" id="add-group" class="button">Adicionar Pergunta e Resposta</button>';
+	?>
+	<!-- Script para adicionar e remover grupos de perguntas e respostas dinamicamente -->
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const container = document.getElementById('perguntas-respostas-container');
+			const addButton = document.getElementById('add-group');
+
+			// Função para adicionar um novo grupo de pergunta e resposta
+			addButton.addEventListener('click', function () {
+				const index = container.querySelectorAll('.pergunta-resposta-group').length;
+				const group = document.createElement('div');
+				group.classList.add('pergunta-resposta-group');
+				group.setAttribute('data-index', index);
+				group.setAttribute('style', 'max-width: 500px;');
+				group.innerHTML = `
+				<p>
+					<label>Pergunta:</label>
+					<input type="text" name="perguntas_respostas[${index}][pergunta]" style="width: 100%; margin-top: 5px;">
+				</p>
+				<p>
+					<label>Resposta:</label>
+					<textarea name="perguntas_respostas[${index}][resposta]" style="width: 100%; margin-top: 5px;"></textarea>
+				</p>
+				<button type="button" class="remove-group button">Remover</button>
+			`;
+				container.appendChild(group);
+			});
+
+			// Delegação de evento para remover um grupo de pergunta e resposta
+			container.addEventListener('click', function (event) {
+				if (event.target.classList.contains('remove-group')) {
+					event.target.parentElement.remove();
+					reindexGroups();
+				}
+			});
+
+			// Reindexa os grupos após remoção
+			function reindexGroups() {
+				const groups = container.querySelectorAll('.pergunta-resposta-group');
+				groups.forEach((group, index) => {
+					group.setAttribute('data-index', index);
+					group.querySelector('input').setAttribute('name', `perguntas_respostas[${index}][pergunta]`);
+					group.querySelector('textarea').setAttribute('name', `perguntas_respostas[${index}][resposta]`);
+				});
+			}
+		});
+	</script>
+	<?php
+}
+
+// Salva os dados do metabox
+add_action('save_post', 'save_perguntas_respostas_metabox');
+function save_perguntas_respostas_metabox($post_id)
+{
+	// Verifica o campo nonce para garantir que a requisição é segura
+	if (!isset($_POST['perguntas_respostas_nonce']) || !wp_verify_nonce($_POST['perguntas_respostas_nonce'], 'save_perguntas_respostas_metabox')) {
+		return;
+	}
+
+	// Verifica se o usuário tem permissão para salvar os dados
+	if (!current_user_can('edit_post', $post_id)) {
+		return;
+	}
+
+	// Verifica e sanitiza as perguntas e respostas
+	if (isset($_POST['perguntas_respostas']) && is_array($_POST['perguntas_respostas'])) {
+		$perguntas_respostas = array_filter($_POST['perguntas_respostas'], function ($item) {
+			// Remove grupos vazios e sanitiza as entradas válidas
+			return !empty($item['pergunta']) || !empty($item['resposta']);
+		});
+
+		// Sanitiza os valores e salva
+		$perguntas_respostas = array_map(function ($item) {
+			return [
+				'pergunta' => sanitize_text_field($item['pergunta']),
+				'resposta' => sanitize_textarea_field($item['resposta']),
+			];
+		}, $perguntas_respostas);
+
+		update_post_meta($post_id, '_perguntas_respostas', $perguntas_respostas);
+	} else {
+		// Remove o meta se não houver dados válidos
+		delete_post_meta($post_id, '_perguntas_respostas');
+	}
+}
+?>
+
+<?php
+// Adiciona a ação para criar o metabox de contato
+add_action('add_meta_boxes', 'add_contato_metabox');
+function add_contato_metabox()
+{
+	add_meta_box(
+		'contato_metabox',           // ID do metabox
+		'Contato (WhatsApp ou E-mail)', // Título do metabox
+		'render_contato_metabox',    // Função de callback para renderizar o metabox
+		'concursos',                 // Post type onde o metabox aparecerá
+		'normal',                    // Contexto: normal, side, advanced
+		'high'                       // Prioridade: high, core, default, low
+	);
+}
+
+// Renderiza o conteúdo do metabox
+function render_contato_metabox($post)
+{
+	// Recupera o valor salvo do metadado, se existir
+	$contato = get_post_meta($post->ID, '_contato', true);
+
+	// Campo nonce para segurança
+	wp_nonce_field('save_contato_metabox', 'contato_nonce');
+
+	// Estrutura do campo de contato
+	echo '<p>';
+	echo '<label for="contato_input">Insira o número de WhatsApp (com DDD) ou o e-mail:</label>';
+	echo '<input type="text" id="contato_input" name="contato" value="' . esc_attr($contato) . '" style="width: 100%; margin-top: 5px;" placeholder="Ex: +5511999999999 ou email@dominio.com">';
+	echo '</p>';
+}
+
+// Salva os dados do metabox
+add_action('save_post', 'save_contato_metabox');
+function save_contato_metabox($post_id)
+{
+	// Verifica o campo nonce para garantir que a requisição é segura
+	if (!isset($_POST['contato_nonce']) || !wp_verify_nonce($_POST['contato_nonce'], 'save_contato_metabox')) {
+		return;
+	}
+
+	// Verifica se o usuário tem permissão para salvar os dados
+	if (!current_user_can('edit_post', $post_id)) {
+		return;
+	}
+
+	// Sanitiza e salva o contato se o campo estiver preenchido
+	if (isset($_POST['contato']) && !empty($_POST['contato'])) {
+		$contato = sanitize_text_field($_POST['contato']);
+		update_post_meta($post_id, '_contato', $contato);
+	} else {
+		// Remove o meta se o campo estiver vazio
+		delete_post_meta($post_id, '_contato');
+	}
+}
 ?>

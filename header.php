@@ -26,14 +26,34 @@
 	<link rel="canonical" href="<?php echo bloginfo('home'); ?>" />
 	<meta property="og:locale" content="pt_BR" />
 	<meta property="og:type" content="website" />
-	<meta property="og:title" content="IF Baiano - Instituto Federal Baiano" />
-	<meta property="og:description" content="Página inicial do Instituto Federal Baiano - <?php bloginfo('name'); ?>. Compartilhar conteúdo: Facebook Twitter LinkedIn Pinterest WhatsApp" />
+	<?php
+	if (is_singular()) {
+		global $post;
+		$og_title = get_the_title($post->ID);
+	} else {
+		$og_title = get_bloginfo('name');
+	}
+
+	if (is_singular()) {
+		$og_description = get_the_excerpt();
+	} else {
+		$og_description = get_bloginfo('description');
+	}
+	if (is_singular() && has_post_thumbnail()) {
+		global $post;
+		$thumbnail_id = get_post_thumbnail_id($post->ID);
+		$image_url = wp_get_attachment_image_src($thumbnail_id, 'full');
+		$og_image_url = $image_url[0];
+	} else {
+		$og_image_url = get_template_directory_uri() . '/imagens/logo_vertical.png';
+	}
+	?>
+	<meta property="og:title" content="<?php echo esc_attr($og_title); ?>" />
+	<meta property="og:description" content="<?php echo esc_attr($og_description); ?>" />
+	<meta property="og:image" content="<?php echo esc_url($og_image_url); ?>" />
 	<meta property="og:url" content="<?php echo bloginfo('home'); ?>" />
 	<meta property="og:site_name" content="Instituto Federal Baiano" />
 	<meta property="article:publisher" content="https://www.facebook.com/IFBaiano.Oficial/" />
-	<meta property="og:image" content="<?php bloginfo('template_url'); ?>/imagens/logo_vertical.png" />
-	<meta property="og:image:width" content="768" />
-	<meta property="og:image:height" content="1080" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="@ifbaianooficial" />
 	<script type="text/javascript">
@@ -75,7 +95,7 @@
 			}
 			localStorage.setItem('style', styleChosen);
 		}
-		
+
 		document.addEventListener('DOMContentLoaded', function() {
 			const estiloPadrao = document.getElementById('estiloPadrao');
 			const contrastePreto = document.getElementById('contrastePreto');
