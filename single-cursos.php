@@ -7,7 +7,7 @@
 			if (have_posts()) {
 				while (have_posts()) {
 					the_post();
-			?>
+					?>
 					<div id="head">
 						<div id="imagemprocesso">
 							<?php
@@ -33,13 +33,13 @@
 									?>
 								</div>
 							<?php } ?>
-							<h2 style="font-weight:800;">
+							<span>
 								<?php $tipo = get_post_meta(get_the_ID(), 'tipo_curso', true);
 								echo $tipo; ?>
-							</h2>
-							<div id="tituloNoticia">
+							</span>
+							<h1 id="tituloNoticia">
 								<?php the_title(); ?>
-							</div>
+							</h1>
 							<p>
 								<?php
 								if (has_excerpt()) { ?>
@@ -54,14 +54,14 @@
 
 					<div id="editalContent">
 						<div id="editalApresentacao">
-						<h3 class="headerSecao">Apresentação</h3>
+							<h2 class="headerSecao">Apresentação</h2>
 							<div id="textoNoticia">
 								<?php the_content(); ?>
 
 							</div>
 						</div>
 						<div id="editalInscricoes" style="flex:5;">
-						<h3 class="headerSecao">Informações Gerais</h3>
+							<h2 class="headerSecao">Informações Gerais</h2>
 							<!-- inscrições -->
 							<div id="periodoInscricoes">
 								<?php
@@ -148,9 +148,9 @@
 					$lattesCoo = get_post_meta(get_the_ID(), 'coordenacao_lattes', true);
 					$feture_template = get_post_meta($id, 'single_repeter_group', true);
 					if (!empty($feture_template)) {
-					?>
+						?>
 						<div id="secaoCD">
-						<h3 class="headerSecao cardsDocentes">Corpo docente</h3>
+							<h2 class="headerSecao cardsDocentes">Corpo docente</h2>
 							<div id="corpoDocente">
 								<div class="docente coordenador">
 									<h4 class="docenteNome">
@@ -184,12 +184,12 @@
 
 							</div>
 						</div>
-					<?php
+						<?php
 					}
 					?>
 					<?php include 'table-documents.php'; ?>
 
-			<?php }
+				<?php }
 			}
 			?>
 			<!-- FIM DA NOTICIA -->

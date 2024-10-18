@@ -26,13 +26,13 @@ if (is_active_sidebar('cursos')) {
                 element.style.backgroundColor = corDeFundo;
 
                 const termo = element.querySelector('strong');
-                termo.classList.add('cursoDestaque');
+                if (termo) termo.classList.add('cursoDestaque');
 
                 if (!element.closest('a')) {
                     element.parentNode.replaceChild(link, element);
                     link.appendChild(element);
                 }
-                if (element.innerText !== termo.innerText) element.insertBefore(document.createElement('br'), termo);
+                if (termo && element.innerText !== termo.innerText) element.insertBefore(document.createElement('br'), termo);
             });
         </script>
     </div>

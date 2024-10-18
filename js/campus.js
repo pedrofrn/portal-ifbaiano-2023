@@ -2,24 +2,54 @@ const localMarca = document.querySelector('#marcaCampus');
 const nomeUnidade = document.querySelector('a.nomeUnidade');
 const localMapa = document.querySelector('#mapaCampus');
 const CentroHeaderEsquerdaTopo = document.querySelector('#CentroHeaderEsquerdaTopo');
-const tituloDocentes = document.querySelector('h3.cardsDocentes');
+const tituloDocentes = document.querySelector('h2.cardsDocentes');
 const corpoDocente = document.querySelector('div#corpoDocente');
+const pergRespContainer = document.querySelector('.perguntas-respostas-container');
+
 if (corpoDocente) {
     corpoDocente.style.display = 'none';
     const expandir = tituloDocentes.appendChild(criaSpanExpand());
+
     document.querySelector('div#secaoCD').addEventListener('click', () => {
         if (corpoDocente.style.display === 'flex') {
             expandir.classList.remove('up');
             expandir.classList.add('down');
-            return corpoDocente.style.display = 'none';
-        }
-        else {
+            corpoDocente.style.height = '0'; // Define a altura inicial para a animação
+            setTimeout(() => {
+                corpoDocente.style.display = 'none'; // Oculta após a animação
+            }, 300); // Tempo correspondente à duração da animação
+        } else {
+            corpoDocente.style.display = 'flex';
+            setTimeout(() => {
+                corpoDocente.style.height = corpoDocente.scrollHeight + 'px'; // Define a altura para mostrar
+            }, 10); // Pequeno atraso para garantir que o display esteja 'flex'
             expandir.classList.remove('down');
             expandir.classList.add('up');
-            return corpoDocente.style.display = 'flex';
         }
-    })
+    });
+}
 
+if (pergRespContainer) {
+    const pergInner = document.querySelector('.perguntas-respostas-interna');
+    pergInner.style.display = 'none';
+    const expandir = document.querySelector('h2.perguntasEdital').appendChild(criaSpanExpand());
+    document.querySelector('div#secaoCD').addEventListener('click', () => {
+        if (pergInner.style.display === 'flex') {
+            expandir.classList.remove('up');
+            expandir.classList.add('down');
+            pergInner.style.height = '0';
+            setTimeout(() => {
+                pergInner.style.display = 'none';
+            }, 10);
+        } else {
+            pergInner.style.display = 'flex';
+            setTimeout(() => {
+                pergInner.style.height = pergInner.scrollHeight + 'px';
+            }, 10);
+            expandir.classList.remove('down');
+            expandir.classList.add('up');
+        }
+    });
 }
 
 function insereMarcasUnidade(url) {

@@ -9,9 +9,9 @@ get_header(); ?>
     <?php include 'coluna-menu.php'; ?>
     <div id="containerMeioCentro">
 
-        <div id="tituloNoticia">
+        <h1 id="tituloNoticia">
             <?php the_title(); ?>
-        </div>
+        </h1>
 
         <div id="textoNoticia">
             <?php

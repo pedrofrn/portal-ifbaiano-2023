@@ -1,12 +1,12 @@
 <?php if (get_post_meta($post->ID, 'post_doc_upload', true)) : ?>
-    <h3 id="docsLista">Lista de documentos</h3>
+    <h2 id="docsLista">Lista de Documentos</h2>
     <?php
     $id = get_the_ID();
     $doc_upload = get_post_meta($id, 'post_doc_upload', true);
     $doc_upload = explode(',', $doc_upload);
     $qnt_doc = count($doc_upload);
     echo '<script>';
-    echo '    const h3Element = document.querySelector("h3#docsLista");';
+    echo '    const h3Element = document.querySelector("h2#docsLista");';
     echo '    if (' . json_encode($qnt_doc) . ' > 10 && h3Element) {';
     echo '        const inputBox = document.createElement("input");';
     echo '        inputBox.type = "text";';

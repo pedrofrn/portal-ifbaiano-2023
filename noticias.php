@@ -82,8 +82,6 @@
                 <div class="maisNoticias"><a href="<?php echo get_permalink(get_page_by_title('Todas as Notícias')); ?>" alt="Todas as notícias"><span class="maisNoticias"> + notícias</span></a></div>
             </div>
         </div>
-        <?php //include 'noticias-campi.php'; 
-        ?>
 
         <?php
         $args_destaque = array(
@@ -143,5 +141,7 @@
 
             </div>
         <?php endif; ?>
+        <?php //include 'noticias-campi.php'; 
+        ?>
     </div>
 </div>

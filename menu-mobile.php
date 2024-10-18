@@ -2,7 +2,7 @@
     <div class="phone">
         <div class="content">
             <nav role="navigation">
-                <h3>Acesse o menu principal</h3>
+                <span class="tag">Acesse o menu principal</span>
                 <div id="menuToggle">
                     <input type="checkbox" />
                     <span class="control"></span>

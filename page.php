@@ -10,9 +10,9 @@
 					the_post();
 			?>
 
-					<div id="tituloNoticia">
+					<h1 id="tituloNoticia">
 						<?php the_title(); ?>
-					</div>
+					</h1>
 
 					<?php if (!has_excerpt()) {
 						echo '';

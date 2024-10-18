@@ -5,9 +5,9 @@
 	<div id="containerMeioCentroNoticia">
 		<div id="containerNoticiapost">
 			<?php include 'banner-publicidade.php'; ?>
-			<div id="tituloNoticia">
+			<h1 id="tituloNoticia">
 				<?php the_title(); ?>
-			</div>
+			</h1>
 
 			<div class="concursosInscricoesAbertas"></div>
 			<div class="concursosInscricoesBreve"></div>

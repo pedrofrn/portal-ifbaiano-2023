@@ -83,7 +83,7 @@
 
         if (!closed) {
             slides[index].style.display = "block";
-            spanDots[index].classList.add("active");
+            if ((spanDots[index])) spanDots[index].classList.add("active");
             slideIndex = index;
         } else {
             return;
